@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { appScreenshots, type AppScreenshot } from "@/lib/data";
@@ -51,7 +52,7 @@ function PhonePlaceholder({
           style={{ background: `hsl(${screenshot.accentHue} 70% 70%)` }}
         />
         <p className="text-[9px] font-mono opacity-30 tracking-widest uppercase">
-          Add screenshot
+          {screenshot.subtitle}
         </p>
       </div>
     </div>
@@ -136,15 +137,15 @@ function PhoneFrame({
           }}
         />
 
-        {/* Image or fallback placeholder */}
-        <div className="absolute inset-0 flex text-primary">
-          {!imgError ? (
-            <div className="relative w-full h-full">
+        {/* Positioned Inner screen viewport */}
+        <div className="inner-screen-viewport absolute inset-0 overflow-hidden flex items-center justify-center text-primary">
+          {screenshot.image && !imgError ? (
+            <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
               <Image
                 src={screenshot.image}
-                alt={screenshot.imageAlt}
+                alt={screenshot.imageAlt || `${screenshot.title} app screen`}
                 fill
-                className="object-cover object-top"
+                className="object-contain object-center"
                 sizes="(max-width: 640px) 230px, (max-width: 1024px) 255px, 270px"
                 onError={() => setImgError(true)}
                 priority={isFeatured}
@@ -400,16 +401,25 @@ export function AppShowcaseSection() {
 
                   {/* Button row */}
                   <div className="h-9 flex items-center justify-center mt-2">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
-                      }}
-                      className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
-                    >
-                      Explore case study →
-                    </button>
+                    {activeApp.projectId === "moviq" ? (
+                      <Link
+                        href="/projects/moviq"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
+                      >
+                        Explore case study →
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
+                        }}
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
+                      >
+                        Explore case study →
+                      </button>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -493,17 +503,27 @@ export function AppShowcaseSection() {
 
                     {/* Button row */}
                     <div className="h-9 flex items-center justify-center mt-2">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
-                        }}
-                        tabIndex={isActive ? 0 : -1}
-                        className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
-                      >
-                        Explore case study →
-                      </button>
+                      {item.projectId === "moviq" ? (
+                        <Link
+                          href="/projects/moviq"
+                          tabIndex={isActive ? 0 : -1}
+                          className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
+                        >
+                          Explore case study →
+                        </Link>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
+                          }}
+                          tabIndex={isActive ? 0 : -1}
+                          className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
+                        >
+                          Explore case study →
+                        </button>
+                      )}
                     </div>
                   </div>
                 </motion.div>

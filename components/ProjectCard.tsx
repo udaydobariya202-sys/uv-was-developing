@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink } from "lucide-react";
 import type { Project } from "@/lib/data";
@@ -13,7 +14,7 @@ interface ProjectCardProps {
 // Abstract CSS visual for each project
 function ProjectVisual({ project }: { project: Project }) {
   const visuals: Record<string, React.ReactNode> = {
-    rideflow: (
+    moviq: (
       <div className="relative w-full h-full overflow-hidden">
         {/* City grid lines */}
         <div className="absolute inset-0 opacity-20">
@@ -48,8 +49,8 @@ function ProjectVisual({ project }: { project: Project }) {
           <path d="M20,20 L120,40 L80,80 L180,60 L140,120" stroke="rgb(139,92,246)" strokeWidth="1.5" fill="none" strokeDasharray="4 3" />
         </svg>
         {/* Label */}
-        <div className="absolute bottom-3 left-3 text-[10px] font-mono text-violet-300/70 tracking-wider">
-          MOBILITY PLATFORM
+        <div className="absolute bottom-3 left-3 text-[10px] font-mono text-violet-300/70 tracking-wider uppercase">
+          Cab Booking User App
         </div>
       </div>
     ),
@@ -128,6 +129,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const statusColor: Record<string, string> = {
+    "Production project / Client work": "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
     "Concept / In development": "text-amber-400 bg-amber-400/10 border-amber-400/20",
     Prototype: "text-sky-400 bg-sky-400/10 border-sky-400/20",
     Exploration: "text-violet-400 bg-violet-400/10 border-violet-400/20",
@@ -159,12 +161,24 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
         {/* Content */}
         <div className="mt-5 flex-1 flex flex-col">
-          <p className="text-xs text-secondary tracking-wider uppercase font-mono mb-1.5">
-            {project.category}
-          </p>
-          <h3 className="text-xl font-semibold text-primary mb-2 leading-tight">
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <p className="text-xs text-secondary tracking-wider uppercase font-mono">
+              {project.category}
+            </p>
+            {project.subtitle && (
+              <span className="text-[10px] font-mono text-accent-uv/90">
+                {project.subtitle}
+              </span>
+            )}
+          </div>
+          <h3 className="text-xl font-semibold text-primary mb-1.5 leading-tight">
             {project.title}
           </h3>
+          {project.role && (
+            <p className="text-[11px] text-secondary/80 font-mono mb-2">
+              <span className="text-accent-uv/80">Role:</span> {project.role}
+            </p>
+          )}
           <p className="text-sm text-secondary leading-relaxed mb-4">
             {project.description}
           </p>
@@ -182,16 +196,29 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
 
           {/* CTA */}
-          <button
-            onClick={() => setModalOpen(true)}
-            className="mt-auto self-start inline-flex items-center gap-1.5 text-sm text-accent-uv font-medium group/btn hover:gap-2.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded"
-          >
-            View case study
-            <ExternalLink
-              size={13}
-              className="opacity-60 group-hover/btn:opacity-100 transition-opacity"
-            />
-          </button>
+          {project.caseStudyUrl ? (
+            <Link
+              href={project.caseStudyUrl}
+              className="mt-auto self-start inline-flex items-center gap-1.5 text-sm text-accent-uv font-medium group/btn hover:gap-2.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded"
+            >
+              View case study
+              <ExternalLink
+                size={13}
+                className="opacity-60 group-hover/btn:opacity-100 transition-opacity"
+              />
+            </Link>
+          ) : (
+            <button
+              onClick={() => setModalOpen(true)}
+              className="mt-auto self-start inline-flex items-center gap-1.5 text-sm text-accent-uv font-medium group/btn hover:gap-2.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded"
+            >
+              View case study
+              <ExternalLink
+                size={13}
+                className="opacity-60 group-hover/btn:opacity-100 transition-opacity"
+              />
+            </button>
+          )}
         </div>
       </motion.article>
 
@@ -254,10 +281,20 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                 </div>
               </div>
 
-              <p className="text-xs text-secondary/60 italic">
-                Full case study coming soon. This project is currently{" "}
-                {project.status.toLowerCase()}.
-              </p>
+              {project.caseStudyUrl ? (
+                <Link
+                  href={project.caseStudyUrl}
+                  onClick={() => setModalOpen(false)}
+                  className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors"
+                >
+                  Explore full case study →
+                </Link>
+              ) : (
+                <p className="text-xs text-secondary/60 italic">
+                  Full case study coming soon. This project is currently{" "}
+                  {project.status.toLowerCase()}.
+                </p>
+              )}
             </motion.div>
           </motion.div>
         )}

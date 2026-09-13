@@ -1,20 +1,27 @@
 export type TechTag = string;
 
-export type ProjectStatus = "Concept / In development" | "Prototype" | "Exploration";
+export type ProjectStatus =
+  | "Production project / Client work"
+  | "Concept / In development"
+  | "Prototype"
+  | "Exploration";
 
 export interface Project {
   id: string;
   number: string;
   category: string;
+  subtitle?: string;
   title: string;
   description: string;
   stack: TechTag[];
   status: ProjectStatus;
+  role?: string;
   accentHue: string; // CSS hue value for visual identity
   // Optional image fields — add these once real screenshots exist
   image?: string;
   imageAlt?: string;
   featured?: boolean;
+  caseStudyUrl?: string;
 }
 
 export interface AppScreenshot {
@@ -22,8 +29,8 @@ export interface AppScreenshot {
   projectId: string; // links back to Project.id
   title: string;
   subtitle: string;
-  image: string; // path under /public, e.g. /images/apps/rideflow-home.png
-  imageAlt: string;
+  image?: string; // path under /public, e.g. /images/apps/moviq/moviq-home.webp
+  imageAlt?: string;
   accentHue: string;
   featured: boolean; // featured = large card on desktop
 }
@@ -41,18 +48,21 @@ export interface StackGroup {
 
 export const projects: Project[] = [
   {
-    id: "rideflow",
+    id: "moviq",
     number: "01",
-    category: "Mobility Platform",
-    title: "RideFlow",
+    category: "Mobility / Ride-Hailing",
+    subtitle: "Cab Booking User App",
+    title: "MOVIQ Cabs",
     description:
-      "A ride-hailing product ecosystem with passenger, driver, and admin experiences.",
-    stack: ["Flutter", "Node.js", "Supabase", "Maps", "Payments", "Notifications"],
-    status: "Concept / In development",
+      "A Flutter cab booking user app built with maps, ride lifecycle states, payments, notifications, and structured product architecture.",
+    stack: ["Flutter", "Dart", "Node.js", "Maps", "Payments", "Notifications"],
+    status: "Production project / Client work",
+    role: "Flutter Developer and Full-Stack Product Builder",
     accentHue: "270",
-    image: "/images/apps/rideflow-home.png",
-    imageAlt: "RideFlow passenger app home screen",
+    image: "/images/apps/moviq/moviq-home.webp",
+    imageAlt: "MOVIQ Cabs cab booking user app home screen.",
     featured: true,
+    caseStudyUrl: "/projects/moviq",
   },
   {
     id: "terracast",
@@ -64,8 +74,6 @@ export const projects: Project[] = [
     stack: ["Flutter", "Maps", "Weather APIs", "Geospatial UI"],
     status: "Prototype",
     accentHue: "210",
-    image: "/images/apps/terracast.png",
-    imageAlt: "TerraCast weather visualization screen",
   },
   {
     id: "udaya-ai",
@@ -83,33 +91,29 @@ export const projects: Project[] = [
 // App screenshots for the dedicated showcase section
 export const appScreenshots: AppScreenshot[] = [
   {
-    id: "rideflow-home",
-    projectId: "rideflow",
-    title: "RideFlow",
-    subtitle: "Mobility Platform",
-    image: "/images/apps/rideflow-home.png",
-    imageAlt: "RideFlow passenger app — home and booking screen",
+    id: "moviq-cabs",
+    projectId: "moviq",
+    title: "MOVIQ Cabs",
+    subtitle: "Cab Booking User App",
+    image: "/images/apps/moviq/moviq-home.webp",
+    imageAlt: "MOVIQ Cabs cab booking user app home screen.",
     accentHue: "270",
     featured: true,
-  },
-  {
-    id: "rideflow-driver",
-    projectId: "rideflow",
-    title: "RideFlow Driver",
-    subtitle: "Driver Experience",
-    image: "/images/apps/rideflow-driver.png",
-    imageAlt: "RideFlow driver app — active ride and earnings screen",
-    accentHue: "258",
-    featured: false,
   },
   {
     id: "terracast",
     projectId: "terracast",
     title: "TerraCast",
     subtitle: "Weather Visualization",
-    image: "/images/apps/terracast.png",
-    imageAlt: "TerraCast — atmospheric weather and Earth visualization",
     accentHue: "210",
+    featured: false,
+  },
+  {
+    id: "udaya-ai",
+    projectId: "udaya-ai",
+    title: "Udaya AI",
+    subtitle: "AI Assistant",
+    accentHue: "290",
     featured: false,
   },
 ];

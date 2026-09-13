@@ -49,9 +49,9 @@ cp .env.example .env.local
 Place Flutter app screenshots in:
 
 ```
-public/images/apps/rideflow-home.png
-public/images/apps/rideflow-driver.png
+public/images/apps/moviq/moviq-home.webp
 public/images/apps/terracast.png
+public/images/apps/udaya-ai.png
 ```
 
 CSS phone frame placeholders are shown until the real images are added.
