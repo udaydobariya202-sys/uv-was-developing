@@ -94,7 +94,7 @@ export default function MoviqCaseStudyPage() {
           <div className="my-14 flex flex-col items-center justify-center">
             <div className="relative w-full flex flex-col items-center justify-center py-6">
               {/* Outer Phone Wrapper */}
-              <div className="relative w-[240px] sm:w-[270px] lg:w-[290px] h-[480px] sm:h-[540px] lg:h-[580px] flex-shrink-0 transition-shadow duration-500 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
+              <div className="relative w-[240px] sm:w-[270px] lg:w-[285px] aspect-[1220/2712] flex-shrink-0 transition-shadow duration-500 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
                 {/* Outer Phone Bezel */}
                 <div
                   className="absolute inset-0 rounded-[2.5rem] border-2 z-20 pointer-events-none"
@@ -102,6 +102,9 @@ export default function MoviqCaseStudyPage() {
                     borderColor: `hsl(${accentHue} 60% 48% / 0.9)`,
                   }}
                 />
+
+                {/* Hardware ear-piece speaker slit on top bezel */}
+                <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-12 h-1 bg-black/60 rounded-full z-30 pointer-events-none" />
 
                 {/* Hardware side buttons */}
                 <div
@@ -124,12 +127,6 @@ export default function MoviqCaseStudyPage() {
                     background: `linear-gradient(160deg, hsl(${accentHue} 25% 8%) 0%, hsl(${accentHue} 15% 5%) 100%)`,
                   }}
                 >
-                  {/* Dynamic Island / Notch */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-black/75 rounded-b-2xl z-20 flex items-center justify-center gap-1 pointer-events-none">
-                    <div className="w-1.5 h-1.5 rounded-full bg-black/90" />
-                    <div className="w-0.5 h-3 rounded-full bg-black/60 mx-0.5" />
-                  </div>
-
                   {/* Screen ambient glow */}
                   <div
                     className="absolute top-1/4 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full blur-2xl pointer-events-none opacity-30"
@@ -143,8 +140,8 @@ export default function MoviqCaseStudyPage() {
                         src="/images/apps/moviq/moviq-home.webp"
                         alt="MOVIQ Cabs cab booking user app home screen."
                         fill
-                        className="object-contain object-center"
-                        sizes="(max-width: 640px) 240px, (max-width: 1024px) 270px, 290px"
+                        className="object-cover object-top"
+                        sizes="(max-width: 640px) 240px, (max-width: 1024px) 270px, 285px"
                         priority
                       />
                     </div>

@@ -73,7 +73,7 @@ function PhoneFrame({
 
   return (
     <div
-      className={`relative w-[230px] sm:w-[255px] lg:w-[270px] h-[460px] sm:h-[500px] lg:h-[530px] flex-shrink-0 transition-shadow duration-500 rounded-[2.5rem] ${
+      className={`relative w-[235px] sm:w-[255px] lg:w-[270px] aspect-[1220/2712] flex-shrink-0 transition-shadow duration-500 rounded-[2.5rem] ${
         isSelected
           ? "shadow-[0_16px_36px_rgba(0,0,0,0.6)] md:shadow-none"
           : "shadow-none"
@@ -88,6 +88,9 @@ function PhoneFrame({
             : `hsl(${screenshot.accentHue} 35% 25% / 0.45)`,
         }}
       />
+
+      {/* Hardware ear-piece speaker slit on top bezel */}
+      <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-12 h-1 bg-black/60 rounded-full z-30 pointer-events-none" />
 
       {/* Hardware side buttons */}
       <div
@@ -122,11 +125,13 @@ function PhoneFrame({
           background: `linear-gradient(160deg, hsl(${screenshot.accentHue} 25% 8%) 0%, hsl(${screenshot.accentHue} 15% 5%) 100%)`,
         }}
       >
-        {/* Dynamic Island / Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-black/70 rounded-b-2xl z-10 flex items-center justify-center gap-1 pointer-events-none">
-          <div className="w-1.5 h-1.5 rounded-full bg-black/90" />
-          <div className="w-0.5 h-3 rounded-full bg-black/60 mx-0.5" />
-        </div>
+        {/* Dynamic Island / Notch — shown only on wireframe placeholders */}
+        {!screenshot.image && (
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-black/70 rounded-b-2xl z-20 flex items-center justify-center gap-1 pointer-events-none">
+            <div className="w-1.5 h-1.5 rounded-full bg-black/90" />
+            <div className="w-0.5 h-3 rounded-full bg-black/60 mx-0.5" />
+          </div>
+        )}
 
         {/* Screen ambient glow (lightweight on mobile, rich on desktop) */}
         <div
@@ -145,8 +150,8 @@ function PhoneFrame({
                 src={screenshot.image}
                 alt={screenshot.imageAlt || `${screenshot.title} app screen`}
                 fill
-                className="object-contain object-center"
-                sizes="(max-width: 640px) 230px, (max-width: 1024px) 255px, 270px"
+                className="object-cover object-top"
+                sizes="(max-width: 640px) 235px, (max-width: 1024px) 255px, 270px"
                 onError={() => setImgError(true)}
                 priority={isFeatured}
               />
@@ -330,7 +335,7 @@ export function AppShowcaseSection() {
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerCancel}
-            className="md:hidden carousel-stage-container relative w-full max-w-[390px] mx-auto h-[620px] sm:h-[660px] overflow-hidden flex items-start justify-center pt-4 sm:pt-8 select-none cursor-grab active:cursor-grabbing"
+            className="md:hidden carousel-stage-container relative w-full max-w-[390px] mx-auto h-[660px] sm:h-[700px] overflow-hidden flex items-start justify-center pt-4 sm:pt-8 select-none cursor-grab active:cursor-grabbing"
             style={{ touchAction: "pan-y" }}
           >
             <AnimatePresence initial={false} custom={direction} mode="popLayout">
@@ -433,7 +438,7 @@ export function AppShowcaseSection() {
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerCancel}
-            className="hidden md:flex carousel-stage-container relative w-full h-[700px] lg:h-[740px] overflow-x-clip overflow-y-visible items-start justify-center pt-14 lg:pt-18 select-none cursor-grab active:cursor-grabbing"
+            className="hidden md:flex carousel-stage-container relative w-full h-[760px] lg:h-[800px] overflow-x-clip overflow-y-visible items-start justify-center pt-10 lg:pt-14 select-none cursor-grab active:cursor-grabbing"
             style={{ touchAction: "pan-y" }}
           >
             {appScreenshots.map((item, index) => {
