@@ -1,27 +1,12 @@
 "use client";
 
-import { useState, useEffect, useSyncExternalStore } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { appScreenshots, type AppScreenshot } from "@/lib/data";
 
-// ─── External Store for Prefers Reduced Motion ──────────────────────────────────
-function subscribeReducedMotion(callback: () => void) {
-  if (typeof window === "undefined") return () => {};
-  const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-  mediaQuery.addEventListener("change", callback);
-  return () => mediaQuery.removeEventListener("change", callback);
-}
-
-function getReducedMotionSnapshot() {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function getReducedMotionServerSnapshot() {
-  return false;
-}
+const AUTOPLAY_DELAY = 3000;
 
 // ─── Consistent Phone Placeholder Wireframe ─────────────────────────────────────
 function PhonePlaceholder({
@@ -190,32 +175,34 @@ function PhoneFrame({
 // ─── Main Showcase Section ──────────────────────────────────────────────────────
 export function AppShowcaseSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isUserPaused, setIsUserPaused] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const prefersReducedMotion = useSyncExternalStore(
-    subscribeReducedMotion,
-    getReducedMotionSnapshot,
-    getReducedMotionServerSnapshot
-  );
-
-  // Reliable autoplay effect: switches slide every 3000ms, resets on activeIndex change
+  // Exact reliable autoplay effect with 3000ms delay
   useEffect(() => {
-    if (isUserPaused || prefersReducedMotion) return;
+    const mediaQuery = typeof window !== "undefined"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
+      : null;
+    const shouldAutoplay = !isPaused && (!mediaQuery || !mediaQuery.matches);
 
-    const timer = window.setTimeout(() => {
-      setActiveIndex((current) => (current + 1) % appScreenshots.length);
-    }, 3000);
+    if (!shouldAutoplay) return;
 
-    return () => window.clearTimeout(timer);
-  }, [activeIndex, isUserPaused, prefersReducedMotion]);
+    timeoutRef.current = setTimeout(() => {
+      setActiveIndex((prev) => (prev + 1) % appScreenshots.length);
+    }, AUTOPLAY_DELAY);
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [activeIndex, isPaused]);
 
   // Navigation handlers
   const handleNext = () => {
-    setActiveIndex((current) => (current + 1) % appScreenshots.length);
+    setActiveIndex((prev) => (prev + 1) % appScreenshots.length);
   };
 
   const handlePrev = () => {
-    setActiveIndex((current) => (current - 1 + appScreenshots.length) % appScreenshots.length);
+    setActiveIndex((prev) => (prev - 1 + appScreenshots.length) % appScreenshots.length);
   };
 
   const handleSelect = (index: number) => {
@@ -264,7 +251,7 @@ export function AppShowcaseSection() {
   };
 
   const slotTransition = {
-    duration: prefersReducedMotion ? 0.01 : 0.95,
+    duration: 0.95,
     ease: [0.22, 1, 0.36, 1] as const,
   };
 
@@ -305,8 +292,6 @@ export function AppShowcaseSection() {
           aria-label="Mobile app showcase autoplay carousel"
           tabIndex={0}
           onKeyDown={handleKeyDown}
-          onPointerEnter={() => setIsUserPaused(true)}
-          onPointerLeave={() => setIsUserPaused(false)}
           className="relative w-full flex flex-col items-center justify-center focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-uv/40 rounded-3xl"
         >
           {/* Screen reader live region */}
@@ -314,8 +299,16 @@ export function AppShowcaseSection() {
             Active app: {activeApp.title} — {activeApp.subtitle} ({activeIndex + 1} of {appScreenshots.length})
           </div>
 
-          {/* ── Fixed-size stage with ample top glow clearance ── */}
-          <div className="relative w-full h-[690px] sm:h-[730px] lg:h-[760px] overflow-x-clip overflow-y-visible flex items-start justify-center pt-12 sm:pt-16 lg:pt-20">
+          {/* ── Fixed-size stage with ample top glow clearance and stage-only hover pause ── */}
+          <div
+            onPointerEnter={(e) => {
+              if (e.pointerType === "mouse") setIsPaused(true);
+            }}
+            onPointerLeave={(e) => {
+              if (e.pointerType === "mouse") setIsPaused(false);
+            }}
+            className="relative w-full h-[690px] sm:h-[730px] lg:h-[760px] overflow-x-clip overflow-y-visible flex items-start justify-center pt-12 sm:pt-16 lg:pt-20"
+          >
             {appScreenshots.map((item, index) => {
               const isActive = index === activeIndex;
               const isPrev = index === previousIndex;
