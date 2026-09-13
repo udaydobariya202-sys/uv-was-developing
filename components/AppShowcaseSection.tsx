@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -172,31 +172,20 @@ function PhoneFrame({
   );
 }
 
-// ─── Main Showcase Section ──────────────────────────────────────────────────────
+// ─── Main Showcase Section with Continuous Reliable Autoplay ────────────────────
 export function AppShowcaseSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Exact reliable autoplay effect with 3000ms delay
+  // Exact single setInterval autoplay effect — continuous, indestructible
   useEffect(() => {
-    const mediaQuery = typeof window !== "undefined"
-      ? window.matchMedia("(prefers-reduced-motion: reduce)")
-      : null;
-    const shouldAutoplay = !isPaused && (!mediaQuery || !mediaQuery.matches);
-
-    if (!shouldAutoplay) return;
-
-    timeoutRef.current = setTimeout(() => {
-      setActiveIndex((prev) => (prev + 1) % appScreenshots.length);
+    const timerId = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % appScreenshots.length);
     }, AUTOPLAY_DELAY);
 
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [activeIndex, isPaused]);
+    return () => window.clearInterval(timerId);
+  }, []);
 
-  // Navigation handlers
+  // Manual navigation handlers
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % appScreenshots.length);
   };
@@ -206,11 +195,10 @@ export function AppShowcaseSection() {
   };
 
   const handleSelect = (index: number) => {
-    if (index === activeIndex) return;
     setActiveIndex(index);
   };
 
-  // Keyboard controls
+  // Keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowRight") {
       e.preventDefault();
@@ -251,7 +239,7 @@ export function AppShowcaseSection() {
   };
 
   const slotTransition = {
-    duration: 0.95,
+    duration: 0.9,
     ease: [0.22, 1, 0.36, 1] as const,
   };
 
@@ -299,16 +287,8 @@ export function AppShowcaseSection() {
             Active app: {activeApp.title} — {activeApp.subtitle} ({activeIndex + 1} of {appScreenshots.length})
           </div>
 
-          {/* ── Fixed-size stage with ample top glow clearance and stage-only hover pause ── */}
-          <div
-            onPointerEnter={(e) => {
-              if (e.pointerType === "mouse") setIsPaused(true);
-            }}
-            onPointerLeave={(e) => {
-              if (e.pointerType === "mouse") setIsPaused(false);
-            }}
-            className="relative w-full h-[690px] sm:h-[730px] lg:h-[760px] overflow-x-clip overflow-y-visible flex items-start justify-center pt-12 sm:pt-16 lg:pt-20"
-          >
+          {/* ── Fixed-size stage with ample top glow clearance ── */}
+          <div className="relative w-full h-[690px] sm:h-[730px] lg:h-[760px] overflow-x-clip overflow-y-visible flex items-start justify-center pt-12 sm:pt-16 lg:pt-20">
             {appScreenshots.map((item, index) => {
               const isActive = index === activeIndex;
               const isPrev = index === previousIndex;
