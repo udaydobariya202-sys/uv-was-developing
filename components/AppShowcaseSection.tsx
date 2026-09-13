@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -15,7 +15,7 @@ function PhonePlaceholder({
   screenshot: AppScreenshot;
 }) {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-between p-4 select-none overflow-hidden">
+    <div className="w-full h-full flex flex-col items-center justify-between p-4 select-none overflow-hidden pointer-events-none">
       {/* Fake status bar */}
       <div className="w-full flex items-center justify-between mb-3 shrink-0">
         <div className="text-[8px] font-mono opacity-40">9:41</div>
@@ -25,7 +25,7 @@ function PhonePlaceholder({
         </div>
       </div>
 
-      {/* Normalized wireframe blocks (identical layout across all mockups) */}
+      {/* Normalized wireframe blocks */}
       <div className="flex-1 w-full flex flex-col gap-2 overflow-hidden">
         <div
           className="w-full h-8 rounded-md opacity-25 shrink-0"
@@ -58,7 +58,7 @@ function PhonePlaceholder({
   );
 }
 
-// ─── Normalized Phone Frame Component ───────────────────────────────────────────
+// ─── GPU-Optimized Phone Frame Component ────────────────────────────────────────
 function PhoneFrame({
   screenshot,
   isFeatured,
@@ -72,16 +72,21 @@ function PhoneFrame({
 
   return (
     <div
-      className="relative w-[240px] sm:w-[260px] lg:w-[270px] h-[480px] sm:h-[510px] lg:h-[530px] flex-shrink-0 transition-shadow duration-700"
+      className={`relative w-[230px] sm:w-[255px] lg:w-[270px] h-[460px] sm:h-[500px] lg:h-[530px] flex-shrink-0 transition-shadow duration-500 ${
+        isSelected
+          ? "shadow-[0_16px_36px_rgba(0,0,0,0.6)] md:shadow-none"
+          : "shadow-none"
+      }`}
       style={{
+        // Hardware-accelerated drop-shadow on desktop; lightweight box-shadow on mobile
         filter: isSelected
-          ? `drop-shadow(0 28px 56px hsl(${screenshot.accentHue} 75% 30% / 0.5))`
-          : `drop-shadow(0 12px 24px hsl(${screenshot.accentHue} 40% 15% / 0.2))`,
+          ? `drop-shadow(0 24px 48px hsl(${screenshot.accentHue} 75% 30% / 0.45))`
+          : `drop-shadow(0 8px 16px hsl(${screenshot.accentHue} 40% 15% / 0.15))`,
       }}
     >
-      {/* Phone outer bezel */}
+      {/* Outer Phone Bezel */}
       <div
-        className="absolute inset-0 rounded-[2.5rem] border-2 z-20 pointer-events-none transition-colors duration-700"
+        className="absolute inset-0 rounded-[2.5rem] border-2 z-20 pointer-events-none transition-colors duration-500"
         style={{
           borderColor: isSelected
             ? `hsl(${screenshot.accentHue} 60% 48% / 0.9)`
@@ -91,7 +96,7 @@ function PhoneFrame({
 
       {/* Hardware side buttons */}
       <div
-        className="absolute -left-[3px] top-[80px] w-[3px] h-7 rounded-l-sm transition-colors duration-700"
+        className="absolute -left-[3px] top-[80px] w-[3px] h-7 rounded-l-sm pointer-events-none transition-colors duration-500"
         style={{
           background: isSelected
             ? `hsl(${screenshot.accentHue} 45% 35%)`
@@ -99,7 +104,7 @@ function PhoneFrame({
         }}
       />
       <div
-        className="absolute -left-[3px] top-[120px] w-[3px] h-7 rounded-l-sm transition-colors duration-700"
+        className="absolute -left-[3px] top-[120px] w-[3px] h-7 rounded-l-sm pointer-events-none transition-colors duration-500"
         style={{
           background: isSelected
             ? `hsl(${screenshot.accentHue} 45% 35%)`
@@ -107,7 +112,7 @@ function PhoneFrame({
         }}
       />
       <div
-        className="absolute -right-[3px] top-[100px] w-[3px] h-12 rounded-r-sm transition-colors duration-700"
+        className="absolute -right-[3px] top-[100px] w-[3px] h-12 rounded-r-sm pointer-events-none transition-colors duration-500"
         style={{
           background: isSelected
             ? `hsl(${screenshot.accentHue} 45% 35%)`
@@ -123,17 +128,17 @@ function PhoneFrame({
         }}
       >
         {/* Dynamic Island / Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-black/70 rounded-b-2xl z-10 flex items-center justify-center gap-1">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-black/70 rounded-b-2xl z-10 flex items-center justify-center gap-1 pointer-events-none">
           <div className="w-1.5 h-1.5 rounded-full bg-black/90" />
           <div className="w-0.5 h-3 rounded-full bg-black/60 mx-0.5" />
         </div>
 
-        {/* Ambient screen backglow */}
+        {/* Screen ambient glow (lightweight on mobile) */}
         <div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-36 h-36 rounded-full blur-3xl pointer-events-none transition-opacity duration-700"
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full blur-xl md:blur-3xl pointer-events-none transition-opacity duration-500"
           style={{
             background: `hsl(${screenshot.accentHue} 80% 60%)`,
-            opacity: isSelected ? 0.35 : 0.12,
+            opacity: isSelected ? 0.3 : 0.1,
           }}
         />
 
@@ -146,7 +151,7 @@ function PhoneFrame({
                 alt={screenshot.imageAlt}
                 fill
                 className="object-cover object-top"
-                sizes="(max-width: 640px) 240px, (max-width: 1024px) 260px, 270px"
+                sizes="(max-width: 640px) 230px, (max-width: 1024px) 255px, 270px"
                 onError={() => setImgError(true)}
                 priority={isFeatured}
               />
@@ -160,23 +165,27 @@ function PhoneFrame({
       {/* Screen glass reflection sheen */}
       <div className="absolute inset-[3px] rounded-[2.3rem] bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none z-10" />
 
-      {/* Outer ambient blur glow */}
+      {/* Outer ambient blur glow (lightweight blur on mobile, rich on desktop) */}
       <div
-        className="absolute -inset-4 rounded-[3.5rem] blur-2xl pointer-events-none transition-opacity duration-700"
+        className="absolute -inset-2 md:-inset-4 rounded-[3rem] md:rounded-[3.5rem] blur-lg md:blur-2xl pointer-events-none transition-opacity duration-500"
         style={{
           background: `hsl(${screenshot.accentHue} 70% 50%)`,
-          opacity: isSelected ? 0.28 : 0.06,
+          opacity: isSelected ? 0.25 : 0.05,
         }}
       />
     </div>
   );
 }
 
-// ─── Main Showcase Section with Continuous Reliable Autoplay ────────────────────
+// ─── Main Showcase Section ──────────────────────────────────────────────────────
 export function AppShowcaseSection() {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Exact single setInterval autoplay effect — continuous, indestructible
+  // Swipe gesture tracking via refs — no state updates during movement, zero scroll interference
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  // Single reliable interval autoplay effect — 3000ms delay, indestructible
   useEffect(() => {
     const timerId = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % appScreenshots.length);
@@ -185,7 +194,7 @@ export function AppShowcaseSection() {
     return () => window.clearInterval(timerId);
   }, []);
 
-  // Manual navigation handlers
+  // Navigation handlers
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % appScreenshots.length);
   };
@@ -196,6 +205,34 @@ export function AppShowcaseSection() {
 
   const handleSelect = (index: number) => {
     setActiveIndex(index);
+  };
+
+  // Touch & Pointer swipe handlers with touch-action: pan-y (preserves butter-smooth vertical scroll)
+  const onPointerDown = (e: React.PointerEvent) => {
+    touchStartX.current = e.clientX;
+    touchStartY.current = e.clientY;
+  };
+
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const deltaX = e.clientX - touchStartX.current;
+    const deltaY = e.clientY - touchStartY.current;
+
+    // Trigger swipe only when horizontal gesture exceeds 40px and is predominantly horizontal
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3) {
+      if (deltaX < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
+  const onPointerCancel = () => {
+    touchStartX.current = null;
+    touchStartY.current = null;
   };
 
   // Keyboard navigation
@@ -214,32 +251,32 @@ export function AppShowcaseSection() {
   const nextIndex = (activeIndex + 1) % total;
   const activeApp = appScreenshots[activeIndex];
 
+  // GPU-friendly slot variants: only transform (x, scale) and opacity — zero filter/boxShadow animation
   const slotVariants = {
     active: {
       x: "0%",
       scale: 1,
       opacity: 1,
       zIndex: 30,
-      filter: "brightness(1) blur(0px)",
     },
     prev: {
       x: "-120%",
       scale: 0.86,
       opacity: 0.22,
       zIndex: 10,
-      filter: "brightness(0.7) blur(0.5px)",
     },
     next: {
       x: "120%",
       scale: 0.86,
       opacity: 0.22,
       zIndex: 10,
-      filter: "brightness(0.7) blur(0.5px)",
     },
   };
 
+  // Snappy, tween-based transition (600ms) with GPU-accelerated cubic bezier
   const slotTransition = {
-    duration: 0.9,
+    type: "tween" as const,
+    duration: 0.6,
     ease: [0.22, 1, 0.36, 1] as const,
   };
 
@@ -249,7 +286,7 @@ export function AppShowcaseSection() {
       aria-labelledby="apps-heading"
       className="relative py-20 lg:py-28 overflow-x-clip overflow-y-visible"
     >
-      {/* Ambient background atmosphere */}
+      {/* Ambient background lighting */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[420px] rounded-full bg-accent-uv/4 blur-[130px]" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-border to-transparent" />
@@ -287,8 +324,14 @@ export function AppShowcaseSection() {
             Active app: {activeApp.title} — {activeApp.subtitle} ({activeIndex + 1} of {appScreenshots.length})
           </div>
 
-          {/* ── Fixed-size stage with ample top glow clearance ── */}
-          <div className="relative w-full h-[690px] sm:h-[730px] lg:h-[760px] overflow-x-clip overflow-y-visible flex items-start justify-center pt-12 sm:pt-16 lg:pt-20">
+          {/* ── GPU-optimized stage with pan-y and layout containment ── */}
+          <div
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerCancel}
+            className="carousel-stage-container relative w-full h-[660px] sm:h-[700px] lg:h-[740px] overflow-x-clip overflow-y-visible flex items-start justify-center pt-10 sm:pt-14 lg:pt-18 select-none cursor-grab active:cursor-grabbing"
+            style={{ touchAction: "pan-y" }}
+          >
             {appScreenshots.map((item, index) => {
               const isActive = index === activeIndex;
               const isPrev = index === previousIndex;
@@ -301,38 +344,29 @@ export function AppShowcaseSection() {
               return (
                 <motion.div
                   key={item.id}
+                  layout={false}
                   variants={slotVariants}
                   animate={slot}
                   transition={slotTransition}
-                  drag={isActive ? "x" : false}
-                  dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={0.2}
-                  onDragEnd={(_, { offset, velocity }) => {
-                    if (offset.x < -50 || velocity.x < -300) {
-                      handleNext();
-                    } else if (offset.x > 50 || velocity.x > 300) {
-                      handlePrev();
-                    }
-                  }}
                   onClick={() => {
                     if (isPrev) handlePrev();
                     else if (isNext) handleNext();
                   }}
-                  className={`absolute left-1/2 top-12 sm:top-16 lg:top-20 -translate-x-1/2 flex flex-col items-center justify-center w-[280px] sm:w-[310px] lg:w-[325px] ${
+                  className={`carousel-slide-item absolute left-1/2 top-10 sm:top-14 lg:top-18 -translate-x-1/2 flex flex-col items-center justify-center w-[280px] sm:w-[310px] lg:w-[325px] ${
                     isActive
-                      ? "cursor-grab active:cursor-grabbing pointer-events-auto"
-                      : "cursor-pointer pointer-events-auto hidden md:flex"
+                      ? "z-30 opacity-100 pointer-events-auto"
+                      : "z-10 opacity-0 pointer-events-none hidden md:flex md:pointer-events-auto md:opacity-25 cursor-pointer"
                   }`}
                   aria-hidden={!isActive}
                 >
-                  {/* Phone frame with full unclipped glow */}
+                  {/* Phone frame with unclipped glow */}
                   <PhoneFrame
                     screenshot={item}
                     isFeatured={item.featured}
                     isSelected={isActive}
                   />
 
-                  {/* Reserved metadata area (fixed vertical bounds) */}
+                  {/* Reserved metadata area (stable pixel heights) */}
                   <div className="mt-5 w-full flex flex-col items-center text-center">
                     {/* Badge row: fixed height 24px */}
                     <div className="h-6 flex items-center justify-center mb-1">
