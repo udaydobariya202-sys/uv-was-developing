@@ -146,24 +146,4 @@ body {
   overflow-x: hidden;
 }
 
-/* App showcase carousel track */
-.showcase-track {
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.showcase-track::-webkit-scrollbar {
-  display: none;
-}
-
-.showcase-slide {
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
-}
 
