@@ -15,9 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dcmlabs.online"),
   title: "Uday Dobariya — UV Was Developing",
   description:
-    "Portfolio of Uday Dobariya, an independent Flutter and full-stack developer building mobile, web, desktop, and AI-powered digital products.",
+    "Portfolio of Uday Dobariya, a Flutter and full-stack developer building mobile, web, and AI-powered applications.",
   keywords: [
     "Flutter developer",
     "full-stack developer",
@@ -32,19 +33,23 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Uday Dobariya" }],
   creator: "Uday Dobariya",
+  alternates: {
+    canonical: "https://dcmlabs.online",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
+    url: "https://dcmlabs.online",
     title: "Uday Dobariya — UV Was Developing",
     description:
-      "Portfolio of Uday Dobariya, an independent Flutter and full-stack developer building mobile, web, desktop, and AI-powered digital products.",
+      "Portfolio of Uday Dobariya, a Flutter and full-stack developer building mobile, web, and AI-powered applications.",
     siteName: "UV Was Developing",
   },
   twitter: {
     card: "summary_large_image",
     title: "Uday Dobariya — UV Was Developing",
     description:
-      "Portfolio of Uday Dobariya, an independent Flutter and full-stack developer.",
+      "Portfolio of Uday Dobariya, a Flutter and full-stack developer building mobile, web, and AI-powered applications.",
   },
   robots: {
     index: true,
