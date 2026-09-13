@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback, useSyncExternalStore } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -177,10 +177,10 @@ function PhoneFrame({
 
       {/* Outer ambient blur glow */}
       <div
-        className="absolute -inset-3 rounded-[3rem] blur-xl pointer-events-none transition-opacity duration-700"
+        className="absolute -inset-4 rounded-[3.5rem] blur-2xl pointer-events-none transition-opacity duration-700"
         style={{
           background: `hsl(${screenshot.accentHue} 70% 50%)`,
-          opacity: isSelected ? 0.25 : 0.06,
+          opacity: isSelected ? 0.28 : 0.06,
         }}
       />
     </div>
@@ -190,9 +190,7 @@ function PhoneFrame({
 // ─── Main Showcase Section ──────────────────────────────────────────────────────
 export function AppShowcaseSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [isUserPaused, setIsUserPaused] = useState(false);
 
   const prefersReducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
@@ -200,46 +198,29 @@ export function AppShowcaseSection() {
     getReducedMotionServerSnapshot
   );
 
-  const isPaused = isHovered || isFocused;
-
-  // Single reliable autoplay timer
-  const startAutoplayTimer = useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    if (!isPaused && !prefersReducedMotion) {
-      timerRef.current = setInterval(() => {
-        setActiveIndex((prev) => (prev + 1) % appScreenshots.length);
-      }, 3000);
-    }
-  }, [isPaused, prefersReducedMotion]);
-
+  // Reliable autoplay effect: switches slide every 3000ms, resets on activeIndex change
   useEffect(() => {
-    startAutoplayTimer();
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, [startAutoplayTimer]);
+    if (isUserPaused || prefersReducedMotion) return;
 
-  // Navigation handlers: update state and reset the 3s interval
+    const timer = window.setTimeout(() => {
+      setActiveIndex((current) => (current + 1) % appScreenshots.length);
+    }, 3000);
+
+    return () => window.clearTimeout(timer);
+  }, [activeIndex, isUserPaused, prefersReducedMotion]);
+
+  // Navigation handlers
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % appScreenshots.length);
-    startAutoplayTimer();
+    setActiveIndex((current) => (current + 1) % appScreenshots.length);
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + appScreenshots.length) % appScreenshots.length);
-    startAutoplayTimer();
+    setActiveIndex((current) => (current - 1 + appScreenshots.length) % appScreenshots.length);
   };
 
   const handleSelect = (index: number) => {
     if (index === activeIndex) return;
     setActiveIndex(index);
-    startAutoplayTimer();
   };
 
   // Keyboard controls
@@ -291,7 +272,7 @@ export function AppShowcaseSection() {
     <section
       id="apps"
       aria-labelledby="apps-heading"
-      className="relative py-20 lg:py-28 overflow-hidden"
+      className="relative py-20 lg:py-28 overflow-x-clip overflow-y-visible"
     >
       {/* Ambient background atmosphere */}
       <div className="absolute inset-0 pointer-events-none">
@@ -301,7 +282,7 @@ export function AppShowcaseSection() {
 
       <div className="page-container relative z-10">
         {/* Section Heading & Slide Counter */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 lg:mb-12">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-6 sm:mb-8">
           <SectionHeading
             id="apps-heading"
             label="01 / Selected Apps"
@@ -309,16 +290,11 @@ export function AppShowcaseSection() {
             subtitle="Mobile products I'm designing and developing with Flutter."
           />
 
-          {/* Persistent status label */}
+          {/* Clean status counter: 01 / 03 */}
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface text-xs font-mono text-secondary self-start sm:self-end">
             <span className="text-primary font-semibold">0{activeIndex + 1}</span>
             <span className="opacity-40">/</span>
             <span>0{appScreenshots.length}</span>
-            {isPaused && (
-              <span className="ml-1 text-[10px] text-accent-uv/70 font-sans tracking-wide">
-                (Paused)
-              </span>
-            )}
           </div>
         </div>
 
@@ -329,14 +305,8 @@ export function AppShowcaseSection() {
           aria-label="Mobile app showcase autoplay carousel"
           tabIndex={0}
           onKeyDown={handleKeyDown}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={(e) => {
-            if (!e.currentTarget.contains(e.relatedTarget)) {
-              setIsFocused(false);
-            }
-          }}
+          onPointerEnter={() => setIsUserPaused(true)}
+          onPointerLeave={() => setIsUserPaused(false)}
           className="relative w-full flex flex-col items-center justify-center focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-uv/40 rounded-3xl"
         >
           {/* Screen reader live region */}
@@ -344,8 +314,8 @@ export function AppShowcaseSection() {
             Active app: {activeApp.title} — {activeApp.subtitle} ({activeIndex + 1} of {appScreenshots.length})
           </div>
 
-          {/* ── Fixed-size stage with 3 absolutely positioned slots ── */}
-          <div className="relative w-full h-[650px] sm:h-[690px] lg:h-[715px] overflow-hidden flex items-center justify-center">
+          {/* ── Fixed-size stage with ample top glow clearance ── */}
+          <div className="relative w-full h-[690px] sm:h-[730px] lg:h-[760px] overflow-x-clip overflow-y-visible flex items-start justify-center pt-12 sm:pt-16 lg:pt-20">
             {appScreenshots.map((item, index) => {
               const isActive = index === activeIndex;
               const isPrev = index === previousIndex;
@@ -375,14 +345,14 @@ export function AppShowcaseSection() {
                     if (isPrev) handlePrev();
                     else if (isNext) handleNext();
                   }}
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-[280px] sm:w-[310px] lg:w-[325px] ${
+                  className={`absolute left-1/2 top-12 sm:top-16 lg:top-20 -translate-x-1/2 flex flex-col items-center justify-center w-[280px] sm:w-[310px] lg:w-[325px] ${
                     isActive
                       ? "cursor-grab active:cursor-grabbing pointer-events-auto"
                       : "cursor-pointer pointer-events-auto hidden md:flex"
                   }`}
                   aria-hidden={!isActive}
                 >
-                  {/* Phone frame */}
+                  {/* Phone frame with full unclipped glow */}
                   <PhoneFrame
                     screenshot={item}
                     isFeatured={item.featured}
@@ -441,7 +411,7 @@ export function AppShowcaseSection() {
           </div>
 
           {/* ── Carousel Navigation Controls ── */}
-          <div className="mt-6 flex items-center justify-center gap-4 z-30">
+          <div className="mt-4 sm:mt-6 flex items-center justify-center gap-4 z-30">
             {/* Previous Button */}
             <button
               type="button"
