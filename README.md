@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UV WAS DEVELOPING
+
+Personal portfolio of **Uday Dobariya** — Flutter developer, full-stack app developer, and AI product builder based in Rajkot, Gujarat, India.
+
+> "I build digital products that feel clear, capable, and alive."
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Fonts**: Geist (via `next/font`)
+
+## Features
+
+- Dark cinematic design with ultraviolet brand identity
+- Fully responsive — mobile, tablet, and desktop
+- Animated hero with UV visual orb
+- App screenshot showcase with CSS phone frames
+- Project cards with case study modals
+- Accessible navigation with mobile menu
+- SEO-optimised metadata and Open Graph tags
+- Static export ready
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.example` to `.env.local` and fill in your values:
 
-## Learn More
+```bash
+cp .env.example .env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Adding App Screenshots
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Place Flutter app screenshots in:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+public/images/apps/rideflow-home.png
+public/images/apps/rideflow-driver.png
+public/images/apps/terracast.png
+```
 
-## Deploy on Vercel
+CSS phone frame placeholders are shown until the real images are added.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/
+  layout.tsx        Root layout with SEO metadata
+  page.tsx          Portfolio page
+  globals.css       Design system and CSS variables
+components/
+  Navigation.tsx    Fixed nav with mobile menu
+  HeroSection.tsx   Animated hero section
+  AppShowcaseSection.tsx  Phone mockup showcase
+  WorkSection.tsx   Project cards grid
+  AboutSection.tsx  About and values
+  StackSection.tsx  Technology stack
+  ProcessSection.tsx  Work process steps
+  ContactSection.tsx  Contact CTAs
+  Footer.tsx        Footer with back-to-top
+  ui/
+    Button.tsx      Reusable button component
+    SectionHeading.tsx  Animated section heading
+lib/
+  data.ts           Typed portfolio data
+public/
+  images/apps/      App screenshots (add your own)
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+---
+
+Built by [Uday Dobariya](https://github.com/udaydobariya202-sys) — UV Was Developing
