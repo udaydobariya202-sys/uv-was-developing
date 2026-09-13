@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { appScreenshots, type AppScreenshot } from "@/lib/data";
 
@@ -72,17 +72,11 @@ function PhoneFrame({
 
   return (
     <div
-      className={`relative w-[230px] sm:w-[255px] lg:w-[270px] h-[460px] sm:h-[500px] lg:h-[530px] flex-shrink-0 transition-shadow duration-500 ${
+      className={`relative w-[230px] sm:w-[255px] lg:w-[270px] h-[460px] sm:h-[500px] lg:h-[530px] flex-shrink-0 transition-shadow duration-500 rounded-[2.5rem] ${
         isSelected
           ? "shadow-[0_16px_36px_rgba(0,0,0,0.6)] md:shadow-none"
           : "shadow-none"
       }`}
-      style={{
-        // Hardware-accelerated drop-shadow on desktop; lightweight box-shadow on mobile
-        filter: isSelected
-          ? `drop-shadow(0 24px 48px hsl(${screenshot.accentHue} 75% 30% / 0.45))`
-          : `drop-shadow(0 8px 16px hsl(${screenshot.accentHue} 40% 15% / 0.15))`,
-      }}
     >
       {/* Outer Phone Bezel */}
       <div
@@ -133,9 +127,9 @@ function PhoneFrame({
           <div className="w-0.5 h-3 rounded-full bg-black/60 mx-0.5" />
         </div>
 
-        {/* Screen ambient glow (lightweight on mobile) */}
+        {/* Screen ambient glow (lightweight on mobile, rich on desktop) */}
         <div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full blur-xl md:blur-3xl pointer-events-none transition-opacity duration-500"
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full blur-md md:blur-3xl pointer-events-none transition-opacity duration-500"
           style={{
             background: `hsl(${screenshot.accentHue} 80% 60%)`,
             opacity: isSelected ? 0.3 : 0.1,
@@ -167,10 +161,10 @@ function PhoneFrame({
 
       {/* Outer ambient blur glow (lightweight blur on mobile, rich on desktop) */}
       <div
-        className="absolute -inset-2 md:-inset-4 rounded-[3rem] md:rounded-[3.5rem] blur-lg md:blur-2xl pointer-events-none transition-opacity duration-500"
+        className="absolute -inset-2 md:-inset-4 rounded-[2.8rem] md:rounded-[3.5rem] blur-md md:blur-2xl pointer-events-none transition-opacity duration-500"
         style={{
           background: `hsl(${screenshot.accentHue} 70% 50%)`,
-          opacity: isSelected ? 0.25 : 0.05,
+          opacity: isSelected ? 0.22 : 0.05,
         }}
       />
     </div>
@@ -180,14 +174,16 @@ function PhoneFrame({
 // ─── Main Showcase Section ──────────────────────────────────────────────────────
 export function AppShowcaseSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
 
-  // Swipe gesture tracking via refs — no state updates during movement, zero scroll interference
+  // Swipe gesture tracking via refs — zero state updates during movement, zero scroll interference
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
 
-  // Single reliable interval autoplay effect — 3000ms delay, indestructible
+  // Single reliable interval autoplay effect — 3000ms delay, continuous
   useEffect(() => {
     const timerId = window.setInterval(() => {
+      setDirection(1);
       setActiveIndex((current) => (current + 1) % appScreenshots.length);
     }, AUTOPLAY_DELAY);
 
@@ -196,14 +192,17 @@ export function AppShowcaseSection() {
 
   // Navigation handlers
   const handleNext = () => {
+    setDirection(1);
     setActiveIndex((prev) => (prev + 1) % appScreenshots.length);
   };
 
   const handlePrev = () => {
+    setDirection(-1);
     setActiveIndex((prev) => (prev - 1 + appScreenshots.length) % appScreenshots.length);
   };
 
   const handleSelect = (index: number) => {
+    setDirection(index > activeIndex ? 1 : -1);
     setActiveIndex(index);
   };
 
@@ -251,7 +250,7 @@ export function AppShowcaseSection() {
   const nextIndex = (activeIndex + 1) % total;
   const activeApp = appScreenshots[activeIndex];
 
-  // GPU-friendly slot variants: only transform (x, scale) and opacity — zero filter/boxShadow animation
+  // GPU-friendly desktop slot variants: only transform (x, scale) and opacity
   const slotVariants = {
     active: {
       x: "0%",
@@ -273,7 +272,6 @@ export function AppShowcaseSection() {
     },
   };
 
-  // Snappy, tween-based transition (600ms) with GPU-accelerated cubic bezier
   const slotTransition = {
     type: "tween" as const,
     duration: 0.6,
@@ -284,11 +282,11 @@ export function AppShowcaseSection() {
     <section
       id="apps"
       aria-labelledby="apps-heading"
-      className="relative py-20 lg:py-28 overflow-x-clip overflow-y-visible"
+      className="relative py-16 sm:py-20 lg:py-28 overflow-x-clip overflow-y-visible"
     >
-      {/* Ambient background lighting */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[420px] rounded-full bg-accent-uv/4 blur-[130px]" />
+      {/* Ambient background lighting (bounded to prevent mobile horizontal overflow) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[200px] max-w-[80vw] md:w-[720px] md:h-[420px] rounded-full bg-accent-uv/4 blur-[60px] md:blur-[130px]" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-border to-transparent" />
       </div>
 
@@ -324,12 +322,108 @@ export function AppShowcaseSection() {
             Active app: {activeApp.title} — {activeApp.subtitle} ({activeIndex + 1} of {appScreenshots.length})
           </div>
 
-          {/* ── GPU-optimized stage with pan-y and layout containment ── */}
+          {/* ═══════════════════════════════════════════════════════════════════
+              MOBILE STAGE (< 768px): Single active phone with AnimatePresence
+              ═══════════════════════════════════════════════════════════════════ */}
           <div
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerCancel}
-            className="carousel-stage-container relative w-full h-[660px] sm:h-[700px] lg:h-[740px] overflow-x-clip overflow-y-visible flex items-start justify-center pt-10 sm:pt-14 lg:pt-18 select-none cursor-grab active:cursor-grabbing"
+            className="md:hidden carousel-stage-container relative w-full max-w-[390px] mx-auto h-[620px] sm:h-[660px] overflow-hidden flex items-start justify-center pt-4 sm:pt-8 select-none cursor-grab active:cursor-grabbing"
+            style={{ touchAction: "pan-y" }}
+          >
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
+              <motion.div
+                key={activeApp.id}
+                custom={direction}
+                variants={{
+                  enter: (dir: number) => ({
+                    x: dir > 0 ? "100%" : "-100%",
+                    opacity: 0,
+                  }),
+                  center: {
+                    x: "0%",
+                    opacity: 1,
+                  },
+                  exit: (dir: number) => ({
+                    x: dir > 0 ? "-100%" : "100%",
+                    opacity: 0,
+                  }),
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  type: "tween",
+                  duration: 0.55,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="carousel-slide-item absolute inset-x-0 mx-auto flex flex-col items-center justify-center w-[min(78vw,260px)]"
+              >
+                {/* Phone frame with bounded glow */}
+                <PhoneFrame
+                  screenshot={activeApp}
+                  isFeatured={activeApp.featured}
+                  isSelected={true}
+                />
+
+                {/* Reserved metadata area (stable pixel heights) */}
+                <div className="mt-4 w-full flex flex-col items-center text-center">
+                  {/* Badge row: fixed height 24px */}
+                  <div className="h-6 flex items-center justify-center mb-1">
+                    {activeApp.featured ? (
+                      <div
+                        className="inline-flex items-center gap-1.5 text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full border tracking-wider uppercase"
+                        style={{
+                          borderColor: `hsl(${activeApp.accentHue} 60% 45% / 0.5)`,
+                          color: `hsl(${activeApp.accentHue} 85% 75%)`,
+                          background: `hsl(${activeApp.accentHue} 60% 18% / 0.35)`,
+                        }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+                        Featured App
+                      </div>
+                    ) : (
+                      <div className="h-6 invisible select-none" aria-hidden="true" />
+                    )}
+                  </div>
+
+                  {/* Title row */}
+                  <h3 className="h-7 flex items-center justify-center text-lg font-semibold text-primary truncate leading-tight">
+                    {activeApp.title}
+                  </h3>
+
+                  {/* Subtitle row */}
+                  <p className="h-5 flex items-center justify-center text-xs text-secondary font-mono tracking-wider truncate leading-tight mt-0.5">
+                    {activeApp.subtitle}
+                  </p>
+
+                  {/* Button row */}
+                  <div className="h-9 flex items-center justify-center mt-2">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
+                    >
+                      Explore case study →
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* ═══════════════════════════════════════════════════════════════════
+              DESKTOP STAGE (>= 768px): 3-Slot Stage with Side Previews
+              ═══════════════════════════════════════════════════════════════════ */}
+          <div
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerCancel}
+            className="hidden md:flex carousel-stage-container relative w-full h-[700px] lg:h-[740px] overflow-x-clip overflow-y-visible items-start justify-center pt-14 lg:pt-18 select-none cursor-grab active:cursor-grabbing"
             style={{ touchAction: "pan-y" }}
           >
             {appScreenshots.map((item, index) => {
@@ -352,10 +446,10 @@ export function AppShowcaseSection() {
                     if (isPrev) handlePrev();
                     else if (isNext) handleNext();
                   }}
-                  className={`carousel-slide-item absolute left-1/2 top-10 sm:top-14 lg:top-18 -translate-x-1/2 flex flex-col items-center justify-center w-[280px] sm:w-[310px] lg:w-[325px] ${
+                  className={`carousel-slide-item absolute inset-x-0 mx-auto flex flex-col items-center justify-center w-[310px] lg:w-[325px] ${
                     isActive
                       ? "z-30 opacity-100 pointer-events-auto"
-                      : "z-10 opacity-0 pointer-events-none hidden md:flex md:pointer-events-auto md:opacity-25 cursor-pointer"
+                      : "z-10 opacity-25 pointer-events-auto cursor-pointer"
                   }`}
                   aria-hidden={!isActive}
                 >
@@ -387,17 +481,17 @@ export function AppShowcaseSection() {
                       )}
                     </div>
 
-                    {/* Title row: fixed height 28px */}
+                    {/* Title row */}
                     <h3 className="h-7 flex items-center justify-center text-lg sm:text-xl font-semibold text-primary truncate leading-tight">
                       {item.title}
                     </h3>
 
-                    {/* Subtitle row: fixed height 20px */}
+                    {/* Subtitle row */}
                     <p className="h-5 flex items-center justify-center text-xs text-secondary font-mono tracking-wider truncate leading-tight mt-0.5">
                       {item.subtitle}
                     </p>
 
-                    {/* Button row: fixed height 36px */}
+                    {/* Button row */}
                     <div className="h-9 flex items-center justify-center mt-2">
                       <button
                         type="button"

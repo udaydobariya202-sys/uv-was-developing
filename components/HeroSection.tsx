@@ -129,25 +129,26 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="hero-section relative min-h-[auto] md:min-h-screen flex items-center overflow-hidden"
       aria-label="Hero"
     >
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-accent-uv/3 blur-[120px] pointer-events-none" />
-      <div className="absolute top-20 right-0 w-[400px] h-[400px] rounded-full bg-accent-blue/3 blur-[100px] pointer-events-none" />
+      {/* Background glow (bounded and hidden on mobile to prevent overflow & content obstruction) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] max-w-[70vw] max-h-[70vw] md:w-[600px] md:h-[600px] rounded-full bg-accent-uv/4 md:bg-accent-uv/3 blur-[50px] md:blur-[120px] pointer-events-none z-0" />
+      <div className="hidden md:block absolute top-20 right-0 w-[400px] h-[400px] rounded-full bg-accent-blue/3 blur-[100px] pointer-events-none z-0" />
 
-      <div className="page-container relative z-10 pt-24 pb-16 lg:pt-32">
+      <div className="page-container relative z-10 pt-20 pb-12 sm:pt-24 sm:pb-16 lg:pt-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left: Text */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
+            className="w-full max-w-full"
           >
             {/* Eyebrow */}
             <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
-              <div className="h-px w-8 bg-accent-uv/60" />
-              <p className="text-xs font-mono tracking-[0.22em] text-accent-uv uppercase">
+              <div className="h-px w-8 bg-accent-uv/60 shrink-0" />
+              <p className="text-xs font-mono tracking-[0.16em] sm:tracking-[0.22em] text-accent-uv uppercase break-words">
                 UV WAS DEVELOPING&nbsp;&nbsp;/&nbsp;&nbsp;INDEPENDENT DIGITAL BUILDER
               </p>
             </motion.div>
@@ -155,7 +156,7 @@ export function HeroSection() {
             {/* Headline */}
             <motion.h1
               variants={itemVariants}
-              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight text-primary leading-[1.08] mb-6"
+              className="text-[clamp(2.5rem,10vw,3.75rem)] md:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-[-0.055em] md:tracking-tight text-primary leading-[0.98] md:leading-[1.08] mb-6"
             >
               I build digital
               <br />
@@ -178,7 +179,7 @@ export function HeroSection() {
             {/* Supporting text */}
             <motion.p
               variants={itemVariants}
-              className="text-base lg:text-lg text-secondary leading-relaxed max-w-lg mb-8"
+              className="text-base sm:text-lg text-secondary leading-relaxed max-w-lg mb-8"
             >
               I&apos;m Uday Dobariya, a Flutter and full-stack developer creating
               production-ready apps, intelligent interfaces, and real-world digital
@@ -186,11 +187,12 @@ export function HeroSection() {
             </motion.p>
 
             {/* CTAs */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mb-8">
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-3 mb-8 w-full sm:w-auto">
               <LinkButton
                 href="#work"
                 variant="primary"
                 size="lg"
+                className="w-full sm:w-auto text-center justify-center"
                 onClick={(e) => {
                   e.preventDefault();
                   document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
@@ -202,6 +204,7 @@ export function HeroSection() {
                 href="#contact"
                 variant="secondary"
                 size="lg"
+                className="w-full sm:w-auto text-center justify-center"
                 onClick={(e) => {
                   e.preventDefault();
                   document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });

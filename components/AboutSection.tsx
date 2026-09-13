@@ -13,7 +13,7 @@ const values = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="relative py-24 lg:py-32">
+    <section id="about" className="relative py-24 lg:py-32 overflow-x-clip">
       {/* Subtle divider glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-border to-transparent" />
 
@@ -49,8 +49,8 @@ export function AboutSection() {
 
           {/* Right: values */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="pt-2 lg:pt-20"
@@ -63,8 +63,8 @@ export function AboutSection() {
                 <motion.li
                   key={value}
                   className="flex items-center gap-3 text-primary"
-                  initial={{ opacity: 0, x: 16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.35 + i * 0.08, duration: 0.4 }}
                 >

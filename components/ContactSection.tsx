@@ -45,11 +45,11 @@ const contactLinks = [
 
 export function ContactSection() {
   return (
-    <section id="contact" className="relative py-24 lg:py-36">
+    <section id="contact" className="relative py-24 lg:py-36 overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-border to-transparent" />
 
-      {/* Ambient glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full bg-accent-uv/4 blur-[100px] pointer-events-none" />
+      {/* Ambient glow (bounded to prevent mobile horizontal scrollbar) */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[280px] h-[180px] max-w-[80vw] md:w-[500px] md:h-[300px] rounded-full bg-accent-uv/4 blur-[60px] md:blur-[100px] pointer-events-none" />
 
       <div className="page-container text-center">
         <SectionHeading
