@@ -29,10 +29,11 @@ export function Footer() {
           {/* Brand */}
           <div>
             <p className="text-sm font-mono text-secondary">
-              <span className="text-primary font-semibold">UV WAS DEVELOPING</span>
+              <span className="text-primary font-semibold">UV WAS DEVELOPING</span>{" "}
+              <span className="text-secondary/80">by Uday Dobariya</span>
             </p>
             <p className="text-xs text-secondary/50 mt-0.5">
-              Designed and built by Uday Dobariya &mdash; {year}
+              Flutter Developer &amp; Full-Stack Product Builder &mdash; {year}
             </p>
           </div>
 

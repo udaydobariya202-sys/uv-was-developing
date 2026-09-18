@@ -150,7 +150,7 @@ function PhoneFrame({
                 src={screenshot.image}
                 alt={screenshot.imageAlt || `${screenshot.title} app screen`}
                 fill
-                className="object-cover object-top"
+                className="object-contain"
                 sizes="(max-width: 640px) 235px, (max-width: 1024px) 255px, 270px"
                 onError={() => setImgError(true)}
                 priority={isFeatured}

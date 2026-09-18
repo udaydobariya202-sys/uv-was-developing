@@ -57,7 +57,7 @@ export function Navigation() {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded"
-              aria-label="UV Was Developing — home"
+              aria-label="UV WAS DEVELOPING by Uday Dobariya — home"
             >
               <div className="relative">
                 <span className="block text-xl font-bold tracking-tight text-primary font-mono">
@@ -65,9 +65,14 @@ export function Navigation() {
                 </span>
                 <div className="absolute -inset-1 bg-accent-uv/10 rounded blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              <span className="hidden sm:block text-xs font-mono tracking-[0.2em] text-secondary uppercase">
-                Was Developing
-              </span>
+              <div className="hidden sm:flex flex-col text-left">
+                <span className="text-xs font-mono tracking-[0.18em] text-primary uppercase font-semibold leading-tight">
+                  UV WAS DEVELOPING
+                </span>
+                <span className="text-[10px] font-mono tracking-[0.1em] text-secondary leading-tight">
+                  by Uday Dobariya
+                </span>
+              </div>
             </a>
 
             {/* Desktop nav */}

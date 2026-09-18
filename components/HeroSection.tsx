@@ -60,6 +60,13 @@ function HeroVisual() {
         >
           Was Developing
         </motion.p>
+        <motion.p
+          className="text-[8px] font-mono tracking-[0.25em] text-secondary/50 uppercase mt-0.5"
+          animate={{ opacity: [0.4, 0.8, 0.4] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+        >
+          by Uday Dobariya
+        </motion.p>
       </div>
 
       {/* Orbiting dots */}
@@ -145,22 +152,26 @@ export function HeroSection() {
             animate="visible"
             className="w-full max-w-full"
           >
-            {/* Eyebrow */}
+            {/* Eyebrow / Brand Line */}
             <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
               <div className="h-px w-8 bg-accent-uv/60 shrink-0" />
-              <p className="text-xs font-mono tracking-[0.16em] sm:tracking-[0.22em] text-accent-uv uppercase break-words">
-                UV WAS DEVELOPING&nbsp;&nbsp;/&nbsp;&nbsp;INDEPENDENT DIGITAL BUILDER
-              </p>
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span className="text-xs font-mono tracking-[0.2em] text-accent-uv font-semibold uppercase">
+                  UV WAS DEVELOPING
+                </span>
+                <span className="text-secondary/40 text-xs font-mono">•</span>
+                <span className="text-xs font-mono tracking-[0.14em] text-secondary">
+                  by Uday Dobariya
+                </span>
+              </div>
             </motion.div>
 
             {/* Headline */}
             <motion.h1
               variants={itemVariants}
-              className="text-[clamp(2.5rem,10vw,3.75rem)] md:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-[-0.055em] md:tracking-tight text-primary leading-[0.98] md:leading-[1.08] mb-6"
+              className="text-[clamp(2.25rem,8vw,3.75rem)] md:text-5xl lg:text-6xl font-semibold tracking-tight text-primary leading-[1.08] md:leading-[1.1] mb-6"
             >
-              I build digital
-              <br />
-              products that feel{" "}
+              I build{" "}
               <span
                 className="font-semibold"
                 style={{
@@ -170,24 +181,21 @@ export function HeroSection() {
                   backgroundClip: "text",
                 }}
               >
-                clear, capable,
-              </span>
-              <br />
-              and alive.
+                production-ready Flutter apps
+              </span>{" "}
+              and full-stack digital products.
             </motion.h1>
 
             {/* Supporting text */}
             <motion.p
               variants={itemVariants}
-              className="text-base sm:text-lg text-secondary leading-relaxed max-w-lg mb-8"
+              className="text-base sm:text-lg text-secondary leading-relaxed max-w-xl mb-8"
             >
-              I&apos;m Uday Dobariya, a Flutter and full-stack developer creating
-              production-ready apps, intelligent interfaces, and real-world digital
-              experiences.
+              I help startups and businesses turn complex ideas into reliable mobile apps, backend systems, and polished product experiences. Working as an independent freelancer under UV WAS DEVELOPING.
             </motion.p>
 
             {/* CTAs */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-3 mb-8 w-full sm:w-auto">
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 mb-8 w-full sm:w-auto">
               <LinkButton
                 href="#work"
                 variant="primary"
@@ -198,7 +206,7 @@ export function HeroSection() {
                   document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                Explore selected work
+                View my work
               </LinkButton>
               <LinkButton
                 href="#contact"
@@ -210,7 +218,19 @@ export function HeroSection() {
                   document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                Let&apos;s work together
+                Start a project
+              </LinkButton>
+              <LinkButton
+                href="#about"
+                variant="ghost"
+                size="lg"
+                className="w-full sm:w-auto text-center justify-center text-secondary hover:text-primary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                About me
               </LinkButton>
             </motion.div>
 
@@ -220,7 +240,7 @@ export function HeroSection() {
               className="flex items-center gap-2 text-xs text-secondary"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Currently open to select freelance and product opportunities
+              Available for freelance Flutter & full-stack development
             </motion.div>
           </motion.div>
 

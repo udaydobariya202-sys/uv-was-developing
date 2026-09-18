@@ -16,16 +16,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://dcmlabs.online"),
-  title: "Uday Dobariya — UV Was Developing",
+  title: "Uday Dobariya — Flutter Developer & Full-Stack Product Builder | UV WAS DEVELOPING",
   description:
-    "Portfolio of Uday Dobariya, a Flutter and full-stack developer building mobile, web, and AI-powered applications.",
+    "Uday Dobariya is a Flutter developer and full-stack product builder working independently under UV WAS DEVELOPING. Explore production-ready Flutter apps, backend systems, and digital products.",
   keywords: [
     "Flutter developer",
     "full-stack developer",
     "mobile app developer",
     "Next.js",
     "Uday Dobariya",
-    "UV Was Developing",
+    "UV WAS DEVELOPING",
     "Rajkot",
     "India",
     "AI product builder",
@@ -40,16 +40,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://dcmlabs.online",
-    title: "Uday Dobariya — UV Was Developing",
+    title: "Uday Dobariya — Flutter Developer & Full-Stack Product Builder | UV WAS DEVELOPING",
     description:
-      "Portfolio of Uday Dobariya, a Flutter and full-stack developer building mobile, web, and AI-powered applications.",
-    siteName: "UV Was Developing",
+      "Uday Dobariya is a Flutter developer and full-stack product builder working independently under UV WAS DEVELOPING. Explore production-ready Flutter apps, backend systems, and digital products.",
+    siteName: "UV WAS DEVELOPING",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Uday Dobariya — UV Was Developing",
+    title: "Uday Dobariya — Flutter Developer & Full-Stack Product Builder | UV WAS DEVELOPING",
     description:
-      "Portfolio of Uday Dobariya, a Flutter and full-stack developer building mobile, web, and AI-powered applications.",
+      "Uday Dobariya is a Flutter developer and full-stack product builder working independently under UV WAS DEVELOPING. Explore production-ready Flutter apps, backend systems, and digital products.",
   },
   robots: {
     index: true,

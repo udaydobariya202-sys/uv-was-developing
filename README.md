@@ -1,8 +1,9 @@
 # UV WAS DEVELOPING
+### by Uday Dobariya
 
-Personal portfolio of **Uday Dobariya** — Flutter developer, full-stack app developer, and AI product builder based in Rajkot, Gujarat, India.
+Personal portfolio of **Uday Dobariya** — Flutter Developer & Full-Stack Product Builder working independently under **UV WAS DEVELOPING**.
 
-> "I build digital products that feel clear, capable, and alive."
+> "I build production-ready Flutter apps and full-stack digital products."
 
 ## Tech Stack
 
@@ -90,4 +91,4 @@ npm run build
 
 ---
 
-Built by [Uday Dobariya](https://github.com/udaydobariya202-sys) — UV Was Developing
+Built by [Uday Dobariya](https://github.com/udaydobariya202-sys) — UV WAS DEVELOPING by Uday Dobariya

@@ -8,14 +8,14 @@ import { Footer } from "@/components/Footer";
 export const metadata: Metadata = {
   title: "MOVIQ Cabs — Cab Booking User App | Uday Dobariya",
   description:
-    "Case study of MOVIQ Cabs, a Flutter cab booking user app built with maps, ride lifecycle states, payments, notifications, and structured product architecture.",
+    "Explore MOVIQ Cabs, a Flutter cab booking user app built with connected backend services, ride lifecycle flows, maps, payments, notifications, and structured product architecture.",
   alternates: {
     canonical: "https://dcmlabs.online/projects/moviq",
   },
   openGraph: {
     title: "MOVIQ Cabs — Cab Booking User App | Uday Dobariya",
     description:
-      "Case study of MOVIQ Cabs, a Flutter cab booking user app built with maps, ride lifecycle states, payments, notifications, and structured product architecture.",
+      "Explore MOVIQ Cabs, a Flutter cab booking user app built with connected backend services, ride lifecycle flows, maps, payments, notifications, and structured product architecture.",
     url: "https://dcmlabs.online/projects/moviq",
     type: "article",
     images: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MOVIQ Cabs — Cab Booking User App | Uday Dobariya",
     description:
-      "Case study of MOVIQ Cabs, a Flutter cab booking user app built with maps, ride lifecycle states, payments, notifications, and structured product architecture.",
+      "Explore MOVIQ Cabs, a Flutter cab booking user app built with connected backend services, ride lifecycle flows, maps, payments, notifications, and structured product architecture.",
   },
 };
 
@@ -140,7 +140,7 @@ export default function MoviqCaseStudyPage() {
                         src="/images/apps/moviq/moviq-home.webp"
                         alt="MOVIQ Cabs cab booking user app home screen."
                         fill
-                        className="object-cover object-top"
+                        className="object-contain"
                         sizes="(max-width: 640px) 240px, (max-width: 1024px) 270px, 285px"
                         priority
                       />

@@ -34,10 +34,9 @@ export function AboutSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <p>
-                I&apos;m Uday, an independent developer from Rajkot, India. I design and
-                build mobile, web, and desktop products with Flutter, while using Node.js,
-                Python, Supabase, Firebase, maps, payments, notifications, and AI services
-                to turn ideas into working experiences.
+                I&apos;m Uday Dobariya, a Flutter developer and full-stack product builder
+                working independently under UV WAS DEVELOPING. I build mobile applications,
+                backend systems, and connected digital products for startups, businesses, and clients.
               </p>
               <p>
                 I care about products that actually work — not just ones that look good in a
