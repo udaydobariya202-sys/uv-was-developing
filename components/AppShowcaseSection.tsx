@@ -72,17 +72,17 @@ export function AppShowcaseSection() {
 
   const currentScreenshot = showcaseScreenshots[activeScreenshotIndex];
 
-  // Mouse tilt / parallax values
+  // Mouse tilt values
   const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
   const rotateX = useSpring(
-    useTransform(mouseY, [-0.5, 0.5], [6, -6]),
+    useTransform(mouseY, [-0.5, 0.5], [5, -5]),
     { stiffness: 200, damping: 25 }
   );
   const rotateY = useSpring(
-    useTransform(mouseX, [-0.5, 0.5], [-6, 6]),
+    useTransform(mouseX, [-0.5, 0.5], [-5, 5]),
     { stiffness: 200, damping: 25 }
   );
 
@@ -103,7 +103,6 @@ export function AppShowcaseSection() {
     mouseY.set(0);
   }, [mouseX, mouseY]);
 
-  // Framer Motion entrance variants (animating transform & opacity only)
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -131,11 +130,8 @@ export function AppShowcaseSection() {
     <section
       id="apps"
       aria-labelledby="apps-showcase-title"
-      className="relative py-20 sm:py-24 lg:py-32 overflow-x-clip"
+      className="relative py-20 sm:py-24 lg:py-32 overflow-x-clip bg-bg"
     >
-      {/* Subtle top divider line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-
       <div className="page-container relative z-10">
         <motion.div
           variants={containerVariants}
@@ -144,21 +140,22 @@ export function AppShowcaseSection() {
           viewport={{ once: true, margin: "-60px" }}
           className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-start"
         >
-          {/* -----------------------------------------------------------------
-              EDITORIAL COLUMN (Header, Description, Meta, Proof Points, CTAs)
-              ----------------------------------------------------------------- */}
+          {/* Editorial Details Column */}
           <div className="lg:col-span-7 flex flex-col">
             {/* Kicker & Status Pill */}
             <motion.div
               variants={itemVariants}
               className="flex flex-wrap items-center gap-3 mb-4"
             >
-              <span className="text-xs font-mono tracking-[0.2em] uppercase text-accent-uv">
-                01 / Featured Project
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-lime" />
+                <span className="text-xs font-mono tracking-[0.2em] uppercase text-secondary">
+                  01 / Featured Showcase
+                </span>
+              </div>
               <span className="text-secondary/30">{"\u2022"}</span>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[11px] font-mono tracking-wider text-emerald-400 bg-emerald-400/10 border-emerald-400/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-border bg-surface text-[11px] font-mono tracking-wider text-accent-lime">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-lime" />
                 <span>Production project / Client work</span>
               </div>
             </motion.div>
@@ -167,7 +164,7 @@ export function AppShowcaseSection() {
             <motion.div variants={itemVariants} className="mb-4">
               <h2
                 id="apps-showcase-title"
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-primary"
+                className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-primary leading-tight [text-wrap:balance]"
               >
                 MOVIQ Cabs
               </h2>
@@ -189,7 +186,7 @@ export function AppShowcaseSection() {
             {/* Role & Tech Stack */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 py-4 px-4 sm:px-5 rounded-xl border border-border/80 bg-surface/50 mb-8"
+              className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 py-4 px-4 sm:px-5 rounded-xl border border-border bg-surface mb-8"
             >
               <div className="flex items-center gap-2 text-xs font-mono">
                 <span className="text-secondary/60">Role:</span>
@@ -202,7 +199,7 @@ export function AppShowcaseSection() {
                 {techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="text-[11px] font-mono px-2 py-0.5 rounded border border-border bg-bg/60 text-secondary"
+                    className="text-[11px] font-mono px-2 py-0.5 rounded border border-border bg-[#0B0A0C] text-secondary"
                   >
                     {tech}
                   </span>
@@ -210,30 +207,22 @@ export function AppShowcaseSection() {
               </div>
             </motion.div>
 
-            {/* -----------------------------------------------------------------
-                MOBILE ONLY DEVICE PREVIEW (< 1024px)
-                Shown inline after intro to create an instant visual anchor.
-                ----------------------------------------------------------------- */}
+            {/* Mobile Only Device Preview */}
             <motion.div
               variants={itemVariants}
               className="lg:hidden w-full flex justify-center mb-10"
             >
-              <div className="w-full max-w-[340px] rounded-3xl border border-border/80 bg-surface/40 p-4 sm:p-6 flex flex-col items-center justify-center">
-                {/* Minimal Header */}
-                <div className="w-full flex items-center justify-between text-[10px] font-mono text-secondary/60 mb-4 pb-2 border-b border-border/40">
+              <div className="w-full max-w-[340px] rounded-2xl border border-border bg-surface p-4 sm:p-6 flex flex-col items-center justify-center">
+                <div className="w-full flex items-center justify-between text-[10px] font-mono text-secondary/60 mb-4 pb-2 border-b border-border">
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent-lime" />
                     Production Build
                   </span>
                   <span>iOS & Android</span>
                 </div>
 
-                {/* Device Frame */}
-                <div className="relative w-[230px] min-[380px]:w-[250px] aspect-[1220/2712] rounded-[2.3rem] p-2 bg-[#0c0c11] border-2 border-white/[0.12] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.85)] flex flex-col">
-                  {/* Speaker slit */}
+                <div className="relative w-[230px] min-[380px]:w-[250px] aspect-[1220/2712] rounded-[2.3rem] p-2 bg-[#0c0c11] border-2 border-white/[0.12] shadow-xl flex flex-col">
                   <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mb-1.5 shrink-0" />
-
-                  {/* Screen Viewport */}
                   <div className="relative w-full flex-1 rounded-[1.7rem] overflow-hidden bg-black">
                     {imgError ? (
                       <div className="w-full h-full bg-[#0d0d14] flex flex-col justify-between p-4 select-none">
@@ -241,12 +230,12 @@ export function AppShowcaseSection() {
                           <span>9:41</span>
                           <span className="w-2 h-1 bg-secondary/40 rounded-xs" />
                         </div>
-                        <div className="flex-1 w-full my-3 rounded-lg border border-white/[0.06] bg-white/[0.02] flex items-center justify-center">
+                        <div className="flex-1 w-full my-3 rounded-lg border border-border bg-white/[0.02] flex items-center justify-center">
                           <span className="text-[10px] font-mono text-secondary/50">
                             MOVIQ Map Interface
                           </span>
                         </div>
-                        <div className="w-full h-12 rounded-lg bg-white/[0.04] border border-white/[0.08]" />
+                        <div className="w-full h-12 rounded-lg bg-surface border border-border" />
                       </div>
                     ) : (
                       <Image
@@ -259,20 +248,17 @@ export function AppShowcaseSection() {
                         onError={() => setImgError(true)}
                       />
                     )}
-                    {/* Gloss sheen */}
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/[0.06] via-transparent to-transparent opacity-60 z-10" />
                   </div>
                 </div>
 
-                {/* Footer caption */}
-                <div className="w-full mt-4 pt-2 border-t border-border/40 flex items-center justify-between text-[10px] font-mono text-secondary/50">
+                <div className="w-full mt-4 pt-2 border-t border-border flex items-center justify-between text-[10px] font-mono text-secondary/50">
                   <span>Home Screen</span>
                   <span>1220 {"\u00D7"} 2712 true scale</span>
                 </div>
               </div>
             </motion.div>
 
-            {/* Proof Points (4 Technical Architecture Highlights) */}
+            {/* Proof Points */}
             <motion.div variants={itemVariants} className="mb-8">
               <h3 className="text-xs font-mono uppercase tracking-[0.18em] text-secondary/70 mb-4">
                 Architecture & Product Proof Points
@@ -283,13 +269,13 @@ export function AppShowcaseSection() {
                   return (
                     <div
                       key={point.title}
-                      className="p-4 rounded-xl border border-border/70 bg-surface/40 hover:border-accent-uv/30 transition-colors flex flex-col justify-between"
+                      className="p-4 rounded-xl border border-border bg-surface hover:border-border-strong transition-colors flex flex-col justify-between"
                     >
                       <div className="flex items-center gap-2.5 mb-2">
                         <div className="p-1.5 rounded-md bg-accent-uv/10 text-accent-uv">
                           <Icon size={15} />
                         </div>
-                        <h4 className="text-sm font-semibold text-primary leading-tight">
+                        <h4 className="text-sm font-semibold text-primary leading-tight font-display">
                           {point.title}
                         </h4>
                       </div>
@@ -307,10 +293,9 @@ export function AppShowcaseSection() {
               variants={itemVariants}
               className="flex flex-wrap items-center gap-3 pt-2"
             >
-              {/* Primary Button */}
               <Link
                 href="/projects/moviq"
-                className="group inline-flex items-center justify-center gap-2 rounded-lg font-medium bg-accent-uv text-white hover:bg-violet-500 active:bg-violet-700 text-sm px-5 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv focus-visible:ring-offset-2 focus-visible:ring-offset-bg shadow-sm shadow-accent-uv/20 cursor-pointer"
+                className="group inline-flex items-center justify-center gap-2 rounded-lg font-semibold bg-accent-lime text-[#0B0A0C] hover:bg-accent-lime-hover text-sm px-5 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime focus-visible:ring-offset-2 focus-visible:ring-offset-bg shadow-sm shadow-accent-lime/20 cursor-pointer"
               >
                 <span>View case study</span>
                 <ArrowRight
@@ -319,12 +304,11 @@ export function AppShowcaseSection() {
                 />
               </Link>
 
-              {/* Secondary Button */}
               <button
                 type="button"
                 disabled
                 aria-disabled="true"
-                className="inline-flex items-center justify-center gap-2 rounded-lg font-medium border border-border text-secondary/60 bg-surface/50 text-sm px-5 py-2.5 cursor-not-allowed opacity-60 select-none"
+                className="inline-flex items-center justify-center gap-2 rounded-lg font-medium border border-border text-secondary/60 bg-surface text-sm px-5 py-2.5 cursor-not-allowed opacity-60 select-none"
               >
                 <Smartphone size={14} className="text-secondary/40" />
                 <span>Google Play, coming soon</span>
@@ -332,10 +316,7 @@ export function AppShowcaseSection() {
             </motion.div>
           </div>
 
-          {/* -----------------------------------------------------------------
-              DESKTOP SHOWCASE STAGE (>= 1024px)
-              Floating, precision-machined device frame with 3D tilt & parallax
-              ----------------------------------------------------------------- */}
+          {/* Desktop Showcase Stage (>= 1024px) */}
           <motion.div
             variants={itemVariants}
             className="hidden lg:flex lg:col-span-5 justify-center sticky top-28"
@@ -344,37 +325,30 @@ export function AppShowcaseSection() {
               ref={cardRef}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              className="w-full max-w-[380px] rounded-3xl border border-border/80 bg-surface/40 backdrop-blur-sm p-6 sm:p-7 flex flex-col items-center justify-center relative select-none"
+              className="w-full max-w-[380px] rounded-2xl border border-border bg-surface p-6 sm:p-7 flex flex-col items-center justify-center relative select-none"
             >
-              {/* Stage Header Info */}
-              <div className="w-full flex items-center justify-between text-[11px] font-mono text-secondary/60 mb-5 pb-3 border-b border-border/40">
+              <div className="w-full flex items-center justify-between text-[11px] font-mono text-secondary mb-5 pb-3 border-b border-border">
                 <span className="inline-flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent-lime" />
                   Live Build
                 </span>
                 <span>iOS & Android</span>
               </div>
 
-              {/* Interactive 3D Phone Frame */}
+              {/* 3D Phone Frame */}
               <motion.div
                 style={{
                   rotateX: shouldReduceMotion ? 0 : rotateX,
                   rotateY: shouldReduceMotion ? 0 : rotateY,
                   transformStyle: "preserve-3d",
                 }}
-                className="relative w-[270px] xl:w-[285px] aspect-[1220/2712] rounded-[2.6rem] p-2.5 bg-[#0c0c11] border-2 border-white/[0.12] shadow-[0_28px_60px_-14px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.06)] flex flex-col will-change-transform"
+                className="relative w-[270px] xl:w-[285px] aspect-[1220/2712] rounded-[2.6rem] p-2.5 bg-[#0c0c11] border-2 border-white/[0.12] shadow-2xl flex flex-col will-change-transform"
               >
-                {/* Hardware Speaker Slit */}
                 <div className="w-11 h-1 bg-white/20 rounded-full mx-auto mb-2 shrink-0" />
-
-                {/* Left Side Hardware Buttons */}
                 <div className="absolute -left-[3px] top-[74px] w-[3px] h-7 bg-white/25 rounded-l-sm" />
                 <div className="absolute -left-[3px] top-[110px] w-[3px] h-7 bg-white/25 rounded-l-sm" />
-
-                {/* Right Side Power Button */}
                 <div className="absolute -right-[3px] top-[92px] w-[3px] h-11 bg-white/25 rounded-r-sm" />
 
-                {/* Screen Viewport */}
                 <div className="relative w-full flex-1 rounded-[1.9rem] overflow-hidden bg-black">
                   {imgError ? (
                     <div className="w-full h-full bg-[#0d0d14] flex flex-col justify-between p-5 select-none">
@@ -385,12 +359,12 @@ export function AppShowcaseSection() {
                           <span className="w-1.5 h-1.5 rounded-full bg-secondary/40" />
                         </div>
                       </div>
-                      <div className="flex-1 w-full my-4 rounded-xl border border-white/[0.06] bg-white/[0.02] flex items-center justify-center">
+                      <div className="flex-1 w-full my-4 rounded-xl border border-border bg-white/[0.02] flex items-center justify-center">
                         <span className="text-xs font-mono text-secondary/50">
                           MOVIQ Map Interface
                         </span>
                       </div>
-                      <div className="w-full h-14 rounded-xl bg-white/[0.04] border border-white/[0.08]" />
+                      <div className="w-full h-14 rounded-xl bg-surface border border-border" />
                     </div>
                   ) : (
                     <Image
@@ -403,18 +377,14 @@ export function AppShowcaseSection() {
                       onError={() => setImgError(true)}
                     />
                   )}
-                  {/* Subtle glass reflection sheen */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/[0.06] via-transparent to-transparent opacity-60 z-10" />
                 </div>
               </motion.div>
 
-              {/* Stage Footer Caption */}
-              <div className="w-full mt-5 pt-3 border-t border-border/40 flex items-center justify-between text-[11px] font-mono text-secondary/50">
+              <div className="w-full mt-5 pt-3 border-t border-border flex items-center justify-between text-[11px] font-mono text-secondary/60">
                 <span>Screen 01 / 01</span>
                 <span>True Aspect 1:2.22</span>
               </div>
 
-              {/* Dynamic Thumbnail Row (automatically renders when more screenshots are added in future) */}
               {showcaseScreenshots.length > 1 && (
                 <div
                   className="flex items-center gap-2 mt-3"
@@ -431,7 +401,7 @@ export function AppShowcaseSection() {
                       onClick={() => setActiveScreenshotIndex(index)}
                       className={`px-2.5 py-1 text-[10px] font-mono rounded-md border transition-all ${
                         index === activeScreenshotIndex
-                          ? "border-accent-uv bg-accent-uv/15 text-primary"
+                          ? "border-accent-lime bg-accent-lime/10 text-primary"
                           : "border-border text-secondary/60 hover:text-primary hover:border-border-strong"
                       }`}
                     >

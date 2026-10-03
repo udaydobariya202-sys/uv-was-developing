@@ -7,15 +7,16 @@ import { ProjectCard } from "@/components/ProjectCard";
 
 export function WorkSection() {
   return (
-    <section id="work" className="relative py-24 lg:py-32">
+    <section id="work" className="relative py-20 sm:py-28 lg:py-36 bg-bg">
       <div className="page-container">
         <SectionHeading
           label="02 / Selected Work"
-          title="Things I've been building."
-          subtitle="A selection of products, prototypes, and experiments I've been working on — each shaped around a real problem or a genuine curiosity."
+          title="Featured systems & applications."
+          subtitle="Production platforms, client applications, and focused technical prototypes built for real users."
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Full-Width Editorial Rows */}
+        <div className="flex flex-col gap-8">
           {projects.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}
@@ -23,13 +24,13 @@ export function WorkSection() {
 
         {/* Bottom note */}
         <motion.p
-          className="mt-10 text-sm text-secondary/60 text-center"
+          className="mt-12 text-xs font-mono text-secondary/60 text-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.2 }}
         >
-          More work in progress — check back soon.
+          More production client systems in progress.
         </motion.p>
       </div>
     </section>
