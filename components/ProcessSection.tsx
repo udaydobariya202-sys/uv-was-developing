@@ -2,53 +2,72 @@
 
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { processSteps } from "@/lib/data";
+
+const steps = [
+  {
+    number: "01",
+    title: "Understand",
+    detail: "Clarify user flows, technical constraints, data schemas, and edge cases before writing a line of code.",
+  },
+  {
+    number: "02",
+    title: "Shape",
+    detail: "Architect the BLoC state machines, database models, and API contracts into a cohesive specification.",
+  },
+  {
+    number: "03",
+    title: "Build",
+    detail: "Iteratively implement features in shippable test builds, keeping business logic clean and decoupled.",
+  },
+  {
+    number: "04",
+    title: "Refine",
+    detail: "Verify under poor network conditions, eliminate micro-stutter, and finalize for store compliance.",
+  },
+];
 
 export function ProcessSection() {
   return (
-    <section id="process" className="relative py-24 lg:py-32">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-border to-transparent" />
-
+    <section id="process" className="relative py-20 sm:py-28 lg:py-36 bg-bg">
       <div className="page-container">
         <SectionHeading
-          label="05 / How I Work"
-          title="From rough idea to usable product."
+          label="05 / Process"
+          title="From initial scope to production store build."
+          subtitle="A disciplined development workflow structured around predictability and rapid feedback."
         />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {processSteps.map((step, i) => (
+        {/* 4 Steps in Sequence */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {steps.map((step, i) => (
             <motion.div
               key={step.number}
-              className="relative"
-              initial={{ opacity: 0, y: 28 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.55,
-                ease: "easeOut",
-                delay: i * 0.1,
-              }}
+              transition={{ duration: 0.45, delay: i * 0.08 }}
+              className="p-6 rounded-2xl border border-border bg-surface hover:border-border-strong transition-colors flex flex-col justify-between"
             >
-              {/* Connector line (desktop) */}
-              {i < processSteps.length - 1 && (
-                <div className="hidden lg:block absolute top-6 left-full w-full h-px bg-gradient-to-r from-border to-transparent z-0 -translate-y-0.5 ml-4 mr-4" style={{ width: "calc(100% - 2rem)" }} />
-              )}
-
-              <div className="relative z-10 p-6 rounded-xl border border-border bg-surface hover:border-accent-uv/30 transition-colors duration-300">
-                {/* Number */}
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="w-8 h-8 rounded-full border border-accent-uv/30 bg-accent-uv/5 flex items-center justify-center text-xs font-mono text-accent-uv">
+              <div>
+                <div className="flex items-center justify-between pb-3 border-b border-border mb-4">
+                  <span className="font-mono text-sm font-bold text-accent-lime">
                     {step.number}
                   </span>
-                  <div className="h-px flex-1 bg-border" />
+                  <span className="text-[10px] font-mono text-secondary/50 uppercase tracking-widest">
+                    Phase {step.number}
+                  </span>
                 </div>
 
-                <h3 className="text-lg font-semibold text-primary mb-2">
+                <h3 className="font-display text-lg font-bold text-primary mb-2">
                   {step.title}
                 </h3>
-                <p className="text-sm text-secondary leading-relaxed">
-                  {step.description}
+
+                <p className="text-xs text-secondary leading-relaxed">
+                  {step.detail}
                 </p>
+              </div>
+
+              <div className="mt-6 pt-3 border-t border-border/60 text-[10px] font-mono text-secondary/50">
+                Milestone Deliverable
               </div>
             </motion.div>
           ))}

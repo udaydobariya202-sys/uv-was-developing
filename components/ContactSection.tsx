@@ -1,11 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { LinkButton } from "@/components/ui/Button";
+import { Mail, Check, Copy, ArrowUpRight } from "lucide-react";
 
-// Inline brand icons (lucide-react doesn't include Github/LinkedIn in this version)
 function GitHubIcon({ size = 16 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -22,84 +21,208 @@ function LinkedInIcon({ size = 16 }: { size?: number }) {
   );
 }
 
-const contactLinks = [
-  {
-    label: "Email me",
-    href: "mailto:your-email@example.com",
-    Icon: Mail,
-    variant: "primary" as const,
-  },
-  {
-    label: "GitHub",
-    href: "https://github.com/udaydobariya",
-    Icon: GitHubIcon,
-    variant: "secondary" as const,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/udaydobariya",
-    Icon: LinkedInIcon,
-    variant: "secondary" as const,
-  },
-];
-
 export function ContactSection() {
+  const [copied, setCopied] = useState(false);
+  const email = "udaydobariya202@gmail.com";
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+    projectType: "Mobile App (Flutter)",
+  });
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Project Inquiry: ${formData.projectType} — from ${formData.name || "Client"}`);
+    const body = encodeURIComponent(
+      `Hi Uday,\n\nName: ${formData.name}\nEmail: ${formData.email}\nProject Type: ${formData.projectType}\n\nProject Overview:\n${formData.message}\n`
+    );
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  };
+
   return (
-    <section id="contact" className="relative py-24 lg:py-36 overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-border to-transparent" />
+    <section id="contact" className="relative py-20 sm:py-28 lg:py-36 bg-bg">
+      <div className="page-container">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left Column: Direct Call to Action */}
+          <div className="lg:col-span-6 flex flex-col">
+            <SectionHeading
+              label="06 / Contact"
+              title="Tell me about your project."
+              subtitle="Have a mobile product, technical prototype, or scalable backend to build? Reach out directly — I typically respond within 24 hours."
+            />
 
-      {/* Ambient glow (bounded to prevent mobile horizontal scrollbar) */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[280px] h-[180px] max-w-[80vw] md:w-[500px] md:h-[300px] rounded-full bg-accent-uv/4 blur-[60px] md:blur-[100px] pointer-events-none" />
+            {/* Email Direct Action Card */}
+            <div className="p-6 rounded-2xl border border-border bg-surface mb-6">
+              <span className="text-xs font-mono uppercase tracking-[0.16em] text-secondary mb-2 block">
+                Direct Email
+              </span>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <a
+                  href={`mailto:${email}`}
+                  className="font-mono text-sm sm:text-base text-primary hover:text-accent-lime transition-colors font-medium"
+                >
+                  {email}
+                </a>
 
-      <div className="page-container text-center">
-        <SectionHeading
-          label="06 / Contact"
-          title={"Have a product\nworth building?"}
-          className="text-center items-center"
-        />
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-[#0B0A0C] text-xs font-mono text-secondary hover:text-primary hover:border-accent-lime/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime cursor-pointer"
+                >
+                  {copied ? (
+                    <>
+                      <Check size={13} className="text-accent-lime" />
+                      <span>Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={13} />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
 
-        <motion.p
-          className="text-base lg:text-lg text-secondary leading-relaxed max-w-xl mx-auto mb-10"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          Tell me what you&apos;re thinking. I&apos;m interested in thoughtful products,
-          ambitious experiments, and practical software that solves a real problem.
-        </motion.p>
+            {/* Social Direct Links */}
+            <div className="grid grid-cols-2 gap-3.5 mb-6">
+              <a
+                href="https://linkedin.com/in/udaydobariya"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 rounded-xl border border-border bg-surface hover:border-accent-lime/40 transition-colors flex items-center justify-between text-xs font-mono text-secondary hover:text-primary group"
+              >
+                <div className="flex items-center gap-2.5">
+                  <LinkedInIcon size={16} />
+                  <span>LinkedIn</span>
+                </div>
+                <ArrowUpRight size={13} className="text-secondary/50 group-hover:text-primary transition-colors" />
+              </a>
 
-        <motion.div
-          className="flex flex-wrap items-center justify-center gap-3 mb-10"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          {contactLinks.map((link) => (
-            <LinkButton
-              key={link.label}
-              href={link.href}
-              variant={link.variant}
-              size="lg"
-              target={link.href.startsWith("mailto") ? undefined : "_blank"}
-              rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+              <a
+                href="https://github.com/udaydobariya202-sys"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 rounded-xl border border-border bg-surface hover:border-accent-lime/40 transition-colors flex items-center justify-between text-xs font-mono text-secondary hover:text-primary group"
+              >
+                <div className="flex items-center gap-2.5">
+                  <GitHubIcon size={16} />
+                  <span>GitHub</span>
+                </div>
+                <ArrowUpRight size={13} className="text-secondary/50 group-hover:text-primary transition-colors" />
+              </a>
+            </div>
+
+            {/* Status note */}
+            <div className="flex items-center gap-2 text-xs font-mono text-secondary/80">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-lime animate-pulse" />
+              <span>Available for select client work &amp; dedicated sprint contracts</span>
+            </div>
+          </div>
+
+          {/* Right Column: Effortless Message Composer Card */}
+          <div className="lg:col-span-6 w-full">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="rounded-2xl border border-border bg-surface p-6 sm:p-8"
             >
-              <link.Icon size={16} />
-              {link.label}
-            </LinkButton>
-          ))}
-        </motion.div>
+              <h3 className="font-display text-xl font-bold text-primary mb-1">
+                Start an inquiry
+              </h3>
+              <p className="text-xs text-secondary mb-6">
+                Fill this brief outline to start a conversation directly via email.
+              </p>
 
-        <motion.p
-          className="text-sm text-secondary/50 italic"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-        >
-          Currently open to selected freelance and product opportunities.
-        </motion.p>
+              <form onSubmit={handleFormSubmit} className="space-y-4">
+                {/* Name */}
+                <div>
+                  <label htmlFor="client-name" className="block text-xs font-mono text-secondary mb-1.5">
+                    Your Name
+                  </label>
+                  <input
+                    id="client-name"
+                    type="text"
+                    required
+                    placeholder="e.g. Alex Smith"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-[#0B0A0C] text-sm text-primary placeholder:text-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime transition-colors"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label htmlFor="client-email" className="block text-xs font-mono text-secondary mb-1.5">
+                    Email Address
+                  </label>
+                  <input
+                    id="client-email"
+                    type="email"
+                    required
+                    placeholder="alex@company.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-[#0B0A0C] text-sm text-primary placeholder:text-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime transition-colors"
+                  />
+                </div>
+
+                {/* Project Type */}
+                <div>
+                  <label htmlFor="project-type" className="block text-xs font-mono text-secondary mb-1.5">
+                    Project Type
+                  </label>
+                  <select
+                    id="project-type"
+                    value={formData.projectType}
+                    onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-[#0B0A0C] text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime transition-colors cursor-pointer"
+                  >
+                    <option value="Mobile App (Flutter)">Mobile App (Flutter &amp; BLoC)</option>
+                    <option value="Full-Stack System">Full-Stack Application (Flutter + Supabase/Node)</option>
+                    <option value="Contract Sprint">Dedicated Sprint Contract</option>
+                    <option value="Architecture Review">Codebase &amp; Architecture Audit</option>
+                  </select>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label htmlFor="project-details" className="block text-xs font-mono text-secondary mb-1.5">
+                    Project Brief
+                  </label>
+                  <textarea
+                    id="project-details"
+                    required
+                    rows={4}
+                    placeholder="Briefly describe what you are looking to build, timeline, and core requirements..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-[#0B0A0C] text-sm text-primary placeholder:text-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime transition-colors resize-none"
+                  />
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  className="w-full py-3 px-5 rounded-lg font-semibold bg-accent-lime text-[#0B0A0C] hover:bg-accent-lime-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0A0C] text-sm cursor-pointer shadow-sm shadow-accent-lime/20 flex items-center justify-center gap-2"
+                >
+                  <Mail size={16} />
+                  <span>Send Project Inquiry</span>
+                </button>
+              </form>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -2,89 +2,166 @@
 
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { CheckCircle2, MapPin, Calendar, Terminal } from "lucide-react";
 
-const values = [
-  "Useful product flows",
-  "Clean interfaces",
-  "Reliable backend systems",
-  "Real-time experiences",
-  "Learning by building",
+const principles = [
+  {
+    title: "Architecture over shortcuts",
+    detail:
+      "BLoC pattern decoupling business logic from UI to enforce deterministic state transitions across complex workflows.",
+  },
+  {
+    title: "Reliable data contracts",
+    detail:
+      "Strict schema validation, resilient backend synchronization, and idempotent transactional flows for payments.",
+  },
+  {
+    title: "Native-grade ergonomics",
+    detail:
+      "Fluid 60fps interaction models, instant visual feedback, and thoughtful offline graceful degradation.",
+  },
+  {
+    title: "Direct accountability",
+    detail:
+      "Direct engineer-to-client communication with disciplined milestone delivery and transparent source code.",
+  },
+];
+
+const timelineFacts = [
+  {
+    icon: Calendar,
+    label: "Current Focus",
+    value: "Founder & Lead Developer at UV WAS DEVELOPING",
+  },
+  {
+    icon: Terminal,
+    label: "Lead Work",
+    value: "MOVIQ Cabs ride-hailing client ecosystem",
+  },
+  {
+    icon: MapPin,
+    label: "Base",
+    value: "Rajkot, Gujarat, India (IST / UTC+5:30)",
+  },
 ];
 
 export function AboutSection() {
   return (
-    <section id="about" className="relative py-24 lg:py-32 overflow-x-clip">
-      {/* Subtle divider glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-border to-transparent" />
-
+    <section id="about" className="relative py-20 sm:py-28 lg:py-36 bg-bg">
       <div className="page-container">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-          {/* Left */}
-          <div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left Column: Introduction & Principles */}
+          <div className="lg:col-span-7 flex flex-col">
             <SectionHeading
               label="03 / About"
-              title={"Built with curiosity.\nShipped with intent."}
+              title="Engineering systems that withstand reality."
+              subtitle="Practical software that balances high-performance client interfaces with resilient backend infrastructure."
             />
 
             <motion.div
-              className="space-y-5 text-secondary leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="space-y-4 text-secondary leading-relaxed mb-10 text-sm sm:text-base"
             >
               <p>
-                I&apos;m Uday Dobariya, a Flutter developer and full-stack product builder
-                working independently under UV WAS DEVELOPING. I build mobile applications,
-                backend systems, and connected digital products for startups, businesses, and clients.
+                I&apos;m Uday Dobariya, an independent Flutter developer and full-stack product
+                builder operating under the brand <strong className="text-primary font-medium">UV WAS DEVELOPING</strong>.
+                I specialize in taking early-stage and production ideas from architectural blueprints to shipped, store-ready applications.
               </p>
               <p>
-                I care about products that actually work — not just ones that look good in a
-                mockup. Every project I take on gets a genuine effort to ship something real,
-                usable, and well-considered.
+                My focus centers on high-utility mobile products with real-time requirements: live
+                geospatial mapping, complex state transitions, end-to-end payment gateways, and scalable cloud databases.
               </p>
             </motion.div>
+
+            {/* Principles */}
+            <div>
+              <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-secondary mb-6 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-lime" />
+                Operating Principles
+              </h3>
+              <div className="space-y-4">
+                {principles.map((item, i) => (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.06, duration: 0.4 }}
+                    className="p-4 sm:p-5 rounded-xl border border-border bg-surface hover:border-border-strong transition-colors"
+                  >
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2
+                        size={16}
+                        className="text-accent-lime shrink-0 mt-0.5"
+                      />
+                      <div>
+                        <h4 className="text-sm font-semibold text-primary mb-1">
+                          {item.title}
+                        </h4>
+                        <p className="text-xs text-secondary leading-relaxed">
+                          {item.detail}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Right: values */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="pt-2 lg:pt-20"
-          >
-            <p className="text-xs font-mono tracking-[0.2em] text-secondary uppercase mb-6">
-              Things I care about
-            </p>
-            <ul className="space-y-3">
-              {values.map((value, i) => (
-                <motion.li
-                  key={value}
-                  className="flex items-center gap-3 text-primary"
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.35 + i * 0.08, duration: 0.4 }}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent-uv flex-shrink-0" />
-                  <span className="text-base">{value}</span>
-                </motion.li>
-              ))}
-            </ul>
-
-            {/* Location tag */}
+          {/* Right Column: Timeline / Facts Grid */}
+          <div className="lg:col-span-5 flex flex-col gap-6 lg:pt-16">
             <motion.div
-              className="mt-10 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border text-sm text-secondary"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.7 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="rounded-2xl border border-border bg-surface p-6 sm:p-8"
             >
-              <span className="text-accent-uv">◎</span>
-              Rajkot, Gujarat, India
+              <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-secondary mb-6 pb-3 border-b border-border">
+                Timeline &amp; Facts
+              </h3>
+
+              <div className="space-y-6">
+                {timelineFacts.map((fact) => {
+                  const Icon = fact.icon;
+                  return (
+                    <div key={fact.label} className="flex items-start gap-3.5">
+                      <div className="p-2 rounded-lg border border-border bg-[#0B0A0C] text-accent-uv shrink-0">
+                        <Icon size={15} />
+                      </div>
+                      <div>
+                        <span className="block text-[11px] font-mono text-secondary/70 uppercase tracking-wider">
+                          {fact.label}
+                        </span>
+                        <span className="block text-sm font-medium text-primary mt-0.5">
+                          {fact.value}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-border space-y-3 text-xs font-mono text-secondary">
+                <div className="flex justify-between items-center">
+                  <span>Working Model:</span>
+                  <span className="text-primary font-medium">Fixed-scope &amp; Sprints</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Languages:</span>
+                  <span className="text-primary font-medium">Dart, TypeScript, SQL</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Availability:</span>
+                  <span className="text-accent-lime font-medium">Immediate for select work</span>
+                </div>
+              </div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
