@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ShieldCheck, Smartphone, Zap, MapPin, CreditCard, Bell } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Layers, Zap, MapPin, CreditCard, Bell } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { RegistrationMark, CropMarks } from "@/components/ui/PrintMarks";
+import { ProjectMedia } from "@/components/ui/ProjectMedia";
 
 export const metadata: Metadata = {
   title: "MOVIQ Cabs — Cab Booking User App | Uday Dobariya",
@@ -18,17 +19,9 @@ export const metadata: Metadata = {
       "Explore MOVIQ Cabs, a Flutter cab booking user app built with connected backend services, ride lifecycle flows, maps, payments, notifications, and structured product architecture.",
     url: "https://dcmlabs.online/projects/moviq",
     type: "article",
-    images: [
-      {
-        url: "/images/apps/moviq/moviq-home.webp",
-        width: 1220,
-        height: 2712,
-        alt: "MOVIQ Cabs cab booking user app home screen.",
-      },
-    ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "MOVIQ Cabs — Cab Booking User App | Uday Dobariya",
     description:
       "Explore MOVIQ Cabs, a Flutter cab booking user app built with connected backend services, ride lifecycle flows, maps, payments, notifications, and structured product architecture.",
@@ -45,7 +38,7 @@ export default function MoviqCaseStudyPage() {
           <div className="mb-8 pt-4">
             <Link
               href="/#work"
-              className="inline-flex items-center gap-2 text-xs font-mono text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded px-2 py-1 -ml-2"
+              className="inline-flex items-center gap-2 text-xs font-mono font-bold text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded px-2 py-1 -ml-2"
             >
               <ArrowLeft size={14} />
               <span>Back to Portfolio</span>
@@ -54,13 +47,17 @@ export default function MoviqCaseStudyPage() {
 
           {/* Project Header */}
           <div className="max-w-3xl mb-12">
-            <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="text-xs font-mono tracking-widest text-accent-uv uppercase">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 text-xs font-mono">
+              <span className="font-bold text-accent-uv uppercase tracking-wider">
                 Mobility / Ride-Hailing
               </span>
-              <span className="text-secondary/40">{"\u2022"}</span>
-              <span className="text-[11px] font-mono tracking-wider px-2.5 py-0.5 rounded-full border border-border bg-surface text-accent-lime">
+              <span className="text-secondary/40">•</span>
+              <span className="px-2.5 py-0.5 rounded border border-border bg-surface text-primary font-bold">
                 Independent product
+              </span>
+              <span className="text-secondary/40">•</span>
+              <span className="px-2.5 py-0.5 rounded border border-border bg-surface text-accent-lime font-bold">
+                Android release in progress
               </span>
             </div>
 
@@ -71,52 +68,42 @@ export default function MoviqCaseStudyPage() {
               Cab Booking User App
             </p>
 
-            <div className="p-3 rounded-lg border border-border bg-surface inline-flex items-center gap-2 mb-6">
-              <span className="text-xs font-mono text-secondary/60">Role:</span>
-              <span className="text-xs font-mono text-primary font-medium">
+            <div className="p-3 rounded-md border-2 border-border bg-surface inline-flex items-center gap-2 mb-6 shadow-ink-sm">
+              <span className="text-xs font-mono text-secondary">Role:</span>
+              <span className="text-xs font-mono text-primary font-bold">
                 Flutter Developer and Full-Stack Product Builder
               </span>
             </div>
 
-            <p className="text-secondary leading-relaxed text-base sm:text-lg">
+            <p className="text-secondary leading-relaxed text-base sm:text-lg mb-6">
               MOVIQ Cabs is a Flutter-based passenger cab booking application engineered for responsive
               booking flows, real-time map location tracking, flexible ride tiers, secure payment gateways,
               and live ride lifecycle states.
             </p>
+
+            {/* Store status button */}
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="inline-flex items-center justify-center gap-2 rounded-md font-mono font-bold border-2 border-border text-secondary bg-surface text-xs sm:text-sm px-5 py-2.5 cursor-not-allowed opacity-60 select-none shadow-ink-sm"
+              >
+                Coming soon on Google Play
+              </button>
+            </div>
           </div>
 
-          {/* Centered Phone Frame Showcase */}
-          <div className="my-14 flex flex-col items-center justify-center">
-            <div className="relative w-full flex flex-col items-center justify-center py-6">
-              {/* Clean Hardware Phone Frame */}
-              <div className="relative w-[240px] sm:w-[270px] lg:w-[285px] aspect-[1220/2712] flex-shrink-0 rounded-[2.5rem] p-2 sm:p-2.5 bg-[#0c0c11] border-2 border-white/[0.12] shadow-2xl flex flex-col">
-                {/* Speaker slit */}
-                <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mb-1.5 shrink-0" />
-
-                {/* Inner Viewport */}
-                <div className="relative w-full flex-1 rounded-[1.8rem] overflow-hidden bg-black flex items-center justify-center">
-                  <Image
-                    src="/images/apps/moviq/moviq-home.webp"
-                    alt="MOVIQ Cabs cab booking user app home screen."
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 640px) 240px, (max-width: 1024px) 270px, 285px"
-                    priority
-                  />
-                </div>
-              </div>
-
-              {/* Caption */}
-              <p className="mt-6 text-xs font-mono text-secondary tracking-wider text-center">
-                MOVIQ Cabs — Live Flutter home screen interface (1220 {"\u00D7"} 2712)
-              </p>
-            </div>
+          {/* Graphic Proof Panel */}
+          <div className="my-12 max-w-3xl">
+            <ProjectMedia proofNumber="01" title="MOVIQ Cabs" className="w-full" />
           </div>
 
           {/* Architecture & Feature Breakdown */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 my-16">
-            <div className="p-6 rounded-2xl border border-border bg-surface flex flex-col">
-              <div className="w-10 h-10 rounded-lg bg-accent-uv/10 border border-accent-uv/20 flex items-center justify-center text-accent-uv mb-4">
+            <div className="p-6 rounded-lg border-2 border-border bg-surface-card shadow-ink-sm flex flex-col relative">
+              <CropMarks />
+              <div className="w-10 h-10 rounded border-2 border-border bg-surface flex items-center justify-center text-accent-uv mb-4">
                 <MapPin size={20} />
               </div>
               <h3 className="font-display text-lg font-bold text-primary mb-2">Live Map &amp; Geolocation</h3>
@@ -125,8 +112,9 @@ export default function MoviqCaseStudyPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-border bg-surface flex flex-col">
-              <div className="w-10 h-10 rounded-lg bg-accent-lime/10 border border-accent-lime/20 flex items-center justify-center text-accent-lime mb-4">
+            <div className="p-6 rounded-lg border-2 border-border bg-surface-card shadow-ink-sm flex flex-col relative">
+              <CropMarks />
+              <div className="w-10 h-10 rounded border-2 border-border bg-surface flex items-center justify-center text-accent-lime mb-4">
                 <Zap size={20} />
               </div>
               <h3 className="font-display text-lg font-bold text-primary mb-2">Ride Lifecycle Engine</h3>
@@ -135,8 +123,9 @@ export default function MoviqCaseStudyPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-border bg-surface flex flex-col">
-              <div className="w-10 h-10 rounded-lg bg-accent-uv/10 border border-accent-uv/20 flex items-center justify-center text-accent-uv mb-4">
+            <div className="p-6 rounded-lg border-2 border-border bg-surface-card shadow-ink-sm flex flex-col relative">
+              <CropMarks />
+              <div className="w-10 h-10 rounded border-2 border-border bg-surface flex items-center justify-center text-accent-uv mb-4">
                 <CreditCard size={20} />
               </div>
               <h3 className="font-display text-lg font-bold text-primary mb-2">Secure Transactions</h3>
@@ -145,8 +134,9 @@ export default function MoviqCaseStudyPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-border bg-surface flex flex-col">
-              <div className="w-10 h-10 rounded-lg bg-accent-lime/10 border border-accent-lime/20 flex items-center justify-center text-accent-lime mb-4">
+            <div className="p-6 rounded-lg border-2 border-border bg-surface-card shadow-ink-sm flex flex-col relative">
+              <CropMarks />
+              <div className="w-10 h-10 rounded border-2 border-border bg-surface flex items-center justify-center text-accent-lime mb-4">
                 <Bell size={20} />
               </div>
               <h3 className="font-display text-lg font-bold text-primary mb-2">Push Alerts &amp; Signals</h3>
@@ -155,18 +145,20 @@ export default function MoviqCaseStudyPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-border bg-surface flex flex-col">
-              <div className="w-10 h-10 rounded-lg bg-accent-uv/10 border border-accent-uv/20 flex items-center justify-center text-accent-uv mb-4">
-                <Smartphone size={20} />
+            <div className="p-6 rounded-lg border-2 border-border bg-surface-card shadow-ink-sm flex flex-col relative">
+              <CropMarks />
+              <div className="w-10 h-10 rounded border-2 border-border bg-surface flex items-center justify-center text-accent-uv mb-4">
+                <Layers size={20} />
               </div>
               <h3 className="font-display text-lg font-bold text-primary mb-2">Flutter Architecture</h3>
               <p className="text-xs sm:text-sm text-secondary leading-relaxed">
-                Clean state separation, high-performance UI rendering at 60fps, responsive typography, and cross-platform reliability.
+                Clean state separation, high-performance UI rendering at 60fps, responsive typography, and Android platform reliability.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-border bg-surface flex flex-col">
-              <div className="w-10 h-10 rounded-lg bg-accent-lime/10 border border-accent-lime/20 flex items-center justify-center text-accent-lime mb-4">
+            <div className="p-6 rounded-lg border-2 border-border bg-surface-card shadow-ink-sm flex flex-col relative">
+              <CropMarks />
+              <div className="w-10 h-10 rounded border-2 border-border bg-surface flex items-center justify-center text-accent-lime mb-4">
                 <ShieldCheck size={20} />
               </div>
               <h3 className="font-display text-lg font-bold text-primary mb-2">Production Quality</h3>
@@ -177,13 +169,17 @@ export default function MoviqCaseStudyPage() {
           </div>
 
           {/* Tech Stack Summary */}
-          <div className="p-7 sm:p-8 rounded-2xl border border-border bg-surface mb-16">
-            <h2 className="font-display text-xl font-bold text-primary mb-4">Tech Stack &amp; Infrastructure</h2>
+          <div className="p-6 sm:p-8 rounded-lg border-2 border-border bg-surface-card shadow-ink mb-16 relative">
+            <CropMarks />
+            <div className="flex items-center justify-between pb-3 border-b-2 border-border mb-4">
+              <h2 className="font-display text-xl font-bold text-primary">Tech Stack &amp; Infrastructure</h2>
+              <RegistrationMark size={16} className="text-accent-uv" />
+            </div>
             <div className="flex flex-wrap gap-2">
               {["Flutter", "Dart", "Node.js", "Google Maps API", "WebSockets", "Push Notifications", "Stripe API", "Supabase", "RESTful Architecture"].map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs font-mono px-3 py-1 rounded-md border border-border text-secondary bg-[#0B0A0C]"
+                  className="text-xs font-mono font-medium px-3 py-1 rounded border border-border text-primary bg-surface"
                 >
                   {tag}
                 </span>
@@ -195,7 +191,7 @@ export default function MoviqCaseStudyPage() {
           <div className="flex justify-center">
             <Link
               href="/#work"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border bg-surface hover:border-accent-lime hover:text-accent-lime text-sm font-mono text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border-2 border-border bg-surface hover:bg-surface-card text-sm font-mono font-bold text-primary shadow-ink-sm hover:-translate-y-0.5 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
             >
               <ArrowLeft size={16} />
               <span>Back to all projects</span>

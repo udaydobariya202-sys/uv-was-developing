@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, X, ExternalLink, MapPin, Sparkles } from "lucide-react";
-import type { Project } from "@/lib/data";
+import Link from "next/link";
+import { ArrowUpRight, ExternalLink, X, MapPin, Sparkles } from "lucide-react";
+import { Project } from "@/lib/data";
+import { RegistrationMark, CropMarks } from "@/components/ui/PrintMarks";
+import { ProjectMedia } from "@/components/ui/ProjectMedia";
 
 interface ProjectCardProps {
   project: Project;
@@ -14,8 +15,6 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, index }: ProjectCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
-  const [imgError, setImgError] = useState(false);
-
   const isLead = project.id === "moviq";
 
   return (
@@ -24,29 +23,21 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 }}
-        className="group relative rounded-2xl border border-border bg-surface hover:border-border-strong transition-colors p-6 sm:p-8 lg:p-10"
+        transition={{ duration: 0.5, delay: index * 0.08 }}
+        className="relative rounded-lg border-2 border-border bg-surface-card p-6 sm:p-8 lg:p-10 shadow-ink"
       >
+        <CropMarks />
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left Column: Editorial Information */}
-          <div className="lg:col-span-7 flex flex-col justify-center">
-            {/* Top Meta: Number + Category + Status */}
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <span className="text-xs font-mono text-secondary tracking-widest">
-                {project.number}
+          {/* Left Column: Metadata & Editorial Info */}
+          <div className="lg:col-span-7 flex flex-col justify-between">
+            {/* Category, Status, Number */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 text-xs font-mono">
+              <span className="font-bold text-accent-uv tracking-wider uppercase">
+                {`${project.number} // ${project.category}`}
               </span>
-              <span className="text-secondary/30">{"\u2022"}</span>
-              <span className="text-xs font-mono uppercase tracking-[0.16em] text-secondary">
-                {project.category}
-              </span>
-              <span className="text-secondary/30">{"\u2022"}</span>
-              <span
-                className={`text-[11px] font-mono tracking-wider px-2.5 py-0.5 rounded-full border ${
-                  project.status === "Independent product"
-                    ? "text-accent-lime bg-accent-lime/10 border-accent-lime/20"
-                    : "text-secondary bg-surface-elevated border-border"
-                }`}
-              >
+              <span className="text-secondary/40">•</span>
+              <span className="px-2.5 py-0.5 rounded border border-border bg-surface text-primary font-bold">
                 {project.status}
               </span>
             </div>
@@ -63,144 +54,111 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             )}
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-secondary leading-relaxed mb-5 max-w-xl">
+            <p className="text-secondary text-sm sm:text-base leading-relaxed mb-6">
               {project.description}
             </p>
 
-            {/* Role if present */}
-            {project.role && (
-              <div className="flex items-center gap-2 text-xs font-mono mb-5 py-2 px-3 rounded-lg border border-border bg-[#0B0A0C] self-start">
-                <span className="text-secondary/60">Role:</span>
-                <span className="text-primary font-medium">{project.role}</span>
-              </div>
-            )}
-
-            {/* Tech Stack Pills */}
-            <div className="flex flex-wrap gap-1.5 mb-6">
-              {project.stack.map((tag) => (
+            {/* Tech Tags */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {project.stack.map((tech) => (
                 <span
-                  key={tag}
-                  className="text-[11px] font-mono px-2.5 py-1 rounded border border-border text-secondary bg-[#0B0A0C]"
+                  key={tech}
+                  className="text-xs font-mono font-medium px-2.5 py-1 rounded border border-border bg-surface text-primary"
                 >
-                  {tag}
+                  {tech}
                 </span>
               ))}
             </div>
 
-            {/* Action Link / Button */}
+            {/* Actions */}
             {project.caseStudyUrl ? (
               <Link
                 href={project.caseStudyUrl}
-                className="self-start inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-accent-lime transition-colors group/cta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded px-1 -ml-1"
+                className="self-start inline-flex items-center gap-2 px-4 py-2 rounded-md font-mono font-bold text-xs sm:text-sm border-2 border-border bg-accent-lime text-[#121014] shadow-ink-sm hover:-translate-x-[1px] hover:-translate-y-[1px] transition-transform select-none"
               >
                 <span>View case study</span>
-                <ArrowRight
-                  size={15}
-                  className="transition-transform group-hover/cta:translate-x-1"
-                />
+                <ArrowUpRight size={14} />
               </Link>
             ) : (
               <button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="self-start inline-flex items-center gap-2 text-sm font-mono text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded px-1 -ml-1 cursor-pointer"
+                className="self-start inline-flex items-center gap-2 px-4 py-2 rounded-md font-mono font-bold text-xs sm:text-sm border-2 border-border bg-surface text-primary shadow-ink-sm hover:-translate-x-[1px] hover:-translate-y-[1px] transition-transform cursor-pointer select-none"
               >
                 <span>Project details</span>
-                <ExternalLink size={13} className="text-secondary/60" />
+                <ExternalLink size={13} className="text-secondary" />
               </button>
             )}
           </div>
 
-          {/* Right Column: Visual Frame */}
+          {/* Right Column: Graphic Spec / Architecture Panel */}
           <div className="lg:col-span-5 flex justify-center items-center w-full">
             {isLead ? (
-              /* Lead Project (MOVIQ Cabs): Large Screenshot in Clean Frame */
-              <div className="w-full max-w-[270px] sm:max-w-[290px] aspect-[1220/2712] rounded-[2.4rem] p-2 sm:p-2.5 bg-[#0c0c11] border-2 border-white/[0.12] shadow-xl flex flex-col justify-between">
-                <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mb-1.5 shrink-0" />
-                <div className="relative w-full flex-1 rounded-[1.8rem] overflow-hidden bg-black flex items-center justify-center">
-                  {imgError ? (
-                    <div className="w-full h-full bg-[#0d0d14] flex flex-col justify-between p-4 select-none">
-                      <div className="w-full flex items-center justify-between text-[9px] font-mono text-secondary/40">
-                        <span>9:41</span>
-                        <span className="w-2 h-1 bg-secondary/40 rounded-xs" />
-                      </div>
-                      <div className="flex-1 w-full my-3 rounded-lg border border-border bg-white/[0.02] flex items-center justify-center">
-                        <span className="text-[10px] font-mono text-secondary/50">
-                          MOVIQ Cabs Home
-                        </span>
-                      </div>
-                      <div className="w-full h-10 rounded-lg bg-surface border border-border" />
-                    </div>
-                  ) : (
-                    <Image
-                      src="/images/apps/moviq/moviq-home.webp"
-                      alt="MOVIQ Cabs cab booking user app home screen."
-                      fill
-                      className="object-contain"
-                      sizes="(max-width: 640px) 240px, 280px"
-                      loading="lazy"
-                      onError={() => setImgError(true)}
-                    />
-                  )}
-                </div>
-                <div className="text-center pt-2 text-[10px] font-mono text-secondary/50">
-                  True Aspect 1:2.22
-                </div>
-              </div>
+              <ProjectMedia
+                proofNumber={project.number}
+                title={project.title}
+                className="w-full"
+              />
             ) : project.id === "terracast" ? (
-              /* TerraCast: Clean Geospatial / Weather Blueprint Frame */
-              <div className="w-full max-w-sm rounded-xl border border-border bg-[#0B0A0C] p-5 font-mono text-xs text-secondary flex flex-col justify-between min-h-[220px]">
-                <div className="flex items-center justify-between pb-3 border-b border-border/60">
-                  <span className="text-accent-lime flex items-center gap-1.5">
-                    <MapPin size={13} /> TerraCast Geospatial
+              /* TerraCast: Clean Geospatial / Weather Blueprint Panel */
+              <div className="w-full rounded-md border-2 border-border bg-surface p-5 font-mono text-xs text-secondary flex flex-col justify-between min-h-[240px] shadow-ink-sm relative">
+                <CropMarks />
+                <div className="flex items-center justify-between pb-3 border-b-2 border-border">
+                  <span className="text-primary font-bold flex items-center gap-1.5">
+                    <MapPin size={13} className="text-accent-uv" /> TerraCast Geospatial
                   </span>
-                  <span>v0.4 Prototype</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded border border-border bg-bg">
+                    v0.4 Prototype
+                  </span>
                 </div>
-                <div className="py-4 space-y-2">
+                <div className="py-4 space-y-2.5">
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-secondary/60">LAYER:</span>
-                    <span className="text-primary font-medium">Atmospheric Isobars</span>
+                    <span className="text-secondary">COORDINATES:</span>
+                    <span className="text-primary font-bold">22.3039° N, 70.8022° E</span>
                   </div>
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-secondary/60">ENGINE:</span>
-                    <span className="text-primary font-medium">Flutter + Canvas 2D</span>
+                    <span className="text-secondary">PROJECTION:</span>
+                    <span className="text-primary font-bold">Spherical Web Mercator</span>
                   </div>
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-secondary/60">TELEMETRY:</span>
-                    <span className="text-primary font-medium">Real-Time OpenWeather API</span>
+                    <span className="text-secondary">RENDER ENGINE:</span>
+                    <span className="text-primary font-bold">Flutter CustomPainter 60fps</span>
                   </div>
                 </div>
-                <div className="pt-3 border-t border-border/60 flex items-center justify-between text-[10px] text-secondary/60">
-                  <span>Geospatial UI Visualization</span>
-                  <span>Cross-Platform</span>
+                <div className="pt-3 border-t-2 border-border flex items-center justify-between text-[10px] text-secondary">
+                  <span>Atmospheric Vectors</span>
+                  <RegistrationMark size={14} className="text-accent-uv" />
                 </div>
               </div>
             ) : (
-              /* Udaya AI: Clean Conversational Architecture Frame */
-              <div className="w-full max-w-sm rounded-xl border border-border bg-[#0B0A0C] p-5 font-mono text-xs text-secondary flex flex-col justify-between min-h-[220px]">
-                <div className="flex items-center justify-between pb-3 border-b border-border/60">
-                  <span className="text-accent-uv flex items-center gap-1.5">
-                    <Sparkles size={13} /> Udaya AI Assistant
+              /* Udaya AI: Clean Conversational Architecture Panel */
+              <div className="w-full rounded-md border-2 border-border bg-surface p-5 font-mono text-xs text-secondary flex flex-col justify-between min-h-[240px] shadow-ink-sm relative">
+                <CropMarks />
+                <div className="flex items-center justify-between pb-3 border-b-2 border-border">
+                  <span className="text-primary font-bold flex items-center gap-1.5">
+                    <Sparkles size={13} className="text-accent-lime" /> Udaya AI System
                   </span>
-                  <span>Exploration</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded border border-border bg-bg">
+                    Exploration
+                  </span>
                 </div>
-                <div className="py-4 space-y-2">
+                <div className="py-4 space-y-2.5">
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-secondary/60">INTERFACE:</span>
-                    <span className="text-primary font-medium">Voice UI + Dynamic Cards</span>
+                    <span className="text-secondary">INTERFACE:</span>
+                    <span className="text-primary font-bold">Voice &amp; Dynamic Prompts</span>
                   </div>
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-secondary/60">PIPELINE:</span>
-                    <span className="text-primary font-medium">Streaming LLM + TTS Engine</span>
+                    <span className="text-secondary">LATENCY GOAL:</span>
+                    <span className="text-primary font-bold">&lt; 350ms streaming response</span>
                   </div>
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-secondary/60">ARCHITECTURE:</span>
-                    <span className="text-primary font-medium">State Machine &amp; Local Cache</span>
+                    <span className="text-secondary">ARCHITECTURE:</span>
+                    <span className="text-primary font-bold">State Machine &amp; Local Cache</span>
                   </div>
                 </div>
-                <div className="pt-3 border-t border-border/60 flex items-center justify-between text-[10px] text-secondary/60">
+                <div className="pt-3 border-t-2 border-border flex items-center justify-between text-[10px] text-secondary">
                   <span>Conversational UX</span>
-                  <span>Flutter App</span>
+                  <RegistrationMark size={14} className="text-accent-lime" />
                 </div>
               </div>
             )}
@@ -212,69 +170,75 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       <AnimatePresence>
         {modalOpen && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-bg/80 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
+            onClick={() => setModalOpen(false)}
           >
             <motion.div
-              className="absolute inset-0 bg-black/80 backdrop-blur-xs"
-              onClick={() => setModalOpen(false)}
-            />
-
-            <motion.div
-              className="relative z-10 w-full max-w-lg bg-surface border border-border rounded-2xl p-7 sm:p-8 shadow-2xl"
-              initial={{ opacity: 0, scale: 0.96, y: 16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 16 }}
-              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="relative w-full max-w-lg rounded-lg border-2 border-border bg-surface p-6 sm:p-8 shadow-ink text-left"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
             >
+              <CropMarks />
+
+              {/* Close Button */}
               <button
+                type="button"
                 onClick={() => setModalOpen(false)}
-                className="absolute top-4 right-4 p-1.5 text-secondary hover:text-primary rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
-                aria-label="Close"
+                className="absolute top-4 right-4 p-1.5 rounded border-2 border-border bg-bg text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
+                aria-label="Close modal"
               >
-                <X size={18} />
+                <X size={16} />
               </button>
 
-              <div className="flex items-center gap-2 mb-2 text-xs font-mono text-secondary">
+              <div className="flex items-center gap-2 text-xs font-mono text-accent-uv font-bold mb-2">
                 <span>{project.number}</span>
-                <span>/</span>
+                <span>•</span>
                 <span>{project.category}</span>
               </div>
 
-              <h3 className="font-display text-2xl font-bold text-primary mb-1">
+              <h4 className="font-display text-2xl font-bold text-primary mb-1">
                 {project.title}
-              </h3>
+              </h4>
+              <p className="text-xs font-mono text-secondary mb-4">
+                Status: {project.status}
+              </p>
 
-              <div className="inline-block text-[11px] font-mono tracking-wider px-2.5 py-0.5 rounded-full border border-border bg-surface-elevated text-secondary my-3">
-                {project.status}
-              </div>
-
-              <p className="text-secondary leading-relaxed text-sm mb-5">
+              <p className="text-secondary text-sm leading-relaxed mb-6">
                 {project.description}
               </p>
 
               <div className="mb-6">
-                <p className="text-xs text-secondary font-mono tracking-wider mb-2 uppercase">
-                  Tech Stack
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.stack.map((tag) => (
+                <span className="block text-xs font-mono text-secondary mb-2 font-bold">
+                  Technologies Used:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {project.stack.map((t) => (
                     <span
-                      key={tag}
-                      className="text-[11px] font-mono px-2 py-0.5 rounded border border-border text-secondary bg-[#0B0A0C]"
+                      key={t}
+                      className="text-xs font-mono px-2.5 py-1 rounded border border-border bg-bg text-primary"
                     >
-                      {tag}
+                      {t}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <p className="text-xs text-secondary/70 italic border-t border-border pt-4">
-                Full case study coming soon as this project progresses through active development.
-              </p>
+              <div className="pt-4 border-t-2 border-border flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setModalOpen(false)}
+                  className="px-4 py-2 rounded border-2 border-border bg-surface text-xs font-mono font-bold text-primary shadow-ink-sm hover:-translate-y-0.5 transition-transform"
+                >
+                  Close
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}

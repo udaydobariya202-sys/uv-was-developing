@@ -17,22 +17,8 @@ export interface Project {
   status: ProjectStatus;
   role?: string;
   accentHue: string; // CSS hue value for visual identity
-  // Optional image fields — add these once real screenshots exist
-  image?: string;
-  imageAlt?: string;
   featured?: boolean;
   caseStudyUrl?: string;
-}
-
-export interface AppScreenshot {
-  id: string;
-  projectId: string; // links back to Project.id
-  title: string;
-  subtitle: string;
-  image?: string; // path under /public, e.g. /images/apps/moviq/moviq-home.webp
-  imageAlt?: string;
-  accentHue: string;
-  featured: boolean; // featured = large card on desktop
 }
 
 export interface ProcessStep {
@@ -54,13 +40,11 @@ export const projects: Project[] = [
     subtitle: "Cab Booking User App",
     title: "MOVIQ Cabs",
     description:
-      "A Flutter cab booking user app built with maps, ride lifecycle states, payments, notifications, and structured product architecture.",
-    stack: ["Flutter", "Dart", "Node.js", "Maps", "Payments", "Notifications"],
+      "A production-style cab booking platform built with Flutter and BLoC, connected to a backend with payments, notifications, and maps.",
+    stack: ["Flutter", "BLoC", "Supabase", "Stripe", "Firebase", "Maps"],
     status: "Independent product",
     role: "Flutter Developer and Full-Stack Product Builder",
     accentHue: "270",
-    image: "/images/apps/moviq/moviq-home.webp",
-    imageAlt: "MOVIQ Cabs cab booking user app home screen.",
     featured: true,
     caseStudyUrl: "/projects/moviq",
   },
@@ -85,36 +69,6 @@ export const projects: Project[] = [
     stack: ["Flutter", "AI APIs", "Voice UI", "Backend Services"],
     status: "Exploration",
     accentHue: "290",
-  },
-];
-
-// App screenshots for the dedicated showcase section
-export const appScreenshots: AppScreenshot[] = [
-  {
-    id: "moviq-cabs",
-    projectId: "moviq",
-    title: "MOVIQ Cabs",
-    subtitle: "Cab Booking User App",
-    image: "/images/apps/moviq/moviq-home.webp",
-    imageAlt: "MOVIQ Cabs cab booking user app home screen.",
-    accentHue: "270",
-    featured: true,
-  },
-  {
-    id: "terracast",
-    projectId: "terracast",
-    title: "TerraCast",
-    subtitle: "Weather Visualization",
-    accentHue: "210",
-    featured: false,
-  },
-  {
-    id: "udaya-ai",
-    projectId: "udaya-ai",
-    title: "Udaya AI",
-    subtitle: "AI Assistant",
-    accentHue: "290",
-    featured: false,
   },
 ];
 

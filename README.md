@@ -19,7 +19,7 @@ Personal portfolio of **Uday Dobariya** — Flutter Developer & Full-Stack Produ
 - UV Print Lab aesthetic with Paper and UV Lamp modes
 - Fully responsive — mobile, tablet, and desktop
 - Editorial headline typography with registration drift and spot ink accents
-- MOVIQ Cabs featured Android proof sheet with live interface capture
+- MOVIQ Cabs featured typographic and graphic proof sheet
 - Project cards with architectural blueprints
 - Accessible navigation with mobile menu
 - SEO-optimised metadata and Open Graph tags
@@ -45,18 +45,6 @@ Copy `.env.example` to `.env.local` and fill in your values:
 cp .env.example .env.local
 ```
 
-## Adding App Screenshots
-
-Place Flutter app screenshots in:
-
-```
-public/images/apps/moviq/moviq-home.webp
-public/images/apps/terracast.png
-public/images/apps/udaya-ai.png
-```
-
-CSS phone frame placeholders are shown until the real images are added.
-
 ## Project Structure
 
 ```
@@ -67,7 +55,7 @@ app/
 components/
   Navigation.tsx    Fixed nav with mobile menu
   HeroSection.tsx   Animated hero section
-  AppShowcaseSection.tsx  Phone mockup showcase
+  AppShowcaseSection.tsx  Graphic proof sheet showcase
   WorkSection.tsx   Project cards grid
   AboutSection.tsx  About and values
   StackSection.tsx  Technology stack
@@ -77,10 +65,10 @@ components/
   ui/
     Button.tsx      Reusable button component
     SectionHeading.tsx  Animated section heading
+    ProjectMedia.tsx    Print lab media and proof panel
+    PrintMarks.tsx      Registration and crop marks
 lib/
   data.ts           Typed portfolio data
-public/
-  images/apps/      App screenshots (add your own)
 ```
 
 ## Build

@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Smartphone, Server, Layers, Wrench } from "lucide-react";
+import { Cpu, Server, Layers, Wrench } from "lucide-react";
 
 const stackCategories = [
   {
-    icon: Smartphone,
+    icon: Cpu,
     category: "Mobile",
     description: "Architecting cross-platform applications with native-grade performance.",
     items: [
