@@ -19,7 +19,7 @@ Personal portfolio of **Uday Dobariya** — Flutter Developer & Full-Stack Produ
 - Calm editorial design system with warm paper background and deep indigo accent
 - Fully responsive — mobile, tablet, and desktop
 - Refined typography pairing Fraunces serif headlines with clean Inter body
-- MOVIQ Cabs featured editorial case study showcase (Android release in progress)
+- MOVIQ Cabs featured editorial case study showcase
 - Project cards with technical architectural specifications
 - Accessible navigation with mobile menu
 - SEO-optimised metadata and Open Graph tags
@@ -55,8 +55,7 @@ app/
 components/
   Navigation.tsx    Fixed nav with mobile menu
   HeroSection.tsx   Editorial hero section
-  AppShowcaseSection.tsx  Featured MOVIQ case study showcase
-  WorkSection.tsx   Project cards grid
+  WorkSection.tsx   Selected work section with project cards
   AboutSection.tsx  About and principles
   StackSection.tsx  Technology stack
   ProcessSection.tsx  Development workflow steps
@@ -66,6 +65,7 @@ components/
     Button.tsx      Reusable button and link component
     SectionHeading.tsx  Numbered section heading
     ProjectMedia.tsx    Calm abstract project media panel
+    Reveal.tsx          Reusable animation wrapper
 lib/
   data.ts           Typed portfolio data
 ```

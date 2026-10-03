@@ -33,7 +33,7 @@ export function ProcessSection() {
         <SectionHeading
           number="04"
           label="Process"
-          title="From initial scope to production store build."
+          title="From initial scope to verified store release."
           subtitle="A disciplined development workflow structured around predictability and rapid feedback."
         />
 

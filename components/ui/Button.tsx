@@ -10,12 +10,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = "primary", size = "md", className = "", children, ...props }, ref) => {
     const base =
-      "inline-flex items-center justify-center gap-2 rounded-lg font-sans font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-40 disabled:pointer-events-none cursor-pointer select-none";
+      "inline-flex items-center justify-center gap-2 rounded-lg font-sans font-medium transition-all duration-150 ease-out hover:-translate-y-[1px] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-40 disabled:pointer-events-none disabled:hover:translate-y-0 cursor-pointer select-none";
 
     const variants: Record<string, string> = {
       primary: "bg-primary text-bg hover:bg-[#2c2a32]",
-      outline: "border border-border-strong text-primary bg-transparent hover:bg-surface",
-      ghost: "text-secondary hover:text-primary bg-transparent",
+      outline: "border border-border-strong text-primary bg-transparent hover:bg-surface hover:border-primary",
+      ghost: "text-secondary hover:text-primary hover:bg-surface/60 bg-transparent hover:-translate-y-0",
     };
 
     const sizes: Record<string, string> = {
@@ -51,12 +51,12 @@ export function LinkButton({
   ...props
 }: LinkButtonProps) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-lg font-sans font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg cursor-pointer select-none";
+    "inline-flex items-center justify-center gap-2 rounded-lg font-sans font-medium transition-all duration-150 ease-out hover:-translate-y-[1px] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg cursor-pointer select-none";
 
   const variants: Record<string, string> = {
     primary: "bg-primary text-bg hover:bg-[#2c2a32]",
-    outline: "border border-border-strong text-primary bg-transparent hover:bg-surface",
-    ghost: "text-secondary hover:text-primary bg-transparent",
+    outline: "border border-border-strong text-primary bg-transparent hover:bg-surface hover:border-primary",
+    ghost: "text-secondary hover:text-primary hover:bg-surface/60 bg-transparent hover:-translate-y-0",
   };
 
   const sizes: Record<string, string> = {

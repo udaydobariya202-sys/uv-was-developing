@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 
 function GitHubIcon({ size = 16 }: { size?: number }) {
@@ -32,120 +32,179 @@ function LinkedInIcon({ size = 16 }: { size?: number }) {
   );
 }
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
-  },
-};
+const facts = [
+  { label: "Specialty", value: "Flutter · Dart" },
+  { label: "Backend", value: "REST APIs · Firebase" },
+  { label: "Full-stack", value: "Next.js · TypeScript" },
+  { label: "Based in", value: "Rajkot, India" },
+];
 
 export function HeroSection() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.08,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 14 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.5,
+        ease: [0.16, 1, 0.3, 1] as const,
+      },
+    },
+  };
+
   return (
     <section
-      className="relative flex flex-col justify-center pt-32 pb-20 sm:pt-40 sm:pb-28 min-h-[90vh]"
+      className="relative flex flex-col justify-center pt-28 pb-16 sm:pt-36 sm:pb-24 min-h-[88vh]"
       aria-label="Introduction"
     >
-      <div className="page-container">
+      <div className="page-container w-full">
         <motion.div
-          className="max-w-4xl"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          className="w-full"
         >
-          {/* Availability Tag */}
-          <motion.div variants={itemVariants} className="flex items-center gap-2 mb-8">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
-            </span>
-            <span className="text-xs font-sans font-medium text-secondary tracking-wide uppercase">
-              Available for select work
-            </span>
-          </motion.div>
+          {/* Main Top Row: Content on Left, Quiet Work Index on Right */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+            <div className="lg:col-span-8">
+              {/* Availability Tag */}
+              <motion.div variants={itemVariants} className="flex items-center gap-2 mb-6 sm:mb-8">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+                </span>
+                <span className="text-xs font-sans font-medium text-secondary tracking-wide uppercase">
+                  Available for select work
+                </span>
+              </motion.div>
 
-          {/* Headline */}
-          <motion.div variants={itemVariants}>
-            <h1 className="font-display text-[clamp(2.8rem,8vw,7rem)] font-semibold tracking-tight text-primary leading-[1.05] [text-wrap:balance] mb-2">
-              I build Flutter apps
-            </h1>
-            <h2 className="font-display text-[clamp(2.8rem,8vw,7rem)] font-semibold tracking-tight text-accent leading-[1.05] [text-wrap:balance] mb-6">
-              that ship.
-            </h2>
-          </motion.div>
+              {/* Headline with natural letter/word spacing */}
+              <motion.div variants={itemVariants} className="mb-6">
+                <h1 className="font-display text-[clamp(2.5rem,7vw,5.5rem)] font-semibold text-primary leading-[1.12] tracking-[-0.015em] mb-1">
+                  I build Flutter apps
+                </h1>
+                <div className="font-display text-[clamp(2.5rem,7vw,5.5rem)] font-semibold text-accent leading-[1.12] tracking-[-0.015em] relative inline-block">
+                  <span>that ship.</span>
+                  {/* Subtle underline drawing once */}
+                  <motion.span
+                    initial={{ scaleX: shouldReduceMotion ? 1 : 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{
+                      delay: shouldReduceMotion ? 0 : 0.45,
+                      duration: shouldReduceMotion ? 0 : 0.6,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="absolute bottom-1 sm:bottom-2 left-0 right-0 h-[2px] bg-accent origin-left"
+                    aria-hidden="true"
+                  />
+                </div>
+              </motion.div>
 
-          {/* SEO / Supporting line */}
-          <motion.p
-            variants={itemVariants}
-            className="text-lg sm:text-xl text-secondary max-w-xl leading-relaxed font-sans mb-10"
-          >
-            Flutter developer and full-stack product builder — from architecture to
-            production, independently.
-          </motion.p>
+              {/* Supporting Line */}
+              <motion.p
+                variants={itemVariants}
+                className="text-base sm:text-lg text-secondary max-w-xl leading-relaxed font-sans mb-8 sm:mb-10"
+              >
+                Flutter developer and full-stack product builder — from architecture to
+                production, independently.
+              </motion.p>
 
-          {/* CTAs */}
-          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4 mb-16">
-            <LinkButton
-              href="#work"
-              variant="primary"
-              size="lg"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
-              }}
+              {/* CTAs */}
+              <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 sm:gap-4">
+                <LinkButton
+                  href="#work"
+                  variant="primary"
+                  size="md"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  View my work
+                </LinkButton>
+                <LinkButton
+                  href="https://github.com/udaydobariya202-sys"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outline"
+                  size="md"
+                >
+                  <GitHubIcon size={15} />
+                  <span>GitHub</span>
+                </LinkButton>
+                <LinkButton
+                  href="https://linkedin.com/in/uday-dobariya"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outline"
+                  size="md"
+                >
+                  <LinkedInIcon size={15} />
+                  <span>LinkedIn</span>
+                </LinkButton>
+              </motion.div>
+            </div>
+
+            {/* Right Column: Quiet Selected Work Index on Wide Screens */}
+            <motion.div
+              variants={itemVariants}
+              className="hidden lg:flex lg:col-span-4 flex-col justify-end items-end pb-2"
             >
-              View my work
-            </LinkButton>
-            <LinkButton
-              href="https://github.com/udaydobariya202-sys"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="outline"
-              size="lg"
-            >
-              <GitHubIcon size={16} />
-              GitHub
-            </LinkButton>
-            <LinkButton
-              href="https://linkedin.com/in/uday-dobariya"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="outline"
-              size="lg"
-            >
-              <LinkedInIcon size={16} />
-              LinkedIn
-            </LinkButton>
-          </motion.div>
+              <a
+                href="#work"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="group w-full max-w-xs p-5 rounded-xl border border-border bg-surface-card hover:border-border-strong transition-colors duration-150"
+              >
+                <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest text-muted mb-3">
+                  <span>Selected work</span>
+                  <ArrowUpRight size={13} className="text-muted group-hover:text-primary transition-colors" />
+                </div>
+                <div className="flex items-baseline justify-between gap-3 text-sm font-sans">
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="font-mono text-xs text-muted">01</span>
+                    <span className="font-medium text-primary group-hover:text-accent transition-colors">
+                      MOVIQ Cabs
+                    </span>
+                  </div>
+                  <span className="text-xs text-secondary font-sans">
+                    Mobile app
+                  </span>
+                </div>
+              </a>
+            </motion.div>
+          </div>
 
-          {/* Colophon */}
+          {/* Facts Row spanning full container width to match Nav */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap items-center gap-6 pt-8 border-t border-border"
+            className="w-full pt-10 sm:pt-12 mt-12 sm:mt-16 border-t border-border"
           >
-            {[
-              { label: "Specialty", value: "Flutter · Dart" },
-              { label: "Backend", value: "REST APIs · Firebase" },
-              { label: "Full-stack", value: "Next.js · TypeScript" },
-              { label: "Based in", value: "Rajkot, India" },
-            ].map(({ label, value }) => (
-              <div key={label} className="flex flex-col gap-0.5">
-                <span className="font-mono text-[10px] text-muted uppercase tracking-widest">
-                  {label}
-                </span>
-                <span className="text-sm font-sans font-medium text-primary">{value}</span>
-              </div>
-            ))}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8">
+              {facts.map(({ label, value }) => (
+                <div key={label} className="flex flex-col gap-1">
+                  <span className="font-mono text-[10px] text-muted uppercase tracking-widest">
+                    {label}
+                  </span>
+                  <span className="text-sm font-sans font-medium text-primary">
+                    {value}
+                  </span>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>
@@ -157,13 +216,13 @@ export function HeroSection() {
           e.preventDefault();
           document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
         }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded px-2 py-1 select-none"
+        className="hidden sm:inline-flex absolute bottom-6 left-1/2 -translate-x-1/2 flex-col items-center gap-1.5 text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded px-2 py-1 select-none"
         aria-label="Scroll to work section"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.1, duration: 0.5 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.4 }}
       >
-        <ArrowDown size={16} className="animate-bounce" />
+        <ArrowDown size={15} />
         <span className="font-mono text-[10px] tracking-widest uppercase">Scroll</span>
       </motion.a>
     </section>

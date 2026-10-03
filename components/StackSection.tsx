@@ -118,7 +118,7 @@ export function StackSection() {
                 </div>
 
                 <div className="mt-8 pt-4 border-t border-border text-[11px] font-mono text-muted">
-                  Production Tested &amp; Maintained
+                  Core Competencies
                 </div>
               </motion.div>
             );

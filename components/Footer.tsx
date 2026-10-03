@@ -61,7 +61,7 @@ export function Footer() {
               href="https://github.com/udaydobariya202-sys"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-lg border border-border text-secondary hover:text-primary bg-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="p-2.5 rounded-lg border border-border text-secondary hover:text-primary hover:border-border-strong bg-surface hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               aria-label="GitHub Profile"
             >
               <GitHubIcon size={16} />
@@ -70,14 +70,14 @@ export function Footer() {
               href="https://linkedin.com/in/udaydobariya"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-lg border border-border text-secondary hover:text-primary bg-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="p-2.5 rounded-lg border border-border text-secondary hover:text-primary hover:border-border-strong bg-surface hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               aria-label="LinkedIn Profile"
             >
               <LinkedInIcon size={16} />
             </a>
             <a
               href="mailto:udaydobariya202@gmail.com"
-              className="p-2.5 rounded-lg border border-border text-secondary hover:text-primary bg-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="p-2.5 rounded-lg border border-border text-secondary hover:text-primary hover:border-border-strong bg-surface hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               aria-label="Email Uday Dobariya"
             >
               <Mail size={16} />
@@ -93,7 +93,7 @@ export function Footer() {
                 key={link.label}
                 href={link.href}
                 onClick={handleScroll(link.href)}
-                className="text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded py-1"
+                className="text-secondary hover:text-primary link-slide py-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
               >
                 {link.label}
               </a>
@@ -101,7 +101,7 @@ export function Footer() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded py-1"
+                className="text-secondary hover:text-primary link-slide py-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
               >
                 {link.label}
               </Link>
@@ -117,7 +117,7 @@ export function Footer() {
 
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-surface text-secondary hover:text-primary transition-colors text-xs font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-surface text-secondary hover:text-primary hover:border-border-strong hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 ease-out text-xs font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             aria-label="Back to top"
           >
             <span>Back to top</span>

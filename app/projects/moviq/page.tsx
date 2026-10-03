@@ -8,14 +8,14 @@ import { ProjectMedia } from "@/components/ui/ProjectMedia";
 export const metadata: Metadata = {
   title: "MOVIQ Cabs — Cab Booking User App | Uday Dobariya",
   description:
-    "Explore MOVIQ Cabs, a Flutter cab booking user app built with connected backend services, ride lifecycle flows, maps, payments, notifications, and structured product architecture.",
+    "Explore MOVIQ Cabs, a ride-booking app with a rider app, a driver app, an admin dashboard, and a connected backend, including payments, maps, and notifications.",
   alternates: {
     canonical: "https://dcmlabs.online/projects/moviq",
   },
   openGraph: {
     title: "MOVIQ Cabs — Cab Booking User App | Uday Dobariya",
     description:
-      "Explore MOVIQ Cabs, a Flutter cab booking user app built with connected backend services, ride lifecycle flows, maps, payments, notifications, and structured product architecture.",
+      "Explore MOVIQ Cabs, a ride-booking app with a rider app, a driver app, an admin dashboard, and a connected backend, including payments, maps, and notifications.",
     url: "https://dcmlabs.online/projects/moviq",
     type: "article",
   },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "MOVIQ Cabs — Cab Booking User App | Uday Dobariya",
     description:
-      "Explore MOVIQ Cabs, a Flutter cab booking user app built with connected backend services, ride lifecycle flows, maps, payments, notifications, and structured product architecture.",
+      "Explore MOVIQ Cabs, a ride-booking app with a rider app, a driver app, an admin dashboard, and a connected backend, including payments, maps, and notifications.",
   },
 };
 
@@ -53,20 +53,18 @@ const builtHighlights = [
     detail: "Google Maps SDK integration with dynamic polyline route calculation, distance calculation, and live GPS pins.",
   },
   {
-    title: "Push Notifications",
-    detail: "Real-time trip status alerts and arrival signals powered by Firebase Cloud Messaging.",
+    title: "Notifications",
+    detail: "Trip status updates, driver arrival alerts, and receipt signals powered by Firebase Cloud Messaging.",
   },
 ];
 
 const techStack = [
   "Flutter",
-  "Dart",
-  "BLoC / Cubit",
+  "BLoC",
   "REST APIs",
-  "Stripe",
   "Firebase",
-  "Google Maps",
-  "Git",
+  "Stripe",
+  "Maps",
 ];
 
 export default function MoviqCaseStudyPage() {
@@ -87,19 +85,10 @@ export default function MoviqCaseStudyPage() {
           </div>
 
           {/* Project Header */}
-          <div className="max-w-3xl mb-14">
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 text-xs font-mono">
+          <div className="max-w-3xl mb-12">
+            <div className="flex flex-wrap items-center gap-2 mb-3 text-xs font-mono">
               <span className="font-semibold text-accent uppercase tracking-wider">
-                Mobility / Ride-Hailing
-              </span>
-              <span className="text-secondary/40">•</span>
-              <span className="px-2.5 py-0.5 rounded-md border border-border bg-surface text-primary font-medium">
-                Independent product
-              </span>
-              <span className="text-secondary/40">•</span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md border border-border bg-surface text-accent font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
-                Android release in progress
+                01 // Mobile app, ride booking
               </span>
             </div>
 
@@ -110,30 +99,30 @@ export default function MoviqCaseStudyPage() {
               Cab Booking User App
             </p>
 
-            <div className="p-3 rounded-lg border border-border bg-surface-card inline-flex items-center gap-2 mb-6">
-              <span className="text-xs font-sans text-secondary font-medium">Role:</span>
-              <span className="text-xs font-sans text-primary font-semibold">
-                Flutter Developer and Full-Stack Product Builder
-              </span>
+            {/* Meta Row: Role & Platform */}
+            <div className="grid grid-cols-2 gap-6 py-4 border-y border-border mb-6 max-w-md">
+              <div>
+                <span className="block text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">
+                  Role
+                </span>
+                <span className="text-sm font-sans font-medium text-primary">
+                  Design and development
+                </span>
+              </div>
+              <div>
+                <span className="block text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">
+                  Platform
+                </span>
+                <span className="text-sm font-sans font-medium text-primary">
+                  Android
+                </span>
+              </div>
             </div>
 
             <p className="text-secondary leading-relaxed text-base sm:text-lg mb-8 font-sans">
-              MOVIQ Cabs is a full-stack passenger cab booking ecosystem engineered from scratch for
-              high-demand mobility operations. Built with responsive booking flows, live map location tracking,
-              secure digital payments, and real-time ride status updates.
+              A ride-booking app with a rider app, a driver app, an admin dashboard, and a connected backend,
+              including payments, maps, and notifications.
             </p>
-
-            {/* Store status button */}
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                disabled
-                aria-disabled="true"
-                className="inline-flex items-center justify-center gap-2 rounded-lg font-sans font-medium border border-border text-muted bg-surface text-xs sm:text-sm px-5 py-2.5 cursor-not-allowed opacity-60 select-none"
-              >
-                Coming soon on Google Play
-              </button>
-            </div>
           </div>
 
           {/* Graphic Proof Panel */}
@@ -154,7 +143,7 @@ export default function MoviqCaseStudyPage() {
               What I built
             </h2>
             <p className="text-sm sm:text-base text-secondary font-sans leading-relaxed mb-8">
-              From user experience architecture to cloud API integration, the entire product ecosystem was developed independently:
+              From user experience architecture to cloud API integration, the entire product ecosystem was developed cleanly:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4">
@@ -199,7 +188,7 @@ export default function MoviqCaseStudyPage() {
                 </div>
                 <h3 className="font-display text-lg font-semibold text-primary mb-2">Live Map &amp; Geolocation</h3>
                 <p className="text-xs sm:text-sm text-secondary leading-relaxed font-sans">
-                  Precise pickup and drop location selection, real-time vehicle movement tracking, and dynamic polyline route calculation.
+                  Precise pickup and drop location selection, vehicle tracking, and dynamic polyline route calculation.
                 </p>
               </div>
 
@@ -209,7 +198,7 @@ export default function MoviqCaseStudyPage() {
                 </div>
                 <h3 className="font-display text-lg font-semibold text-primary mb-2">Ride Lifecycle Engine</h3>
                 <p className="text-xs sm:text-sm text-secondary leading-relaxed font-sans">
-                  Stateful booking management from driver dispatch and acceptance to arrival, OTP verification, and ride completion.
+                  Booking management from driver dispatch and acceptance to arrival, OTP verification, and ride completion.
                 </p>
               </div>
 
@@ -219,7 +208,7 @@ export default function MoviqCaseStudyPage() {
                 </div>
                 <h3 className="font-display text-lg font-semibold text-primary mb-2">Secure Transactions</h3>
                 <p className="text-xs sm:text-sm text-secondary leading-relaxed font-sans">
-                  Integrated card payment flows, estimated fare calculation with surge handling, and detailed invoice generation.
+                  Integrated card payment flows, estimated fare calculation with surge handling, and trip receipts.
                 </p>
               </div>
 
@@ -227,9 +216,9 @@ export default function MoviqCaseStudyPage() {
                 <div className="w-10 h-10 rounded-lg border border-border bg-surface flex items-center justify-center text-accent mb-4">
                   <Bell size={18} />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-primary mb-2">Push Alerts &amp; Signals</h3>
+                <h3 className="font-display text-lg font-semibold text-primary mb-2">Push Notifications</h3>
                 <p className="text-xs sm:text-sm text-secondary leading-relaxed font-sans">
-                  Instant push notification triggers for real-time driver updates, ride milestones, and trip receipts.
+                  Instant alerts for driver updates, ride milestones, and trip completion notices.
                 </p>
               </div>
 
@@ -247,9 +236,9 @@ export default function MoviqCaseStudyPage() {
                 <div className="w-10 h-10 rounded-lg border border-border bg-surface flex items-center justify-center text-accent mb-4">
                   <ShieldCheck size={18} />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-primary mb-2">Production Quality</h3>
+                <h3 className="font-display text-lg font-semibold text-primary mb-2">Reliable Architecture</h3>
                 <p className="text-xs sm:text-sm text-secondary leading-relaxed font-sans">
-                  Engineered as a standalone production system with comprehensive error handling, graceful network recovery, and secure local caching.
+                  Engineered with comprehensive error handling, graceful network recovery, and secure local caching.
                 </p>
               </div>
             </div>
@@ -274,7 +263,7 @@ export default function MoviqCaseStudyPage() {
           <div className="flex justify-center">
             <Link
               href="/#work"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border-strong bg-surface hover:bg-surface-card text-sm font-sans font-medium text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border-strong bg-surface hover:bg-surface-card text-sm font-sans font-medium text-primary hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               <ArrowLeft size={16} />
               <span>Back to all projects</span>

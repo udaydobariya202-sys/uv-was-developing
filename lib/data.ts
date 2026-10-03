@@ -1,11 +1,5 @@
 export type TechTag = string;
 
-export type ProjectStatus =
-  | "Independent product"
-  | "Concept / In development"
-  | "Prototype"
-  | "Exploration";
-
 export interface Project {
   id: string;
   number: string;
@@ -14,9 +8,9 @@ export interface Project {
   title: string;
   description: string;
   stack: TechTag[];
-  status: ProjectStatus;
   role?: string;
-  accentHue: string; // CSS hue value for visual identity
+  platform?: string;
+  accentHue: string;
   featured?: boolean;
   caseStudyUrl?: string;
 }
@@ -36,14 +30,14 @@ export const projects: Project[] = [
   {
     id: "moviq",
     number: "01",
-    category: "Mobility / Ride-Hailing",
+    category: "Mobile app, ride booking",
     subtitle: "Cab Booking User App",
     title: "MOVIQ Cabs",
     description:
-      "A production-style cab booking platform built with Flutter and BLoC, connected to a backend with payments, notifications, and maps.",
-    stack: ["Flutter", "BLoC", "Stripe", "Firebase", "Maps"],
-    status: "Independent product",
-    role: "Flutter Developer and Full-Stack Product Builder",
+      "A ride-booking app with a rider app, a driver app, an admin dashboard, and a connected backend, including payments, maps, and notifications.",
+    stack: ["Flutter", "BLoC", "REST APIs", "Firebase", "Stripe", "Maps"],
+    role: "Design and development",
+    platform: "Android",
     accentHue: "270",
     featured: true,
     caseStudyUrl: "/projects/moviq",
@@ -51,23 +45,25 @@ export const projects: Project[] = [
   {
     id: "terracast",
     number: "02",
-    category: "Weather / Earth Visualization",
+    category: "Weather, earth visualization",
     title: "TerraCast",
     description:
-      "A weather and Earth-visualization experience focused on atmosphere, location, and motion.",
+      "An interactive weather and atmospheric visualization interface focused on location data and fluid motion.",
     stack: ["Flutter", "Maps", "Weather APIs", "Geospatial UI"],
-    status: "Prototype",
+    role: "Design and development",
+    platform: "Android, web",
     accentHue: "210",
   },
   {
     id: "udaya-ai",
     number: "03",
-    category: "AI Assistant",
+    category: "Voice assistant interface",
     title: "Udaya AI",
     description:
-      "An assistant concept exploring voice, intelligent interaction, and a more human digital experience.",
-    stack: ["Flutter", "AI APIs", "Voice UI", "Backend Services"],
-    status: "Exploration",
+      "A conversational assistant interface exploring voice interactions, intelligent state transitions, and responsive prompts.",
+    stack: ["Flutter", "AI APIs", "Voice UI", "REST APIs"],
+    role: "Design and development",
+    platform: "Android",
     accentHue: "290",
   },
 ];
@@ -77,25 +73,25 @@ export const processSteps: ProcessStep[] = [
     number: "01",
     title: "Understand",
     description:
-      "Clarify the user, the core problem, and the essential flow before writing a single line of code.",
+      "Clarify user expectations, technical scope, and essential flows before writing code.",
   },
   {
     number: "02",
     title: "Shape",
     description:
-      "Design the interface and technical direction — aligning visuals, data, and behavior into a coherent system.",
+      "Define state architecture, API contracts, and interface systems into a clear technical direction.",
   },
   {
     number: "03",
     title: "Build",
     description:
-      "Implement the product in focused iterations, keeping each cycle shippable and testable.",
+      "Implement features in focused iterations, keeping code decoupled and testable.",
   },
   {
     number: "04",
     title: "Refine",
     description:
-      "Test across real conditions, smooth rough edges, and prepare the product for real users.\n",
+      "Verify under varied network conditions, polish interactions, and prepare clean releases.",
   },
 ];
 

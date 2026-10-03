@@ -57,7 +57,7 @@ export function ContactSection() {
               number="05"
               label="Contact"
               title="Tell me about your project."
-              subtitle="Have a mobile product, technical prototype, or scalable backend to build? Reach out directly — I typically respond within 24 hours."
+              subtitle="Have a mobile product, focused mobile application, or scalable backend to build? Reach out directly — I typically respond within 24 hours."
             />
 
             {/* Email Direct Action Card */}
@@ -122,7 +122,7 @@ export function ContactSection() {
               </a>
             </div>
 
-            {/* Status note */}
+            {/* Availability note */}
             <div className="flex items-center gap-2 text-xs font-sans text-secondary">
               <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
               <span>Available for select engineering sprints &amp; dedicated product contracts</span>

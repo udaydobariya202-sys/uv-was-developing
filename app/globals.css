@@ -98,6 +98,27 @@ body {
   border-radius: 4px;
 }
 
+/* Link Underline Slide on Hover (150ms) */
+.link-slide {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.link-slide::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background-color: var(--accent);
+  transition: width 150ms ease-out;
+}
+.link-slide:hover::after,
+.link-slide:focus-visible::after {
+  width: 100%;
+}
+
 /* Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -111,11 +132,12 @@ body {
 }
 
 /* ============================================================
-   Page Container — 12-Column Grid, ~1240px Max Width, 8px Scale
+   Page Container — Shared Container across Nav, Hero, Sections
+   Max 1200px width with consistent responsive side padding
    ============================================================ */
 .page-container {
   width: 100%;
-  max-width: 1240px;
+  max-width: 1200px;
   margin-inline: auto;
   padding-inline: 1rem;
 }

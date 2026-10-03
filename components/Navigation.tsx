@@ -22,7 +22,8 @@ export function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      // 1px bottom border and faint blur after scrolling past 8px
+      setScrolled(window.scrollY > 8);
       const scrollPos = window.scrollY + 160;
       let current = "";
       for (const link of navLinks) {
@@ -84,10 +85,10 @@ export function Navigation() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-200 ${
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-150 ${
           scrolled
-            ? "bg-bg/95 backdrop-blur-sm border-b border-border"
-            : "bg-transparent"
+            ? "bg-bg/90 backdrop-blur-sm border-b border-border"
+            : "bg-transparent border-b border-transparent"
         }`}
       >
         <div className="page-container">
@@ -99,7 +100,7 @@ export function Navigation() {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="flex flex-col text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded p-1 -ml-1"
+              className="flex flex-col text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded p-1 -ml-1 group"
               aria-label="UV WAS DEVELOPING by Uday Dobariya — home"
             >
               <span className="text-xs tracking-widest text-primary uppercase font-sans font-semibold leading-tight">
@@ -125,7 +126,7 @@ export function Navigation() {
                       e.preventDefault();
                       handleNavClick(link.href);
                     }}
-                    className={`px-4 py-2 text-sm font-sans transition-colors duration-150 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                    className={`relative px-3.5 py-1.5 text-sm font-sans rounded-md transition-colors duration-150 link-slide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                       isActive
                         ? "text-accent font-semibold"
                         : "text-secondary hover:text-primary"
@@ -155,7 +156,7 @@ export function Navigation() {
 
               <button
                 ref={menuToggleRef}
-                className="md:hidden p-2 text-secondary hover:text-primary rounded-lg border border-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer"
+                className="md:hidden p-2 text-secondary hover:text-primary rounded-lg border border-border transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer"
                 onClick={() => setMenuOpen((v) => !v)}
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={menuOpen}
