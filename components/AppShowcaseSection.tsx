@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ProjectMedia } from "@/components/ui/ProjectMedia";
 import { LinkButton } from "@/components/ui/Button";
 
-const tags = ["Flutter", "BLoC", "Supabase", "Stripe", "Firebase", "Maps"];
+const tags = ["Flutter", "BLoC", "Stripe", "Firebase", "Maps"];
 
 export function AppShowcaseSection() {
   return (
@@ -62,7 +62,7 @@ export function AppShowcaseSection() {
             <p className="text-base font-sans text-secondary leading-relaxed max-w-lg">
               A full-stack cab booking platform built from the ground up — Flutter
               user app, driver app, and admin panel. Real-time tracking, Stripe
-              payments, and Supabase backend, all architected and shipped
+              payments, and a connected backend, all architected and shipped
               independently.
             </p>
 

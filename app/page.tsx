@@ -1,6 +1,5 @@
 import { Navigation } from "@/components/Navigation";
 import { HeroSection } from "@/components/HeroSection";
-import { AppShowcaseSection } from "@/components/AppShowcaseSection";
 import { WorkSection } from "@/components/WorkSection";
 import { AboutSection } from "@/components/AboutSection";
 import { StackSection } from "@/components/StackSection";
@@ -14,7 +13,6 @@ export default function Home() {
       <Navigation />
       <main id="main-content">
         <HeroSection />
-        <AppShowcaseSection />
         <WorkSection />
         <AboutSection />
         <StackSection />

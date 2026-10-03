@@ -23,7 +23,7 @@ const stackCategories = [
     category: "Backend & Data",
     description: "Constructing reliable persistence, authentication, and API endpoints.",
     items: [
-      "Supabase (PostgreSQL & Auth)",
+      "Cloud & SQL Databases",
       "Node.js & Express",
       "Relational Database Design",
       "RESTful API Architecture",
@@ -52,7 +52,7 @@ const stackCategories = [
       "Git & GitHub Workflows",
       "Postman API Validation",
       "Figma UI System Translation",
-      "Render Cloud Hosting",
+      "Cloud Hosting & Deployment",
       "Android Studio Tooling",
       "Store Release Pipeline",
     ],

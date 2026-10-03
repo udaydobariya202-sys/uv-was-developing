@@ -135,7 +135,7 @@ export function HeroSection() {
           >
             {[
               { label: "Specialty", value: "Flutter · Dart" },
-              { label: "Backend", value: "Supabase · Firebase" },
+              { label: "Backend", value: "REST APIs · Firebase" },
               { label: "Full-stack", value: "Next.js · TypeScript" },
               { label: "Based in", value: "Rajkot, India" },
             ].map(({ label, value }) => (

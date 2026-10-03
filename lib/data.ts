@@ -41,7 +41,7 @@ export const projects: Project[] = [
     title: "MOVIQ Cabs",
     description:
       "A production-style cab booking platform built with Flutter and BLoC, connected to a backend with payments, notifications, and maps.",
-    stack: ["Flutter", "BLoC", "Supabase", "Stripe", "Firebase", "Maps"],
+    stack: ["Flutter", "BLoC", "Stripe", "Firebase", "Maps"],
     status: "Independent product",
     role: "Flutter Developer and Full-Stack Product Builder",
     accentHue: "270",
@@ -110,7 +110,7 @@ export const stackGroups: StackGroup[] = [
   },
   {
     label: "Data & Auth",
-    items: ["Supabase", "PostgreSQL", "Firebase"],
+    items: ["Cloud Databases", "PostgreSQL", "Firebase"],
   },
   {
     label: "Product Features",
@@ -122,6 +122,6 @@ export const stackGroups: StackGroup[] = [
   },
   {
     label: "Deployment",
-    items: ["GitHub", "Render", "Environment Config"],
+    items: ["GitHub", "Cloud Hosting", "CI/CD Pipelines"],
   },
 ];

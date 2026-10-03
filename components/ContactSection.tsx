@@ -190,7 +190,7 @@ export function ContactSection() {
                     className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-surface text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors cursor-pointer"
                   >
                     <option value="Mobile App (Flutter)">Mobile App (Flutter &amp; BLoC)</option>
-                    <option value="Full-Stack System">Full-Stack Application (Flutter + Supabase/Node)</option>
+                    <option value="Full-Stack System">Full-Stack Application (Flutter + Backend APIs)</option>
                     <option value="Contract Sprint">Dedicated Sprint Contract</option>
                     <option value="Architecture Review">Codebase &amp; Architecture Audit</option>
                   </select>

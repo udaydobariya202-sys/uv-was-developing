@@ -51,7 +51,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             )}
 
             {/* Description */}
-            <p className="text-secondary text-sm sm:text-base leading-relaxed mb-6">
+            <p className="text-secondary text-sm sm:text-base leading-relaxed mb-6 font-sans">
               {project.description}
             </p>
 
@@ -88,7 +88,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             )}
           </div>
 
-          {/* Right Column: Graphic Spec / Architecture Panel */}
+          {/* Right Column: Architectural Blueprint Panel */}
           <div className="lg:col-span-5 flex justify-center items-center w-full">
             {isLead ? (
               <ProjectMedia
@@ -116,7 +116,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                     <span className="text-primary font-medium">Spherical Web Mercator</span>
                   </div>
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-muted">RENDER ENGINE:</span>
+                    <span className="text-muted">GRAPHICS ENGINE:</span>
                     <span className="text-primary font-medium">Flutter CustomPainter 60fps</span>
                   </div>
                 </div>

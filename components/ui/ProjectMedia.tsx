@@ -16,7 +16,7 @@ export function ProjectMedia({
   className = "",
   title = "MOVIQ Cabs",
 }: ProjectMediaProps) {
-  // If real media is passed in the future, render it
+  // If real media is passed in the future, display it
   if (media?.src) {
     return (
       <div
