@@ -1,604 +1,448 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { appScreenshots, type AppScreenshot } from "@/lib/data";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
+import {
+  ArrowRight,
+  Layers,
+  MapPin,
+  CreditCard,
+  Zap,
+  Smartphone,
+} from "lucide-react";
 
-const AUTOPLAY_DELAY = 3000;
-
-// ─── Consistent Phone Placeholder Wireframe ─────────────────────────────────────
-function PhonePlaceholder({
-  screenshot,
-}: {
-  screenshot: AppScreenshot;
-}) {
-  return (
-    <div className="w-full h-full flex flex-col items-center justify-between p-4 select-none overflow-hidden pointer-events-none">
-      {/* Fake status bar */}
-      <div className="w-full flex items-center justify-between mb-3 shrink-0">
-        <div className="text-[8px] font-mono opacity-40">9:41</div>
-        <div className="flex gap-1">
-          <div className="w-3 h-1.5 rounded-sm bg-current opacity-30" />
-          <div className="w-1.5 h-1.5 rounded-full bg-current opacity-30" />
-        </div>
-      </div>
-
-      {/* Normalized wireframe blocks */}
-      <div className="flex-1 w-full flex flex-col gap-2 overflow-hidden">
-        <div
-          className="w-full h-8 rounded-md opacity-25 shrink-0"
-          style={{ background: `hsl(${screenshot.accentHue} 70% 50%)` }}
-        />
-        <div className="flex gap-2 shrink-0">
-          <div className="w-1/2 h-16 rounded-md bg-white/5" />
-          <div className="w-1/2 h-16 rounded-md bg-white/5" />
-        </div>
-        <div className="w-full h-4 rounded bg-white/5 shrink-0" />
-        <div className="w-3/4 h-4 rounded bg-white/5 shrink-0" />
-        <div className="w-full h-16 rounded-md bg-white/5 shrink-0 mt-1" />
-        <div className="flex gap-2 shrink-0 mt-1">
-          <div className="flex-1 h-9 rounded-md bg-white/5" />
-          <div className="flex-1 h-9 rounded-md bg-white/5" />
-        </div>
-      </div>
-
-      {/* Internal visual placeholder label */}
-      <div className="mt-3 flex flex-col items-center gap-1 shrink-0">
-        <div
-          className="w-6 h-0.5 rounded-full opacity-30"
-          style={{ background: `hsl(${screenshot.accentHue} 70% 70%)` }}
-        />
-        <p className="text-[9px] font-mono opacity-30 tracking-widest uppercase">
-          {screenshot.subtitle}
-        </p>
-      </div>
-    </div>
-  );
+interface ShowcaseScreenshot {
+  id: string;
+  src: string;
+  alt: string;
+  label: string;
 }
 
-// ─── GPU-Optimized Phone Frame Component ────────────────────────────────────────
-function PhoneFrame({
-  screenshot,
-  isFeatured,
-  isSelected,
-}: {
-  screenshot: AppScreenshot;
-  isFeatured: boolean;
-  isSelected: boolean;
-}) {
-  const [imgError, setImgError] = useState(false);
+const showcaseScreenshots: ShowcaseScreenshot[] = [
+  {
+    id: "moviq-home",
+    src: "/images/apps/moviq/moviq-home.webp",
+    alt: "MOVIQ Cabs cab booking user app home screen.",
+    label: "Home Screen",
+  },
+];
 
-  return (
-    <div
-      className={`relative w-[235px] sm:w-[255px] lg:w-[270px] aspect-[1220/2712] flex-shrink-0 transition-shadow duration-500 rounded-[2.5rem] ${
-        isSelected
-          ? "shadow-[0_16px_36px_rgba(0,0,0,0.6)] md:shadow-none"
-          : "shadow-none"
-      }`}
-    >
-      {/* Outer Phone Bezel */}
-      <div
-        className="absolute inset-0 rounded-[2.5rem] border-2 z-20 pointer-events-none transition-colors duration-500"
-        style={{
-          borderColor: isSelected
-            ? `hsl(${screenshot.accentHue} 60% 48% / 0.9)`
-            : `hsl(${screenshot.accentHue} 35% 25% / 0.45)`,
-        }}
-      />
+const techStack = ["Flutter", "BLoC", "Supabase", "Stripe", "Firebase"];
 
-      {/* Hardware ear-piece speaker slit on top bezel */}
-      <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-12 h-1 bg-black/60 rounded-full z-30 pointer-events-none" />
+const proofPoints = [
+  {
+    icon: Layers,
+    title: "BLoC State Management",
+    description:
+      "Deterministic state transitions governing booking flows, driver dispatch, and ride lifecycle states without UI inconsistencies.",
+  },
+  {
+    icon: MapPin,
+    title: "Live Maps & Routing",
+    description:
+      "Google Maps integration delivering interactive pickup pins, turn-by-turn route polylines, and real-time transit telemetry.",
+  },
+  {
+    icon: CreditCard,
+    title: "Stripe Payment Gateway",
+    description:
+      "Production-grade payment processing with multi-tier fare computation, pre-authorization holds, and instant receipt generation.",
+  },
+  {
+    icon: Zap,
+    title: "Supabase & Firebase Sync",
+    description:
+      "Low-latency cloud synchronization for live vehicle status updates, push notification dispatch, and encrypted session data.",
+  },
+];
 
-      {/* Hardware side buttons */}
-      <div
-        className="absolute -left-[3px] top-[80px] w-[3px] h-7 rounded-l-sm pointer-events-none transition-colors duration-500"
-        style={{
-          background: isSelected
-            ? `hsl(${screenshot.accentHue} 45% 35%)`
-            : `hsl(${screenshot.accentHue} 30% 25%)`,
-        }}
-      />
-      <div
-        className="absolute -left-[3px] top-[120px] w-[3px] h-7 rounded-l-sm pointer-events-none transition-colors duration-500"
-        style={{
-          background: isSelected
-            ? `hsl(${screenshot.accentHue} 45% 35%)`
-            : `hsl(${screenshot.accentHue} 30% 25%)`,
-        }}
-      />
-      <div
-        className="absolute -right-[3px] top-[100px] w-[3px] h-12 rounded-r-sm pointer-events-none transition-colors duration-500"
-        style={{
-          background: isSelected
-            ? `hsl(${screenshot.accentHue} 45% 35%)`
-            : `hsl(${screenshot.accentHue} 30% 25%)`,
-        }}
-      />
-
-      {/* Phone Screen Area */}
-      <div
-        className="absolute inset-[3px] rounded-[2.3rem] overflow-hidden"
-        style={{
-          background: `linear-gradient(160deg, hsl(${screenshot.accentHue} 25% 8%) 0%, hsl(${screenshot.accentHue} 15% 5%) 100%)`,
-        }}
-      >
-        {/* Dynamic Island / Notch — shown only on wireframe placeholders */}
-        {!screenshot.image && (
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-black/70 rounded-b-2xl z-20 flex items-center justify-center gap-1 pointer-events-none">
-            <div className="w-1.5 h-1.5 rounded-full bg-black/90" />
-            <div className="w-0.5 h-3 rounded-full bg-black/60 mx-0.5" />
-          </div>
-        )}
-
-        {/* Screen ambient glow (lightweight on mobile, rich on desktop) */}
-        <div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full blur-md md:blur-3xl pointer-events-none transition-opacity duration-500"
-          style={{
-            background: `hsl(${screenshot.accentHue} 80% 60%)`,
-            opacity: isSelected ? 0.3 : 0.1,
-          }}
-        />
-
-        {/* Positioned Inner screen viewport */}
-        <div className="inner-screen-viewport absolute inset-0 overflow-hidden flex items-center justify-center text-primary">
-          {screenshot.image && !imgError ? (
-            <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
-              <Image
-                src={screenshot.image}
-                alt={screenshot.imageAlt || `${screenshot.title} app screen`}
-                fill
-                className="object-contain"
-                sizes="(max-width: 640px) 235px, (max-width: 1024px) 255px, 270px"
-                onError={() => setImgError(true)}
-                priority={isFeatured}
-              />
-            </div>
-          ) : (
-            <PhonePlaceholder screenshot={screenshot} />
-          )}
-        </div>
-      </div>
-
-      {/* Screen glass reflection sheen */}
-      <div className="absolute inset-[3px] rounded-[2.3rem] bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none z-10" />
-
-      {/* Outer ambient blur glow (lightweight blur on mobile, rich on desktop) */}
-      <div
-        className="absolute -inset-2 md:-inset-4 rounded-[2.8rem] md:rounded-[3.5rem] blur-md md:blur-2xl pointer-events-none transition-opacity duration-500"
-        style={{
-          background: `hsl(${screenshot.accentHue} 70% 50%)`,
-          opacity: isSelected ? 0.22 : 0.05,
-        }}
-      />
-    </div>
-  );
-}
-
-// ─── Main Showcase Section ──────────────────────────────────────────────────────
 export function AppShowcaseSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
+  const [imgError, setImgError] = useState(false);
+  const [activeScreenshotIndex, setActiveScreenshotIndex] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
-  // Swipe gesture tracking via refs — zero state updates during movement, zero scroll interference
-  const touchStartX = useRef<number | null>(null);
-  const touchStartY = useRef<number | null>(null);
+  const currentScreenshot = showcaseScreenshots[activeScreenshotIndex];
 
-  // Single reliable interval autoplay effect — 3000ms delay, continuous
-  useEffect(() => {
-    const timerId = window.setInterval(() => {
-      setDirection(1);
-      setActiveIndex((current) => (current + 1) % appScreenshots.length);
-    }, AUTOPLAY_DELAY);
+  // Mouse tilt / parallax values
+  const cardRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-    return () => window.clearInterval(timerId);
-  }, []);
+  const rotateX = useSpring(
+    useTransform(mouseY, [-0.5, 0.5], [6, -6]),
+    { stiffness: 200, damping: 25 }
+  );
+  const rotateY = useSpring(
+    useTransform(mouseX, [-0.5, 0.5], [-6, 6]),
+    { stiffness: 200, damping: 25 }
+  );
 
-  // Navigation handlers
-  const handleNext = () => {
-    setDirection(1);
-    setActiveIndex((prev) => (prev + 1) % appScreenshots.length);
-  };
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (shouldReduceMotion || !cardRef.current) return;
+      const rect = cardRef.current.getBoundingClientRect();
+      const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+      const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+      mouseX.set(xPct);
+      mouseY.set(yPct);
+    },
+    [shouldReduceMotion, mouseX, mouseY]
+  );
 
-  const handlePrev = () => {
-    setDirection(-1);
-    setActiveIndex((prev) => (prev - 1 + appScreenshots.length) % appScreenshots.length);
-  };
+  const handleMouseLeave = useCallback(() => {
+    mouseX.set(0);
+    mouseY.set(0);
+  }, [mouseX, mouseY]);
 
-  const handleSelect = (index: number) => {
-    setDirection(index > activeIndex ? 1 : -1);
-    setActiveIndex(index);
-  };
-
-  // Touch & Pointer swipe handlers with touch-action: pan-y (preserves butter-smooth vertical scroll)
-  const onPointerDown = (e: React.PointerEvent) => {
-    touchStartX.current = e.clientX;
-    touchStartY.current = e.clientY;
-  };
-
-  const onPointerUp = (e: React.PointerEvent) => {
-    if (touchStartX.current === null || touchStartY.current === null) return;
-    const deltaX = e.clientX - touchStartX.current;
-    const deltaY = e.clientY - touchStartY.current;
-
-    // Trigger swipe only when horizontal gesture exceeds 40px and is predominantly horizontal
-    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3) {
-      if (deltaX < 0) {
-        handleNext();
-      } else {
-        handlePrev();
-      }
-    }
-    touchStartX.current = null;
-    touchStartY.current = null;
-  };
-
-  const onPointerCancel = () => {
-    touchStartX.current = null;
-    touchStartY.current = null;
-  };
-
-  // Keyboard navigation
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowRight") {
-      e.preventDefault();
-      handleNext();
-    } else if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      handlePrev();
-    }
-  };
-
-  const total = appScreenshots.length;
-  const previousIndex = (activeIndex + total - 1) % total;
-  const nextIndex = (activeIndex + 1) % total;
-  const activeApp = appScreenshots[activeIndex];
-
-  // GPU-friendly desktop slot variants: only transform (x, scale) and opacity
-  const slotVariants = {
-    active: {
-      x: "0%",
-      scale: 1,
+  // Framer Motion entrance variants (animating transform & opacity only)
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
       opacity: 1,
-      zIndex: 30,
-    },
-    prev: {
-      x: "-120%",
-      scale: 0.86,
-      opacity: 0.22,
-      zIndex: 10,
-    },
-    next: {
-      x: "120%",
-      scale: 0.86,
-      opacity: 0.22,
-      zIndex: 10,
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.08,
+        delayChildren: shouldReduceMotion ? 0 : 0.05,
+      },
     },
   };
 
-  const slotTransition = {
-    type: "tween" as const,
-    duration: 0.6,
-    ease: [0.22, 1, 0.36, 1] as const,
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    },
   };
 
   return (
     <section
       id="apps"
-      aria-labelledby="apps-heading"
-      className="relative py-16 sm:py-20 lg:py-28 overflow-x-clip overflow-y-visible"
+      aria-labelledby="apps-showcase-title"
+      className="relative py-20 sm:py-24 lg:py-32 overflow-x-clip"
     >
-      {/* Ambient background lighting (bounded to prevent mobile horizontal overflow) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[200px] max-w-[80vw] md:w-[720px] md:h-[420px] rounded-full bg-accent-uv/4 blur-[60px] md:blur-[130px]" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-border to-transparent" />
-      </div>
+      {/* Subtle top divider line */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
       <div className="page-container relative z-10">
-        {/* Section Heading & Slide Counter */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-6 sm:mb-8">
-          <SectionHeading
-            id="apps-heading"
-            label="01 / Selected Apps"
-            title="Selected apps, built for real use."
-            subtitle="Mobile products I'm designing and developing with Flutter."
-          />
-
-          {/* Clean status counter: 01 / 03 */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface text-xs font-mono text-secondary self-start sm:self-end">
-            <span className="text-primary font-semibold">0{activeIndex + 1}</span>
-            <span className="opacity-40">/</span>
-            <span>0{appScreenshots.length}</span>
-          </div>
-        </div>
-
-        {/* Carousel Container */}
-        <div
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Mobile app showcase autoplay carousel"
-          tabIndex={0}
-          onKeyDown={handleKeyDown}
-          className="relative w-full flex flex-col items-center justify-center focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-uv/40 rounded-3xl"
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-start"
         >
-          {/* Screen reader live region */}
-          <div className="sr-only" aria-live="polite" aria-atomic="true">
-            Active app: {activeApp.title} — {activeApp.subtitle} ({activeIndex + 1} of {appScreenshots.length})
-          </div>
+          {/* -----------------------------------------------------------------
+              EDITORIAL COLUMN (Header, Description, Meta, Proof Points, CTAs)
+              ----------------------------------------------------------------- */}
+          <div className="lg:col-span-7 flex flex-col">
+            {/* Kicker & Status Pill */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap items-center gap-3 mb-4"
+            >
+              <span className="text-xs font-mono tracking-[0.2em] uppercase text-accent-uv">
+                01 / Featured Project
+              </span>
+              <span className="text-secondary/30">{"\u2022"}</span>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[11px] font-mono tracking-wider text-emerald-400 bg-emerald-400/10 border-emerald-400/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span>Production project / Client work</span>
+              </div>
+            </motion.div>
 
-          {/* ═══════════════════════════════════════════════════════════════════
-              MOBILE STAGE (< 768px): Single active phone with AnimatePresence
-              ═══════════════════════════════════════════════════════════════════ */}
-          <div
-            onPointerDown={onPointerDown}
-            onPointerUp={onPointerUp}
-            onPointerCancel={onPointerCancel}
-            className="md:hidden carousel-stage-container relative w-full max-w-[390px] mx-auto h-[660px] sm:h-[700px] overflow-hidden flex items-start justify-center pt-4 sm:pt-8 select-none cursor-grab active:cursor-grabbing"
-            style={{ touchAction: "pan-y" }}
-          >
-            <AnimatePresence initial={false} custom={direction} mode="popLayout">
-              <motion.div
-                key={activeApp.id}
-                custom={direction}
-                variants={{
-                  enter: (dir: number) => ({
-                    x: dir > 0 ? "100%" : "-100%",
-                    opacity: 0,
-                  }),
-                  center: {
-                    x: "0%",
-                    opacity: 1,
-                  },
-                  exit: (dir: number) => ({
-                    x: dir > 0 ? "-100%" : "100%",
-                    opacity: 0,
-                  }),
-                }}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  type: "tween",
-                  duration: 0.55,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="carousel-slide-item absolute inset-x-0 mx-auto flex flex-col items-center justify-center w-[min(78vw,260px)]"
+            {/* Title & Subtitle */}
+            <motion.div variants={itemVariants} className="mb-4">
+              <h2
+                id="apps-showcase-title"
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-primary"
               >
-                {/* Phone frame with bounded glow */}
-                <PhoneFrame
-                  screenshot={activeApp}
-                  isFeatured={activeApp.featured}
-                  isSelected={true}
-                />
+                MOVIQ Cabs
+              </h2>
+              <p className="text-lg sm:text-xl font-mono text-secondary mt-1.5">
+                Cab Booking User App
+              </p>
+            </motion.div>
 
-                {/* Reserved metadata area (stable pixel heights) */}
-                <div className="mt-4 w-full flex flex-col items-center text-center">
-                  {/* Badge row: fixed height 24px */}
-                  <div className="h-6 flex items-center justify-center mb-1">
-                    {activeApp.featured ? (
-                      <div
-                        className="inline-flex items-center gap-1.5 text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full border tracking-wider uppercase"
-                        style={{
-                          borderColor: `hsl(${activeApp.accentHue} 60% 45% / 0.5)`,
-                          color: `hsl(${activeApp.accentHue} 85% 75%)`,
-                          background: `hsl(${activeApp.accentHue} 60% 18% / 0.35)`,
-                        }}
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
-                        Featured App
+            {/* Description */}
+            <motion.p
+              variants={itemVariants}
+              className="text-base sm:text-lg text-secondary leading-relaxed max-w-2xl mb-6"
+            >
+              A production-style cab booking platform built with Flutter and
+              BLoC, connected to a backend with payments, notifications, and
+              maps.
+            </motion.p>
+
+            {/* Role & Tech Stack */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 py-4 px-4 sm:px-5 rounded-xl border border-border/80 bg-surface/50 mb-8"
+            >
+              <div className="flex items-center gap-2 text-xs font-mono">
+                <span className="text-secondary/60">Role:</span>
+                <span className="text-primary font-medium">
+                  Flutter Developer and Full-Stack Product Builder
+                </span>
+              </div>
+              <div className="hidden sm:block w-px h-5 bg-border" />
+              <div className="flex flex-wrap items-center gap-1.5">
+                {techStack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-[11px] font-mono px-2 py-0.5 rounded border border-border bg-bg/60 text-secondary"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* -----------------------------------------------------------------
+                MOBILE ONLY DEVICE PREVIEW (< 1024px)
+                Shown inline after intro to create an instant visual anchor.
+                ----------------------------------------------------------------- */}
+            <motion.div
+              variants={itemVariants}
+              className="lg:hidden w-full flex justify-center mb-10"
+            >
+              <div className="w-full max-w-[340px] rounded-3xl border border-border/80 bg-surface/40 p-4 sm:p-6 flex flex-col items-center justify-center">
+                {/* Minimal Header */}
+                <div className="w-full flex items-center justify-between text-[10px] font-mono text-secondary/60 mb-4 pb-2 border-b border-border/40">
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    Production Build
+                  </span>
+                  <span>iOS & Android</span>
+                </div>
+
+                {/* Device Frame */}
+                <div className="relative w-[230px] min-[380px]:w-[250px] aspect-[1220/2712] rounded-[2.3rem] p-2 bg-[#0c0c11] border-2 border-white/[0.12] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.85)] flex flex-col">
+                  {/* Speaker slit */}
+                  <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mb-1.5 shrink-0" />
+
+                  {/* Screen Viewport */}
+                  <div className="relative w-full flex-1 rounded-[1.7rem] overflow-hidden bg-black">
+                    {imgError ? (
+                      <div className="w-full h-full bg-[#0d0d14] flex flex-col justify-between p-4 select-none">
+                        <div className="w-full flex items-center justify-between text-[9px] font-mono text-secondary/40">
+                          <span>9:41</span>
+                          <span className="w-2 h-1 bg-secondary/40 rounded-xs" />
+                        </div>
+                        <div className="flex-1 w-full my-3 rounded-lg border border-white/[0.06] bg-white/[0.02] flex items-center justify-center">
+                          <span className="text-[10px] font-mono text-secondary/50">
+                            MOVIQ Map Interface
+                          </span>
+                        </div>
+                        <div className="w-full h-12 rounded-lg bg-white/[0.04] border border-white/[0.08]" />
                       </div>
                     ) : (
-                      <div className="h-6 invisible select-none" aria-hidden="true" />
+                      <Image
+                        src={currentScreenshot.src}
+                        alt={currentScreenshot.alt}
+                        fill
+                        className="object-contain"
+                        sizes="(max-width: 640px) 250px, 280px"
+                        loading="lazy"
+                        onError={() => setImgError(true)}
+                      />
                     )}
-                  </div>
-
-                  {/* Title row */}
-                  <h3 className="h-7 flex items-center justify-center text-lg font-semibold text-primary truncate leading-tight">
-                    {activeApp.title}
-                  </h3>
-
-                  {/* Subtitle row */}
-                  <p className="h-5 flex items-center justify-center text-xs text-secondary font-mono tracking-wider truncate leading-tight mt-0.5">
-                    {activeApp.subtitle}
-                  </p>
-
-                  {/* Button row */}
-                  <div className="h-9 flex items-center justify-center mt-2">
-                    {activeApp.projectId === "moviq" ? (
-                      <Link
-                        href="/projects/moviq"
-                        className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
-                      >
-                        Explore case study →
-                      </Link>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
-                        }}
-                        className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
-                      >
-                        Explore case study →
-                      </button>
-                    )}
+                    {/* Gloss sheen */}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/[0.06] via-transparent to-transparent opacity-60 z-10" />
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
 
-          {/* ═══════════════════════════════════════════════════════════════════
-              DESKTOP STAGE (>= 768px): 3-Slot Stage with Side Previews
-              ═══════════════════════════════════════════════════════════════════ */}
-          <div
-            onPointerDown={onPointerDown}
-            onPointerUp={onPointerUp}
-            onPointerCancel={onPointerCancel}
-            className="hidden md:flex carousel-stage-container relative w-full h-[760px] lg:h-[800px] overflow-x-clip overflow-y-visible items-start justify-center pt-10 lg:pt-14 select-none cursor-grab active:cursor-grabbing"
-            style={{ touchAction: "pan-y" }}
-          >
-            {appScreenshots.map((item, index) => {
-              const isActive = index === activeIndex;
-              const isPrev = index === previousIndex;
-              const isNext = index === nextIndex;
+                {/* Footer caption */}
+                <div className="w-full mt-4 pt-2 border-t border-border/40 flex items-center justify-between text-[10px] font-mono text-secondary/50">
+                  <span>Home Screen</span>
+                  <span>1220 {"\u00D7"} 2712 true scale</span>
+                </div>
+              </div>
+            </motion.div>
 
-              let slot: "active" | "prev" | "next" = "active";
-              if (isPrev) slot = "prev";
-              else if (isNext) slot = "next";
-
-              return (
-                <motion.div
-                  key={item.id}
-                  layout={false}
-                  variants={slotVariants}
-                  animate={slot}
-                  transition={slotTransition}
-                  onClick={() => {
-                    if (isPrev) handlePrev();
-                    else if (isNext) handleNext();
-                  }}
-                  className={`carousel-slide-item absolute inset-x-0 mx-auto flex flex-col items-center justify-center w-[310px] lg:w-[325px] ${
-                    isActive
-                      ? "z-30 opacity-100 pointer-events-auto"
-                      : "z-10 opacity-25 pointer-events-auto cursor-pointer"
-                  }`}
-                  aria-hidden={!isActive}
-                >
-                  {/* Phone frame with unclipped glow */}
-                  <PhoneFrame
-                    screenshot={item}
-                    isFeatured={item.featured}
-                    isSelected={isActive}
-                  />
-
-                  {/* Reserved metadata area (stable pixel heights) */}
-                  <div className="mt-5 w-full flex flex-col items-center text-center">
-                    {/* Badge row: fixed height 24px */}
-                    <div className="h-6 flex items-center justify-center mb-1">
-                      {item.featured ? (
-                        <div
-                          className="inline-flex items-center gap-1.5 text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full border tracking-wider uppercase"
-                          style={{
-                            borderColor: `hsl(${item.accentHue} 60% 45% / 0.5)`,
-                            color: `hsl(${item.accentHue} 85% 75%)`,
-                            background: `hsl(${item.accentHue} 60% 18% / 0.35)`,
-                          }}
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
-                          Featured App
+            {/* Proof Points (4 Technical Architecture Highlights) */}
+            <motion.div variants={itemVariants} className="mb-8">
+              <h3 className="text-xs font-mono uppercase tracking-[0.18em] text-secondary/70 mb-4">
+                Architecture & Product Proof Points
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                {proofPoints.map((point) => {
+                  const Icon = point.icon;
+                  return (
+                    <div
+                      key={point.title}
+                      className="p-4 rounded-xl border border-border/70 bg-surface/40 hover:border-accent-uv/30 transition-colors flex flex-col justify-between"
+                    >
+                      <div className="flex items-center gap-2.5 mb-2">
+                        <div className="p-1.5 rounded-md bg-accent-uv/10 text-accent-uv">
+                          <Icon size={15} />
                         </div>
-                      ) : (
-                        <div className="h-6 invisible select-none" aria-hidden="true" />
-                      )}
+                        <h4 className="text-sm font-semibold text-primary leading-tight">
+                          {point.title}
+                        </h4>
+                      </div>
+                      <p className="text-xs text-secondary leading-relaxed">
+                        {point.description}
+                      </p>
                     </div>
+                  );
+                })}
+              </div>
+            </motion.div>
 
-                    {/* Title row */}
-                    <h3 className="h-7 flex items-center justify-center text-lg sm:text-xl font-semibold text-primary truncate leading-tight">
-                      {item.title}
-                    </h3>
+            {/* CTA Action Row */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap items-center gap-3 pt-2"
+            >
+              {/* Primary Button */}
+              <Link
+                href="/projects/moviq"
+                className="group inline-flex items-center justify-center gap-2 rounded-lg font-medium bg-accent-uv text-white hover:bg-violet-500 active:bg-violet-700 text-sm px-5 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv focus-visible:ring-offset-2 focus-visible:ring-offset-bg shadow-sm shadow-accent-uv/20 cursor-pointer"
+              >
+                <span>View case study</span>
+                <ArrowRight
+                  size={15}
+                  className="transition-transform group-hover:translate-x-0.5"
+                />
+              </Link>
 
-                    {/* Subtitle row */}
-                    <p className="h-5 flex items-center justify-center text-xs text-secondary font-mono tracking-wider truncate leading-tight mt-0.5">
-                      {item.subtitle}
-                    </p>
-
-                    {/* Button row */}
-                    <div className="h-9 flex items-center justify-center mt-2">
-                      {item.projectId === "moviq" ? (
-                        <Link
-                          href="/projects/moviq"
-                          tabIndex={isActive ? 0 : -1}
-                          className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
-                        >
-                          Explore case study →
-                        </Link>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
-                          }}
-                          tabIndex={isActive ? 0 : -1}
-                          className="inline-flex items-center gap-1.5 text-xs font-mono text-accent-uv hover:text-violet-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv rounded px-2 py-1"
-                        >
-                          Explore case study →
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+              {/* Secondary Button */}
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="inline-flex items-center justify-center gap-2 rounded-lg font-medium border border-border text-secondary/60 bg-surface/50 text-sm px-5 py-2.5 cursor-not-allowed opacity-60 select-none"
+              >
+                <Smartphone size={14} className="text-secondary/40" />
+                <span>Google Play, coming soon</span>
+              </button>
+            </motion.div>
           </div>
 
-          {/* ── Carousel Navigation Controls ── */}
-          <div className="mt-4 sm:mt-6 flex items-center justify-center gap-4 z-30">
-            {/* Previous Button */}
-            <button
-              type="button"
-              onClick={handlePrev}
-              aria-label="Show previous app"
-              className="w-10 h-10 rounded-full border border-border bg-surface flex items-center justify-center text-primary hover:border-accent-uv hover:bg-surface-elevated transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv cursor-pointer"
+          {/* -----------------------------------------------------------------
+              DESKTOP SHOWCASE STAGE (>= 1024px)
+              Floating, precision-machined device frame with 3D tilt & parallax
+              ----------------------------------------------------------------- */}
+          <motion.div
+            variants={itemVariants}
+            className="hidden lg:flex lg:col-span-5 justify-center sticky top-28"
+          >
+            <div
+              ref={cardRef}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              className="w-full max-w-[380px] rounded-3xl border border-border/80 bg-surface/40 backdrop-blur-sm p-6 sm:p-7 flex flex-col items-center justify-center relative select-none"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                aria-hidden="true"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
+              {/* Stage Header Info */}
+              <div className="w-full flex items-center justify-between text-[11px] font-mono text-secondary/60 mb-5 pb-3 border-b border-border/40">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  Live Build
+                </span>
+                <span>iOS & Android</span>
+              </div>
 
-            {/* 3 Pagination Buttons */}
-            <div className="flex items-center gap-2 px-2" role="tablist" aria-label="App slides">
-              {appScreenshots.map((item, idx) => {
-                const isActive = idx === activeIndex;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    aria-label={`Show ${item.title}`}
-                    onClick={() => handleSelect(idx)}
-                    className={`h-2 rounded-full transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv cursor-pointer ${
-                      isActive
-                        ? "w-8 bg-accent-uv shadow-[0_0_12px_rgba(139,92,246,0.7)]"
-                        : "w-2.5 bg-white/20 hover:bg-white/40"
-                    }`}
-                  />
-                );
-              })}
+              {/* Interactive 3D Phone Frame */}
+              <motion.div
+                style={{
+                  rotateX: shouldReduceMotion ? 0 : rotateX,
+                  rotateY: shouldReduceMotion ? 0 : rotateY,
+                  transformStyle: "preserve-3d",
+                }}
+                className="relative w-[270px] xl:w-[285px] aspect-[1220/2712] rounded-[2.6rem] p-2.5 bg-[#0c0c11] border-2 border-white/[0.12] shadow-[0_28px_60px_-14px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.06)] flex flex-col will-change-transform"
+              >
+                {/* Hardware Speaker Slit */}
+                <div className="w-11 h-1 bg-white/20 rounded-full mx-auto mb-2 shrink-0" />
+
+                {/* Left Side Hardware Buttons */}
+                <div className="absolute -left-[3px] top-[74px] w-[3px] h-7 bg-white/25 rounded-l-sm" />
+                <div className="absolute -left-[3px] top-[110px] w-[3px] h-7 bg-white/25 rounded-l-sm" />
+
+                {/* Right Side Power Button */}
+                <div className="absolute -right-[3px] top-[92px] w-[3px] h-11 bg-white/25 rounded-r-sm" />
+
+                {/* Screen Viewport */}
+                <div className="relative w-full flex-1 rounded-[1.9rem] overflow-hidden bg-black">
+                  {imgError ? (
+                    <div className="w-full h-full bg-[#0d0d14] flex flex-col justify-between p-5 select-none">
+                      <div className="w-full flex items-center justify-between text-[10px] font-mono text-secondary/40">
+                        <span>9:41</span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-2.5 h-1.5 rounded-xs bg-secondary/40" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-secondary/40" />
+                        </div>
+                      </div>
+                      <div className="flex-1 w-full my-4 rounded-xl border border-white/[0.06] bg-white/[0.02] flex items-center justify-center">
+                        <span className="text-xs font-mono text-secondary/50">
+                          MOVIQ Map Interface
+                        </span>
+                      </div>
+                      <div className="w-full h-14 rounded-xl bg-white/[0.04] border border-white/[0.08]" />
+                    </div>
+                  ) : (
+                    <Image
+                      src={currentScreenshot.src}
+                      alt={currentScreenshot.alt}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 1024px) 280px, 320px"
+                      loading="lazy"
+                      onError={() => setImgError(true)}
+                    />
+                  )}
+                  {/* Subtle glass reflection sheen */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/[0.06] via-transparent to-transparent opacity-60 z-10" />
+                </div>
+              </motion.div>
+
+              {/* Stage Footer Caption */}
+              <div className="w-full mt-5 pt-3 border-t border-border/40 flex items-center justify-between text-[11px] font-mono text-secondary/50">
+                <span>Screen 01 / 01</span>
+                <span>True Aspect 1:2.22</span>
+              </div>
+
+              {/* Dynamic Thumbnail Row (automatically renders when more screenshots are added in future) */}
+              {showcaseScreenshots.length > 1 && (
+                <div
+                  className="flex items-center gap-2 mt-3"
+                  role="tablist"
+                  aria-label="Showcase screenshots"
+                >
+                  {showcaseScreenshots.map((item, index) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={index === activeScreenshotIndex}
+                      aria-label={`Show ${item.label}`}
+                      onClick={() => setActiveScreenshotIndex(index)}
+                      className={`px-2.5 py-1 text-[10px] font-mono rounded-md border transition-all ${
+                        index === activeScreenshotIndex
+                          ? "border-accent-uv bg-accent-uv/15 text-primary"
+                          : "border-border text-secondary/60 hover:text-primary hover:border-border-strong"
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-
-            {/* Next Button */}
-            <button
-              type="button"
-              onClick={handleNext}
-              aria-label="Show next app"
-              className="w-10 h-10 rounded-full border border-border bg-surface flex items-center justify-center text-primary hover:border-accent-uv hover:bg-surface-elevated transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-uv cursor-pointer"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                aria-hidden="true"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
