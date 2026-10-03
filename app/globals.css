@@ -1,36 +1,40 @@
 @import "tailwindcss";
 
 /* ============================================================
-   UV WAS DEVELOPING — Design System
+   UV WAS DEVELOPING — Premium Editorial Design System
    ============================================================ */
 
-/* Design tokens */
+/* Design Tokens */
 :root {
-  /* Background */
-  --bg: #08080b;
-  --surface: #111116;
-  --surface-elevated: #18181f;
+  /* Warm Ink-Black Background & Surfaces */
+  --bg: #0B0A0C;
+  --surface: #131215;
+  --surface-elevated: #1A191D;
 
-  /* Text */
-  --text-primary: #f5f5f7;
-  --text-secondary: #a1a1aa;
-  --text-muted: #52525b;
+  /* Off-White & High-Contrast Typography */
+  --text-primary: #F2EFE8;
+  --text-secondary: #A8A39A; /* 8.8:1 contrast on #0B0A0C, exceeds 4.5:1 AAA */
+  --text-muted: #6E6A63;
 
-  /* Borders */
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.14);
+  /* Hairline Borders (10% to 14% opacity) */
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.18);
 
-  /* Accent */
-  --accent-uv: #8b5cf6;
-  --accent-uv-hover: #7c3aed;
-  --accent-blue: #38bdf8;
+  /* Primary Accent: Acid Lime */
+  --accent-lime: #C6FF3D;
+  --accent-lime-hover: #b5f524;
+
+  /* Quiet Secondary Accent: UV Violet */
+  --accent-uv: #8B5CF6;
+  --accent-uv-hover: #7C3AED;
 
   /* Fonts */
+  --font-display: var(--font-display), system-ui, -apple-system, sans-serif;
   --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), "Fira Code", "Cascadia Code", monospace;
+  --font-mono: var(--font-geist-mono), "Fira Code", monospace;
 }
 
-/* Tailwind v4 theme mapping */
+/* Tailwind v4 Theme Mapping */
 @theme inline {
   /* Colors */
   --color-bg: var(--bg);
@@ -41,16 +45,18 @@
   --color-muted: var(--text-muted);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
+  --color-accent-lime: var(--accent-lime);
+  --color-accent-lime-hover: var(--accent-lime-hover);
   --color-accent-uv: var(--accent-uv);
   --color-accent-uv-hover: var(--accent-uv-hover);
-  --color-accent-blue: var(--accent-blue);
 
   /* Typography */
+  --font-display: var(--font-display);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
 }
 
-/* Base reset */
+/* Base Reset */
 *,
 *::before,
 *::after {
@@ -74,8 +80,8 @@ body {
 
 /* Selection */
 ::selection {
-  background: rgba(139, 92, 246, 0.25);
-  color: var(--text-primary);
+  background: rgba(198, 255, 61, 0.22);
+  color: #F2EFE8;
 }
 
 /* Scrollbar */
@@ -86,21 +92,21 @@ body {
   background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: rgba(255, 255, 255, 0.16);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-uv);
+  background: var(--accent-lime);
 }
 
-/* Focus ring */
+/* Accessible Global Focus Ring */
 :focus-visible {
-  outline: 2px solid var(--accent-uv);
+  outline: 2px solid var(--accent-lime);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-/* Respect reduced motion */
+/* Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -113,37 +119,24 @@ body {
 }
 
 /* ============================================================
-   Shared page container — use class="page-container" on each
-   section's inner wrapper to replace per-section max-w/px
+   Page Container — Max Content Width of ~1200px on an 8px scale
    ============================================================ */
 .page-container {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1200px;
   margin-inline: auto;
-  padding-inline: 1rem; /* 16px safe padding on small mobile */
-}
-
-@media (min-width: 390px) {
-  .page-container {
-    padding-inline: 1.25rem; /* 20px mobile */
-  }
+  padding-inline: 1rem; /* 16px safe padding on mobile */
 }
 
 @media (min-width: 640px) {
   .page-container {
-    padding-inline: 2rem; /* 32px tablet */
+    padding-inline: 1.5rem; /* 24px on tablet */
   }
 }
 
 @media (min-width: 1024px) {
   .page-container {
-    padding-inline: 4rem; /* 64px desktop */
-  }
-}
-
-@media (min-width: 1280px) {
-  .page-container {
-    padding-inline: 6rem; /* 96px wide desktop */
+    padding-inline: 2rem; /* 32px on desktop */
   }
 }
 
@@ -152,28 +145,4 @@ html,
 body {
   max-width: 100%;
   overflow-x: hidden;
-}
-
-/* Mobile-safe hero section override */
-@media (max-width: 767px) {
-  .hero-section {
-    min-height: auto !important;
-    overflow: hidden;
-    padding-top: 76px;
-    padding-bottom: 56px;
-    padding-inline: 0;
-  }
-}
-
-/* GPU-optimized carousel container */
-.carousel-stage-container {
-  touch-action: pan-y;
-  contain: layout paint;
-}
-
-.carousel-slide-item {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translate3d(0, 0, 0);
-  will-change: transform, opacity;
 }
