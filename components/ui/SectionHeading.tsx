@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { RegistrationMark } from "./PrintMarks";
 
 interface SectionHeadingProps {
+  number?: string;
   label: string;
   title: string;
   subtitle?: string;
@@ -12,6 +12,7 @@ interface SectionHeadingProps {
 }
 
 export function SectionHeading({
+  number,
   label,
   title,
   subtitle,
@@ -26,15 +27,18 @@ export function SectionHeading({
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="flex items-center gap-2 mb-3">
-        <RegistrationMark size={14} className="text-accent-uv" />
-        <p className="text-xs font-mono font-bold tracking-[0.2em] uppercase text-secondary">
+      <div className="flex items-center gap-3 mb-4">
+        {number && (
+          <span className="font-mono text-xs text-muted tabular-nums">{number}</span>
+        )}
+        <div className="flex-1 h-px bg-border" />
+        <p className="text-xs font-sans tracking-widest uppercase text-secondary font-medium">
           {label}
         </p>
       </div>
       <h2
         id={id}
-        className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-primary leading-[1.08] [text-wrap:balance]"
+        className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-primary leading-[1.12] [text-wrap:balance]"
       >
         {title}
       </h2>

@@ -48,26 +48,27 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-20 sm:py-28 lg:py-36 bg-bg">
+    <section id="contact" className="relative py-20 sm:py-28 lg:py-36 bg-bg border-t border-border">
       <div className="page-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Direct Call to Action */}
           <div className="lg:col-span-6 flex flex-col">
             <SectionHeading
-              label="06 / Contact"
+              number="05"
+              label="Contact"
               title="Tell me about your project."
               subtitle="Have a mobile product, technical prototype, or scalable backend to build? Reach out directly — I typically respond within 24 hours."
             />
 
             {/* Email Direct Action Card */}
-            <div className="p-6 rounded-2xl border border-border bg-surface mb-6">
-              <span className="text-xs font-mono uppercase tracking-[0.16em] text-secondary mb-2 block">
+            <div className="p-6 rounded-xl border border-border bg-surface-card mb-6">
+              <span className="text-xs font-sans uppercase tracking-widest text-secondary font-medium mb-2 block">
                 Direct Email
               </span>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <a
                   href={`mailto:${email}`}
-                  className="font-mono text-sm sm:text-base text-primary hover:text-accent-lime transition-colors font-medium"
+                  className="font-mono text-sm sm:text-base text-primary hover:text-accent transition-colors font-medium"
                 >
                   {email}
                 </a>
@@ -75,11 +76,11 @@ export function ContactSection() {
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-[#0B0A0C] text-xs font-mono text-secondary hover:text-primary hover:border-accent-lime/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border-strong bg-surface text-xs font-sans text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer"
                 >
                   {copied ? (
                     <>
-                      <Check size={13} className="text-accent-lime" />
+                      <Check size={13} className="text-accent" />
                       <span>Copied</span>
                     </>
                   ) : (
@@ -98,32 +99,32 @@ export function ContactSection() {
                 href="https://linkedin.com/in/udaydobariya"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 rounded-xl border border-border bg-surface hover:border-accent-lime/40 transition-colors flex items-center justify-between text-xs font-mono text-secondary hover:text-primary group"
+                className="p-4 rounded-xl border border-border bg-surface-card hover:border-border-strong transition-colors flex items-center justify-between text-xs font-sans text-secondary hover:text-primary group"
               >
                 <div className="flex items-center gap-2.5">
                   <LinkedInIcon size={16} />
                   <span>LinkedIn</span>
                 </div>
-                <ArrowUpRight size={13} className="text-secondary/50 group-hover:text-primary transition-colors" />
+                <ArrowUpRight size={13} className="text-muted group-hover:text-primary transition-colors" />
               </a>
 
               <a
                 href="https://github.com/udaydobariya202-sys"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 rounded-xl border border-border bg-surface hover:border-accent-lime/40 transition-colors flex items-center justify-between text-xs font-mono text-secondary hover:text-primary group"
+                className="p-4 rounded-xl border border-border bg-surface-card hover:border-border-strong transition-colors flex items-center justify-between text-xs font-sans text-secondary hover:text-primary group"
               >
                 <div className="flex items-center gap-2.5">
                   <GitHubIcon size={16} />
                   <span>GitHub</span>
                 </div>
-                <ArrowUpRight size={13} className="text-secondary/50 group-hover:text-primary transition-colors" />
+                <ArrowUpRight size={13} className="text-muted group-hover:text-primary transition-colors" />
               </a>
             </div>
 
             {/* Status note */}
-            <div className="flex items-center gap-2 text-xs font-mono text-secondary/80">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-lime animate-pulse" />
+            <div className="flex items-center gap-2 text-xs font-sans text-secondary">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
               <span>Available for select engineering sprints &amp; dedicated product contracts</span>
             </div>
           </div>
@@ -135,19 +136,19 @@ export function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-2xl border border-border bg-surface p-6 sm:p-8"
+              className="rounded-xl border border-border bg-surface-card p-6 sm:p-8"
             >
-              <h3 className="font-display text-xl font-bold text-primary mb-1">
+              <h3 className="font-display text-xl font-semibold text-primary mb-1">
                 Start an inquiry
               </h3>
-              <p className="text-xs text-secondary mb-6">
+              <p className="text-xs text-secondary mb-6 font-sans">
                 Fill this brief outline to start a conversation directly via email.
               </p>
 
-              <form onSubmit={handleFormSubmit} className="space-y-4">
+              <form onSubmit={handleFormSubmit} className="space-y-4 font-sans">
                 {/* Name */}
                 <div>
-                  <label htmlFor="contact-name" className="block text-xs font-mono text-secondary mb-1.5">
+                  <label htmlFor="contact-name" className="block text-xs font-sans text-secondary mb-1.5 font-medium">
                     Your Name
                   </label>
                   <input
@@ -157,13 +158,13 @@ export function ContactSection() {
                     placeholder="e.g. Alex Smith"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-[#0B0A0C] text-sm text-primary placeholder:text-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-surface text-sm text-primary placeholder:text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
                   />
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="contact-email" className="block text-xs font-mono text-secondary mb-1.5">
+                  <label htmlFor="contact-email" className="block text-xs font-sans text-secondary mb-1.5 font-medium">
                     Email Address
                   </label>
                   <input
@@ -173,20 +174,20 @@ export function ContactSection() {
                     placeholder="alex@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-[#0B0A0C] text-sm text-primary placeholder:text-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-surface text-sm text-primary placeholder:text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
                   />
                 </div>
 
                 {/* Project Type */}
                 <div>
-                  <label htmlFor="project-type" className="block text-xs font-mono text-secondary mb-1.5">
+                  <label htmlFor="project-type" className="block text-xs font-sans text-secondary mb-1.5 font-medium">
                     Project Type
                   </label>
                   <select
                     id="project-type"
                     value={formData.projectType}
                     onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-[#0B0A0C] text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime transition-colors cursor-pointer"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-surface text-sm text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors cursor-pointer"
                   >
                     <option value="Mobile App (Flutter)">Mobile App (Flutter &amp; BLoC)</option>
                     <option value="Full-Stack System">Full-Stack Application (Flutter + Supabase/Node)</option>
@@ -197,7 +198,7 @@ export function ContactSection() {
 
                 {/* Message */}
                 <div>
-                  <label htmlFor="project-details" className="block text-xs font-mono text-secondary mb-1.5">
+                  <label htmlFor="project-details" className="block text-xs font-sans text-secondary mb-1.5 font-medium">
                     Project Brief
                   </label>
                   <textarea
@@ -207,14 +208,14 @@ export function ContactSection() {
                     placeholder="Briefly describe what you are looking to build, timeline, and core requirements..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-[#0B0A0C] text-sm text-primary placeholder:text-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime transition-colors resize-none"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-surface text-sm text-primary placeholder:text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors resize-none"
                   />
                 </div>
 
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="w-full py-3 px-5 rounded-lg font-semibold bg-accent-lime text-[#0B0A0C] hover:bg-accent-lime-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0A0C] text-sm cursor-pointer shadow-sm shadow-accent-lime/20 flex items-center justify-center gap-2"
+                  className="w-full py-3 px-5 rounded-lg font-sans font-medium bg-primary text-bg hover:bg-[#2c2a32] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg text-sm cursor-pointer flex items-center justify-center gap-2"
                 >
                   <Mail size={16} />
                   <span>Send Project Inquiry</span>

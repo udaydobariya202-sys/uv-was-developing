@@ -12,15 +12,15 @@ Personal portfolio of **Uday Dobariya** — Flutter Developer & Full-Stack Produ
 - **Styling**: Tailwind CSS v4
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
-- **Fonts**: Geist (via `next/font`)
+- **Fonts**: Fraunces & Inter (via `next/font/google`)
 
 ## Features
 
-- UV Print Lab aesthetic with Paper and UV Lamp modes
+- Calm editorial design system with warm paper background and deep indigo accent
 - Fully responsive — mobile, tablet, and desktop
-- Editorial headline typography with registration drift and spot ink accents
-- MOVIQ Cabs featured typographic and graphic proof sheet
-- Project cards with architectural blueprints
+- Refined typography pairing Fraunces serif headlines with clean Inter body
+- MOVIQ Cabs featured editorial case study showcase (Android release in progress)
+- Project cards with technical architectural specifications
 - Accessible navigation with mobile menu
 - SEO-optimised metadata and Open Graph tags
 - Static export ready
@@ -49,24 +49,23 @@ cp .env.example .env.local
 
 ```
 app/
-  layout.tsx        Root layout with SEO metadata
+  layout.tsx        Root layout with SEO metadata and typography
   page.tsx          Portfolio page
-  globals.css       Design system and CSS variables
+  globals.css       Design system tokens and reset
 components/
   Navigation.tsx    Fixed nav with mobile menu
-  HeroSection.tsx   Animated hero section
-  AppShowcaseSection.tsx  Graphic proof sheet showcase
+  HeroSection.tsx   Editorial hero section
+  AppShowcaseSection.tsx  Featured MOVIQ case study showcase
   WorkSection.tsx   Project cards grid
-  AboutSection.tsx  About and values
+  AboutSection.tsx  About and principles
   StackSection.tsx  Technology stack
-  ProcessSection.tsx  Work process steps
-  ContactSection.tsx  Contact CTAs
+  ProcessSection.tsx  Development workflow steps
+  ContactSection.tsx  Contact CTAs and inquiry form
   Footer.tsx        Footer with back-to-top
   ui/
-    Button.tsx      Reusable button component
-    SectionHeading.tsx  Animated section heading
-    ProjectMedia.tsx    Print lab media and proof panel
-    PrintMarks.tsx      Registration and crop marks
+    Button.tsx      Reusable button and link component
+    SectionHeading.tsx  Numbered section heading
+    ProjectMedia.tsx    Calm abstract project media panel
 lib/
   data.ts           Typed portfolio data
 ```

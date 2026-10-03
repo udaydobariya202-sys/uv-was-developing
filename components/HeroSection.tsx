@@ -1,217 +1,171 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, MapPin, Clock, Code2, CheckCircle2 } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
-import { RegistrationMark, CropMarks, ColorSwatches } from "@/components/ui/PrintMarks";
+
+function GitHubIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.41 7.88 10.94.58.1.79-.25.79-.56 0-.28-.01-1.01-.01-1.97-3.2.69-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.27-5.23-5.67 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.14 1.17A10.9 10.9 0 0 1 12 6.84c.97.004 1.94.13 2.85.38 2.18-1.48 3.14-1.17 3.14-1.17.62 1.58.23 2.75.11 3.04.73.8 1.18 1.82 1.18 3.07 0 4.41-2.68 5.38-5.24 5.66.41.36.78 1.06.78 2.14 0 1.54-.01 2.79-.01 3.16 0 .31.21.67.8.56A11.504 11.504 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" />
+    </svg>
+  );
+}
+
+function LinkedInIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+    </svg>
+  );
+}
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
 
 export function HeroSection() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 16 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
-    },
-  };
-
-  const handleScroll = (selector: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    const el = document.querySelector(selector);
-    el?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <section
-      id="hero"
-      aria-label="Hero"
-      className="relative min-h-[90vh] lg:min-h-screen flex flex-col justify-between pt-24 sm:pt-28 lg:pt-36 pb-12 overflow-x-clip bg-bg"
+      className="relative flex flex-col justify-center pt-32 pb-20 sm:pt-40 sm:pb-28 min-h-[90vh]"
+      aria-label="Introduction"
     >
-      <div className="page-container flex-1 flex flex-col justify-center">
+      <div className="page-container">
         <motion.div
+          className="max-w-4xl"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center my-auto"
         >
-          {/* Left Column: Headline, SEO subline, CTAs */}
-          <div className="lg:col-span-7 xl:col-span-8 flex flex-col relative isolate">
-            {/* Overprinted decorative spot ink registration shapes behind content */}
-            <div
-              className="absolute -top-6 -left-6 w-32 h-10 bg-accent-lime/25 rounded -rotate-2 pointer-events-none ink-overprint -z-10"
-              aria-hidden="true"
-            />
-            <div
-              className="absolute top-1/3 -right-4 w-24 h-24 bg-accent-uv/15 rounded-full pointer-events-none ink-overprint -z-10"
-              aria-hidden="true"
-            />
+          {/* Availability Tag */}
+          <motion.div variants={itemVariants} className="flex items-center gap-2 mb-8">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+            </span>
+            <span className="text-xs font-sans font-medium text-secondary tracking-wide uppercase">
+              Available for select work
+            </span>
+          </motion.div>
 
-            {/* Status Tag */}
-            <motion.div variants={itemVariants} className="mb-6 flex items-center gap-3">
-              <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-md border-2 border-border bg-surface text-xs font-mono text-secondary shadow-ink-sm select-none">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-lime opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-lime" />
-                </span>
-                <span>
-                  Currently developing:{" "}
-                  <strong className="text-primary font-bold">MOVIQ Cabs</strong>
-                </span>
-              </div>
-              <RegistrationMark size={18} className="text-accent-uv hidden sm:block" />
-            </motion.div>
+          {/* Headline */}
+          <motion.div variants={itemVariants}>
+            <h1 className="font-display text-[clamp(2.8rem,8vw,7rem)] font-semibold tracking-tight text-primary leading-[1.05] [text-wrap:balance] mb-2">
+              I build Flutter apps
+            </h1>
+            <h2 className="font-display text-[clamp(2.8rem,8vw,7rem)] font-semibold tracking-tight text-accent leading-[1.05] [text-wrap:balance] mb-6">
+              that ship.
+            </h2>
+          </motion.div>
 
-            {/* Main Headline with subtle print registration drift */}
-            <motion.div variants={itemVariants} className="relative mb-6">
-              {/* Drift layer */}
-              <span
-                className="absolute top-0.5 left-0.5 font-display text-[clamp(2.5rem,6.8vw,5.5rem)] font-bold tracking-tight text-accent-uv/30 leading-[1.04] [text-wrap:balance] select-none pointer-events-none -z-10 ink-overprint"
-                aria-hidden="true"
-              >
-                I build Flutter apps that ship.
-              </span>
-              <h1 className="font-display text-[clamp(2.5rem,6.8vw,5.5rem)] font-bold tracking-tight text-primary leading-[1.04] [text-wrap:balance]">
-                I build Flutter apps that ship.
-              </h1>
-            </motion.div>
+          {/* SEO / Supporting line */}
+          <motion.p
+            variants={itemVariants}
+            className="text-lg sm:text-xl text-secondary max-w-xl leading-relaxed font-sans mb-10"
+          >
+            Flutter developer and full-stack product builder — from architecture to
+            production, independently.
+          </motion.p>
 
-            {/* SEO-Accurate Line & Description */}
-            <motion.div variants={itemVariants} className="space-y-3 mb-8 max-w-xl">
-              <p className="text-lg sm:text-xl font-mono text-secondary font-medium tracking-tight">
-                Flutter developer and full-stack product builder.
-              </p>
-              <p className="text-sm sm:text-base text-secondary leading-relaxed">
-                Turning complex product requirements into deterministic mobile apps,
-                scalable cloud backends, and reliable production experiences.
-              </p>
-            </motion.div>
-
-            {/* Primary & Secondary Buttons */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-wrap items-center gap-3 sm:gap-4"
+          {/* CTAs */}
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4 mb-16">
+            <LinkButton
+              href="#work"
+              variant="primary"
+              size="lg"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+              }}
             >
-              <LinkButton
-                href="#work"
-                variant="primary"
-                size="lg"
-                onClick={handleScroll("#work")}
-              >
-                View my work
-              </LinkButton>
-              <LinkButton
-                href="#contact"
-                variant="outline"
-                size="lg"
-                onClick={handleScroll("#contact")}
-              >
-                Start a project
-              </LinkButton>
-            </motion.div>
-          </div>
+              View my work
+            </LinkButton>
+            <LinkButton
+              href="https://github.com/udaydobariya202-sys"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="outline"
+              size="lg"
+            >
+              <GitHubIcon size={16} />
+              GitHub
+            </LinkButton>
+            <LinkButton
+              href="https://linkedin.com/in/uday-dobariya"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="outline"
+              size="lg"
+            >
+              <LinkedInIcon size={16} />
+              LinkedIn
+            </LinkButton>
+          </motion.div>
 
-          {/* Right Column: Printed Colophon Card of True Facts */}
+          {/* Colophon */}
           <motion.div
             variants={itemVariants}
-            className="lg:col-span-5 xl:col-span-4 w-full"
+            className="flex flex-wrap items-center gap-6 pt-8 border-t border-border"
           >
-            <div className="relative rounded-lg border-2 border-border bg-surface-card p-6 sm:p-7 shadow-ink select-none">
-              <CropMarks />
-
-              {/* Colophon Header */}
-              <div className="flex items-center justify-between pb-3.5 border-b-2 border-border text-xs font-mono text-secondary">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-accent-uv border border-border inline-block" />
-                  <span className="uppercase tracking-[0.16em] text-primary font-bold">
-                    Colophon / Spec
-                  </span>
-                </div>
-                <RegistrationMark size={16} className="text-accent-uv" />
-              </div>
-
-              {/* True Facts List */}
-              <div className="divide-y border-b-2 border-border divide-border text-xs font-mono">
-                {/* Location */}
-                <div className="py-3 flex items-start justify-between gap-4">
-                  <span className="text-secondary flex items-center gap-1.5 shrink-0">
-                    <MapPin size={13} className="text-accent-uv" />
-                    Location
-                  </span>
-                  <span className="text-primary text-right font-bold">
-                    Gujarat, India
-                  </span>
-                </div>
-
-                {/* Timezone */}
-                <div className="py-3 flex items-start justify-between gap-4">
-                  <span className="text-secondary flex items-center gap-1.5 shrink-0">
-                    <Clock size={13} className="text-accent-uv" />
-                    Timezone
-                  </span>
-                  <span className="text-primary text-right font-bold">
-                    IST (UTC+5:30)
-                  </span>
-                </div>
-
-                {/* Core Stack */}
-                <div className="py-3 flex items-start justify-between gap-4">
-                  <span className="text-secondary flex items-center gap-1.5 shrink-0">
-                    <Code2 size={13} className="text-accent-uv" />
-                    Core Stack
-                  </span>
-                  <span className="text-primary text-right font-bold leading-relaxed">
-                    Flutter · BLoC · Supabase
-                  </span>
-                </div>
-
-                {/* Availability */}
-                <div className="py-3 flex items-start justify-between gap-4">
-                  <span className="text-secondary flex items-center gap-1.5 shrink-0">
-                    <CheckCircle2 size={13} className="text-accent-lime" />
-                    Status
-                  </span>
-                  <span className="text-accent-uv font-bold text-right">
-                    Available for select work
-                  </span>
-                </div>
-              </div>
-
-              {/* Colophon Calibration Swatches */}
-              <div className="mt-4 pt-2 flex items-center justify-between">
-                <ColorSwatches />
-                <span className="text-[10px] font-mono text-secondary">
-                  ED. 2026 / 01
+            {[
+              { label: "Specialty", value: "Flutter · Dart" },
+              { label: "Backend", value: "Supabase · Firebase" },
+              { label: "Full-stack", value: "Next.js · TypeScript" },
+              { label: "Based in", value: "Rajkot, India" },
+            ].map(({ label, value }) => (
+              <div key={label} className="flex flex-col gap-0.5">
+                <span className="font-mono text-[10px] text-muted uppercase tracking-widest">
+                  {label}
                 </span>
+                <span className="text-sm font-sans font-medium text-primary">{value}</span>
               </div>
-            </div>
+            ))}
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Scroll Down Hint */}
-      <div className="page-container mt-6 flex justify-center">
-        <a
-          href="#work"
-          onClick={handleScroll("#work")}
-          className="inline-flex flex-col items-center gap-1.5 text-xs font-mono text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded px-2 py-1 select-none"
-          aria-label="Scroll to featured work"
-        >
-          <span className="tracking-[0.16em] uppercase text-[10px] font-bold">
-            Scroll
-          </span>
-          <ArrowDown size={14} className="animate-bounce" />
-        </a>
-      </div>
+      {/* Scroll cue */}
+      <motion.a
+        href="#work"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+        }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded px-2 py-1 select-none"
+        aria-label="Scroll to work section"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.1, duration: 0.5 }}
+      >
+        <ArrowDown size={16} className="animate-bounce" />
+        <span className="font-mono text-[10px] tracking-widest uppercase">Scroll</span>
+      </motion.a>
     </section>
   );
 }

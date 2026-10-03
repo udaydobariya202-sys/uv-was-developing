@@ -1,97 +1,47 @@
 @import "tailwindcss";
 
 /* ============================================================
-   UV WAS DEVELOPING — "UV Print Lab" Design System
+   UV WAS DEVELOPING — Calm Editorial Design System
    ============================================================ */
 
-/* Paper Mode (Default) Tokens */
-:root,
-[data-theme="paper"] {
-  /* Warm Paper & Surfaces */
-  --bg: #EFE9DD;
-  --surface: #E5DFC9;
-  --surface-card: #FAF6EE;
-  --surface-elevated: #FAF6EE;
+/* Design Tokens */
+:root {
+  /* Warm Off-White Paper */
+  --bg: #F6F3EC;
+  --surface: #EDEAE2;
+  --surface-card: #F9F7F2;
 
-  /* Ink-Black & Legible High-Contrast Typography */
-  --text-primary: #121014; /* 15.7:1 AAA contrast on #EFE9DD */
-  --text-secondary: #5B5650; /* 5.9:1 AAA contrast on #EFE9DD (> 4.5:1) */
-  --text-muted: #7A746C;
+  /* Ink-Black Typography */
+  --text-primary: #17151A;   /* 16.2:1 contrast on #F6F3EC — AAA */
+  --text-secondary: #5F5A55; /* 5.6:1 contrast on #F6F3EC — AAA ≥ 4.5:1 */
+  --text-muted: #8A847D;
 
-  /* 2px Solid Ink Borders & Offset Hard Shadows */
-  --border: #121014;
-  --border-subtle: rgba(18, 16, 20, 0.22);
-  --ink-shadow: #121014;
+  /* Single Accent: Deep Indigo */
+  --accent: #3F33B8;          /* indigo */
+  --accent-hover: #322AA0;
 
-  /* Spot Inks */
-  --accent-uv: #7B2CFF;
-  --accent-uv-hover: #671cd9;
-  --accent-lime: #C6FF3D;
-  --accent-lime-hover: #b5f524;
-  --accent-pink: #FF2A85;
-
-  /* Overprint blending */
-  --ink-blend: multiply;
-
-  /* Halftone Texture */
-  --halftone-color: rgba(18, 16, 20, 0.08);
-  --grain-opacity: 0.038;
+  /* Thin 1px Dividers */
+  --border: rgba(23, 21, 26, 0.12);
+  --border-strong: rgba(23, 21, 26, 0.22);
 
   /* Fonts */
-  --font-display: var(--font-display), system-ui, sans-serif;
-  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono), "Fira Code", monospace;
 }
 
-/* UV Lamp Mode Tokens */
-[data-theme="uv"] {
-  /* Near-Black Inks & Deep Glow Canvas */
-  --bg: #0B0A10;
-  --surface: #14131C;
-  --surface-card: #191823;
-  --surface-elevated: #1F1D2C;
-
-  /* Off-White & Silver High-Contrast Typography */
-  --text-primary: #F2EFE8; /* 17.0:1 AAA contrast on #0B0A10 */
-  --text-secondary: #A8A39A; /* 8.0:1 AAA contrast on #0B0A10 */
-  --text-muted: #706B62;
-
-  /* Luminous Borders & Acid Shadows */
-  --border: #F2EFE8;
-  --border-subtle: rgba(242, 239, 232, 0.22);
-  --ink-shadow: #C6FF3D;
-
-  /* Glowing Fluorescent Inks */
-  --accent-uv: #8F4BFF;
-  --accent-uv-hover: #a16bff;
-  --accent-lime: #C6FF3D;
-  --accent-lime-hover: #b5f524;
-  --accent-pink: #FF3D9A;
-
-  /* Screen blending for fluorescent glow */
-  --ink-blend: screen;
-
-  /* Halftone Texture in UV */
-  --halftone-color: rgba(198, 255, 61, 0.12);
-  --grain-opacity: 0.05;
-}
-
-/* Tailwind Theme Mapping */
+/* Tailwind v4 Theme Mapping */
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
   --color-surface-card: var(--surface-card);
-  --color-surface-elevated: var(--surface-elevated);
   --color-primary: var(--text-primary);
   --color-secondary: var(--text-secondary);
   --color-muted: var(--text-muted);
   --color-border: var(--border);
-  --color-border-subtle: var(--border-subtle);
-  --color-accent-lime: var(--accent-lime);
-  --color-accent-lime-hover: var(--accent-lime-hover);
-  --color-accent-uv: var(--accent-uv);
-  --color-accent-uv-hover: var(--accent-uv-hover);
-  --color-accent-pink: var(--accent-pink);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
 
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
@@ -116,49 +66,36 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
+  line-height: 1.65;
   min-height: 100dvh;
-  position: relative;
-  transition: background-color 0.25s ease, color 0.25s ease;
-}
-
-/* Static Grain Overlay */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 99;
-  opacity: var(--grain-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
 }
 
 /* Selection */
 ::selection {
-  background: var(--accent-lime);
-  color: #121014;
+  background: rgba(63, 51, 184, 0.15);
+  color: var(--text-primary);
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--border-strong);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-uv);
+  background: var(--accent);
 }
 
 /* Accessible Global Focus Ring */
 :focus-visible {
-  outline: 2px solid var(--accent-lime);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 /* Respect Reduced Motion */
@@ -174,7 +111,7 @@ body::before {
 }
 
 /* ============================================================
-   Page Container — 12-Column Grid with ~1240px Max Width
+   Page Container — 12-Column Grid, ~1240px Max Width, 8px Scale
    ============================================================ */
 .page-container {
   width: 100%;
@@ -193,30 +130,6 @@ body::before {
   .page-container {
     padding-inline: 2rem;
   }
-}
-
-/* Hard Shadows for Print Lab */
-.shadow-ink {
-  box-shadow: 4px 4px 0px var(--ink-shadow);
-}
-
-.shadow-ink-sm {
-  box-shadow: 2px 2px 0px var(--ink-shadow);
-}
-
-.shadow-ink-lg {
-  box-shadow: 6px 6px 0px var(--ink-shadow);
-}
-
-/* Halftone Pattern */
-.bg-halftone {
-  background-image: radial-gradient(var(--halftone-color) 1.5px, transparent 1.5px);
-  background-size: 12px 12px;
-}
-
-/* Overprint mix blend mode */
-.ink-overprint {
-  mix-blend-mode: var(--ink-blend);
 }
 
 /* Prevent horizontal overflow globally */

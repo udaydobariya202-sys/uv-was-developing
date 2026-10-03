@@ -7,10 +7,11 @@ import { ProjectCard } from "@/components/ProjectCard";
 
 export function WorkSection() {
   return (
-    <section id="work" className="relative py-20 sm:py-28 lg:py-36 bg-bg">
+    <section id="work" className="relative py-20 sm:py-28 lg:py-36 bg-bg border-t border-border">
       <div className="page-container">
         <SectionHeading
-          label="02 / Selected Work"
+          number="01"
+          label="Selected Work"
           title="Featured systems & applications."
           subtitle="Independent platforms, mobile applications, and focused technical prototypes built for real users."
         />
@@ -24,7 +25,7 @@ export function WorkSection() {
 
         {/* Bottom note */}
         <motion.p
-          className="mt-12 text-xs font-mono text-secondary/60 text-center"
+          className="mt-14 text-xs font-mono text-muted text-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

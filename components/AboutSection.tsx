@@ -47,13 +47,14 @@ const timelineFacts = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="relative py-20 sm:py-28 lg:py-36 bg-bg">
+    <section id="about" className="relative py-20 sm:py-28 lg:py-36 bg-bg border-t border-border">
       <div className="page-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Introduction & Principles */}
           <div className="lg:col-span-7 flex flex-col">
             <SectionHeading
-              label="03 / About"
+              number="02"
+              label="About"
               title="Engineering systems that withstand reality."
               subtitle="Practical software that balances high-performance mobile interfaces with resilient backend infrastructure."
             />
@@ -63,7 +64,7 @@ export function AboutSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="space-y-4 text-secondary leading-relaxed mb-10 text-sm sm:text-base"
+              className="space-y-4 text-secondary leading-relaxed mb-10 text-sm sm:text-base font-sans"
             >
               <p>
                 I&apos;m Uday Dobariya, an independent Flutter developer and full-stack product
@@ -78,8 +79,8 @@ export function AboutSection() {
 
             {/* Principles */}
             <div>
-              <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-secondary mb-6 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent-lime" />
+              <h3 className="text-xs font-sans uppercase tracking-widest text-secondary font-medium mb-6 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                 Operating Principles
               </h3>
               <div className="space-y-4">
@@ -90,18 +91,18 @@ export function AboutSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.06, duration: 0.4 }}
-                    className="p-4 sm:p-5 rounded-xl border border-border bg-surface hover:border-border-strong transition-colors"
+                    className="p-5 rounded-xl border border-border bg-surface-card hover:border-border-strong transition-colors"
                   >
                     <div className="flex items-start gap-3">
                       <CheckCircle2
                         size={16}
-                        className="text-accent-lime shrink-0 mt-0.5"
+                        className="text-accent shrink-0 mt-0.5"
                       />
                       <div>
                         <h4 className="text-sm font-semibold text-primary mb-1">
                           {item.title}
                         </h4>
-                        <p className="text-xs text-secondary leading-relaxed">
+                        <p className="text-xs sm:text-sm text-secondary leading-relaxed">
                           {item.detail}
                         </p>
                       </div>
@@ -119,9 +120,9 @@ export function AboutSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-2xl border border-border bg-surface p-6 sm:p-8"
+              className="rounded-xl border border-border bg-surface-card p-6 sm:p-8"
             >
-              <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-secondary mb-6 pb-3 border-b border-border">
+              <h3 className="text-xs font-sans uppercase tracking-widest text-secondary font-medium mb-6 pb-3 border-b border-border">
                 Timeline &amp; Facts
               </h3>
 
@@ -130,11 +131,11 @@ export function AboutSection() {
                   const Icon = fact.icon;
                   return (
                     <div key={fact.label} className="flex items-start gap-3.5">
-                      <div className="p-2 rounded-lg border border-border bg-[#0B0A0C] text-accent-uv shrink-0">
+                      <div className="p-2 rounded-lg border border-border bg-surface text-accent shrink-0">
                         <Icon size={15} />
                       </div>
                       <div>
-                        <span className="block text-[11px] font-mono text-secondary/70 uppercase tracking-wider">
+                        <span className="block text-[11px] font-mono text-muted uppercase tracking-wider">
                           {fact.label}
                         </span>
                         <span className="block text-sm font-medium text-primary mt-0.5">
@@ -149,15 +150,15 @@ export function AboutSection() {
               <div className="mt-8 pt-6 border-t border-border space-y-3 text-xs font-mono text-secondary">
                 <div className="flex justify-between items-center">
                   <span>Working Model:</span>
-                  <span className="text-primary font-medium">Fixed-scope &amp; Sprints</span>
+                  <span className="text-primary font-medium font-sans">Fixed-scope &amp; Sprints</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span>Languages:</span>
-                  <span className="text-primary font-medium">Dart, TypeScript, SQL</span>
+                  <span className="text-primary font-medium font-sans">Dart, TypeScript, SQL</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span>Availability:</span>
-                  <span className="text-accent-lime font-medium">Immediate for select work</span>
+                  <span className="text-accent font-medium font-sans">Immediate for select work</span>
                 </div>
               </div>
             </motion.div>
