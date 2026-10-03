@@ -40,7 +40,7 @@ export function ContactSection() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Project Inquiry: ${formData.projectType} — from ${formData.name || "Client"}`);
+    const subject = encodeURIComponent(`Project Inquiry: ${formData.projectType} — from ${formData.name || "Product Lead"}`);
     const body = encodeURIComponent(
       `Hi Uday,\n\nName: ${formData.name}\nEmail: ${formData.email}\nProject Type: ${formData.projectType}\n\nProject Overview:\n${formData.message}\n`
     );
@@ -124,7 +124,7 @@ export function ContactSection() {
             {/* Status note */}
             <div className="flex items-center gap-2 text-xs font-mono text-secondary/80">
               <span className="w-1.5 h-1.5 rounded-full bg-accent-lime animate-pulse" />
-              <span>Available for select client work &amp; dedicated sprint contracts</span>
+              <span>Available for select engineering sprints &amp; dedicated product contracts</span>
             </div>
           </div>
 
@@ -147,11 +147,11 @@ export function ContactSection() {
               <form onSubmit={handleFormSubmit} className="space-y-4">
                 {/* Name */}
                 <div>
-                  <label htmlFor="client-name" className="block text-xs font-mono text-secondary mb-1.5">
+                  <label htmlFor="contact-name" className="block text-xs font-mono text-secondary mb-1.5">
                     Your Name
                   </label>
                   <input
-                    id="client-name"
+                    id="contact-name"
                     type="text"
                     required
                     placeholder="e.g. Alex Smith"
@@ -163,11 +163,11 @@ export function ContactSection() {
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="client-email" className="block text-xs font-mono text-secondary mb-1.5">
+                  <label htmlFor="contact-email" className="block text-xs font-mono text-secondary mb-1.5">
                     Email Address
                   </label>
                   <input
-                    id="client-email"
+                    id="contact-email"
                     type="email"
                     required
                     placeholder="alex@company.com"

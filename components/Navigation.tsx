@@ -4,28 +4,27 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
+import { useTheme } from "@/components/ThemeProvider";
 
 const navLinks = [
-  { label: "Work", href: "#work", id: "work" },
-  { label: "About", href: "#about", id: "about" },
-  { label: "Stack", href: "#stack", id: "stack" },
-  { label: "Contact", href: "#contact", id: "contact" },
+  { number: "01", label: "Work", href: "#work", id: "work" },
+  { number: "02", label: "About", href: "#about", id: "about" },
+  { number: "03", label: "Stack", href: "#stack", id: "stack" },
+  { number: "04", label: "Contact", href: "#contact", id: "contact" },
 ];
 
 export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
+  const { theme, toggleTheme } = useTheme();
 
   const menuToggleRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
-  // Scroll detection for blurred background & active section
+  // Active section tracking via scroll position
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-
-      const scrollPos = window.scrollY + 140;
+      const scrollPos = window.scrollY + 160;
       let current = "";
       for (const link of navLinks) {
         const el = document.getElementById(link.id);
@@ -92,41 +91,26 @@ export function Navigation() {
 
   return (
     <>
-      {/* Accessible skip link */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent-lime focus:text-[#0B0A0C] focus:font-mono focus:text-xs focus:rounded-md focus:shadow-lg focus:outline-none"
-      >
-        Skip to content
-      </a>
-
-      <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-200 ${
-          scrolled
-            ? "bg-[#0B0A0C]/85 backdrop-blur-md border-b border-border shadow-xs shadow-black/40"
-            : "bg-transparent border-b border-transparent"
-        }`}
-      >
+      <header className="fixed top-0 left-0 right-0 z-40 bg-bg/95 backdrop-blur-md border-b-2 border-border transition-colors duration-200">
         <div className="page-container">
-          <div className="flex items-center justify-between h-16">
-            {/* Left: Brand & UV mark */}
+          <div className="flex items-center justify-between h-16 sm:h-18">
+            {/* Left: UV Mark & Brand */}
             <a
               href="#"
               onClick={(e) => {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded p-1 -ml-1"
+              className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded p-1 -ml-1 select-none"
               aria-label="UV WAS DEVELOPING by Uday Dobariya — home"
             >
-              {/* Clean UV Mark */}
-              <div className="flex items-center justify-center w-8 h-8 rounded-md bg-surface border border-border group-hover:border-accent-lime/40 transition-colors">
-                <span className="font-mono text-xs font-bold text-primary group-hover:text-accent-lime transition-colors">
+              <div className="flex items-center justify-center w-8 h-8 rounded border-2 border-border bg-surface shadow-ink-sm group-hover:bg-accent-lime group-hover:text-[#121014] transition-colors">
+                <span className="font-mono text-xs font-bold text-primary group-hover:text-[#121014]">
                   UV
                 </span>
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-mono tracking-[0.16em] text-primary uppercase font-semibold leading-tight">
+                <span className="text-xs font-mono tracking-[0.16em] text-primary uppercase font-bold leading-tight">
                   UV WAS DEVELOPING
                 </span>
                 <span className="text-[10px] font-mono tracking-[0.08em] text-secondary leading-tight">
@@ -135,9 +119,9 @@ export function Navigation() {
               </div>
             </a>
 
-            {/* Center: Desktop Navigation with Active Indicator */}
+            {/* Center: Desktop Navigation with Section-Number Markers */}
             <nav
-              className="hidden md:flex items-center gap-1 p-1 rounded-lg border border-border/60 bg-surface/50 backdrop-blur-xs"
+              className="hidden md:flex items-center gap-1 px-3 py-1 rounded-md border-2 border-border bg-surface/80 shadow-ink-sm"
               aria-label="Primary navigation"
             >
               {navLinks.map((link) => {
@@ -150,35 +134,48 @@ export function Navigation() {
                       e.preventDefault();
                       handleNavClick(link.href);
                     }}
-                    className={`relative px-3.5 py-1 text-xs font-mono transition-colors duration-150 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime ${
+                    className={`relative px-3 py-1 text-xs font-mono font-medium transition-colors duration-150 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime ${
                       isActive
-                        ? "text-primary font-medium"
+                        ? "text-primary font-bold bg-bg border border-border"
                         : "text-secondary hover:text-primary"
                     }`}
                   >
+                    <span className="text-[10px] text-accent-uv font-bold mr-1.5">
+                      {link.number}
+                    </span>
                     {link.label}
-                    {isActive && (
-                      <motion.span
-                        layoutId="activeNavIndicator"
-                        className="absolute -bottom-1 left-3 right-3 h-0.5 bg-accent-lime rounded-full"
-                        transition={{ type: "spring", stiffness: 450, damping: 30 }}
-                      />
-                    )}
                   </a>
                 );
               })}
             </nav>
 
-            {/* Right: Availability Pill & Action Button */}
-            <div className="flex items-center gap-3">
-              {/* Availability pill */}
-              <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-xs font-mono text-secondary">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent-lime animate-pulse" />
-                <span>Available for select work</span>
-              </div>
+            {/* Right: UV Lamp Switch & Action Button */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Lamp Switch Toggle */}
+              <button
+                type="button"
+                onClick={toggleTheme}
+                aria-label={`Switch to ${theme === "paper" ? "UV Lamp" : "Paper"} mode`}
+                title={`Switch to ${theme === "paper" ? "UV Lamp" : "Paper"} mode`}
+                className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md border-2 border-border bg-surface text-xs font-mono font-bold text-primary shadow-ink-sm hover:-translate-x-[1px] hover:-translate-y-[1px] transition-all cursor-pointer select-none"
+              >
+                <span
+                  className={`w-2.5 h-2.5 rounded-full border border-border transition-colors ${
+                    theme === "uv"
+                      ? "bg-accent-lime shadow-[0_0_8px_#C6FF3D]"
+                      : "bg-[#121014]/25"
+                  }`}
+                />
+                <span className="hidden sm:inline tracking-wider">
+                  {theme === "uv" ? "UV LAMP: ON" : "UV LAMP: OFF"}
+                </span>
+                <span className="sm:hidden text-[10px]">
+                  {theme === "uv" ? "UV" : "PAPER"}
+                </span>
+              </button>
 
-              {/* Start a project CTA button */}
-              <div className="hidden sm:block">
+              {/* Start a project CTA */}
+              <div className="hidden lg:block">
                 <LinkButton
                   href="#contact"
                   variant="primary"
@@ -192,10 +189,10 @@ export function Navigation() {
                 </LinkButton>
               </div>
 
-              {/* Mobile menu hamburger toggle */}
+              {/* Mobile menu toggle */}
               <button
                 ref={menuToggleRef}
-                className="md:hidden p-2 text-secondary hover:text-primary rounded-lg border border-border hover:border-accent-lime/40 bg-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime cursor-pointer"
+                className="md:hidden p-2 text-primary rounded-md border-2 border-border bg-surface shadow-ink-sm transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime cursor-pointer"
                 onClick={() => setMenuOpen((v) => !v)}
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={menuOpen}
@@ -217,26 +214,45 @@ export function Navigation() {
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation"
-            className="fixed inset-0 z-50 md:hidden flex flex-col justify-between bg-[#0B0A0C]/98 backdrop-blur-xl p-6 pt-20"
+            className="fixed inset-0 z-50 md:hidden flex flex-col justify-between bg-bg p-6 pt-20 border-b-2 border-border"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {/* Top Close Button */}
-            <button
-              onClick={() => {
-                setMenuOpen(false);
-                menuToggleRef.current?.focus();
-              }}
-              className="absolute top-5 right-5 p-2 rounded-lg border border-border text-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
-              aria-label="Close menu"
-            >
-              <X size={20} />
-            </button>
+            {/* Top Close Button & Lamp Mode */}
+            <div className="absolute top-4 left-6 right-6 flex items-center justify-between pb-3 border-b-2 border-border">
+              <span className="text-xs font-mono font-bold tracking-widest uppercase text-secondary">
+                NAVIGATION
+              </span>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="inline-flex items-center gap-2 px-2.5 py-1 rounded border-2 border-border bg-surface text-xs font-mono font-bold text-primary shadow-ink-sm"
+                >
+                  <span
+                    className={`w-2 h-2 rounded-full border border-border ${
+                      theme === "uv" ? "bg-accent-lime" : "bg-[#121014]/25"
+                    }`}
+                  />
+                  <span>{theme === "uv" ? "UV ON" : "PAPER"}</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setMenuOpen(false);
+                    menuToggleRef.current?.focus();
+                  }}
+                  className="p-1.5 rounded border-2 border-border bg-surface text-primary shadow-ink-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
+                  aria-label="Close menu"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            </div>
 
-            {/* Nav Links */}
-            <nav className="flex flex-col gap-2 my-auto">
+            {/* Nav Links with Section-Number Markers */}
+            <nav className="flex flex-col gap-2 my-auto pt-6">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.label}
@@ -245,21 +261,24 @@ export function Navigation() {
                     e.preventDefault();
                     handleNavClick(link.href);
                   }}
-                  className="py-3 text-2xl font-display font-bold text-primary hover:text-accent-lime transition-colors border-b border-border/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded"
+                  className="py-3 px-3 text-xl sm:text-2xl font-display font-bold text-primary hover:bg-surface border-2 border-border shadow-ink-sm rounded mb-2 transition-colors flex items-center justify-between"
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 + i * 0.05, duration: 0.25 }}
+                  transition={{ delay: 0.05 + i * 0.05, duration: 0.2 }}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  <span className="text-xs font-mono text-accent-uv px-2 py-0.5 rounded border border-border bg-bg">
+                    {link.number}
+                  </span>
                 </motion.a>
               ))}
 
-              <div className="pt-6">
+              <div className="pt-4">
                 <LinkButton
                   href="#contact"
                   variant="primary"
                   size="lg"
-                  className="w-full text-center justify-center"
+                  className="w-full text-center justify-center py-3"
                   onClick={(e) => {
                     e.preventDefault();
                     handleNavClick("#contact");
@@ -270,13 +289,13 @@ export function Navigation() {
               </div>
             </nav>
 
-            {/* Mobile Footer Status */}
-            <div className="pt-6 border-t border-border flex flex-col gap-3 text-xs font-mono text-secondary">
+            {/* Mobile Footer Colophon */}
+            <div className="pt-4 border-t-2 border-border flex flex-col gap-2 text-xs font-mono text-secondary">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-accent-lime animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-accent-lime border border-border" />
                 <span>Available for select work</span>
               </div>
-              <p className="text-[11px] text-muted">
+              <p className="text-[11px] text-muted font-mono">
                 UV WAS DEVELOPING · Uday Dobariya
               </p>
             </div>

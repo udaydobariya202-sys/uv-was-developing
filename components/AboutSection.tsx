@@ -23,7 +23,7 @@ const principles = [
   {
     title: "Direct accountability",
     detail:
-      "Direct engineer-to-client communication with disciplined milestone delivery and transparent source code.",
+      "Direct engineering communication with disciplined milestone delivery and transparent source code.",
   },
 ];
 
@@ -36,7 +36,7 @@ const timelineFacts = [
   {
     icon: Terminal,
     label: "Lead Work",
-    value: "MOVIQ Cabs ride-hailing client ecosystem",
+    value: "MOVIQ Cabs ride-hailing independent platform",
   },
   {
     icon: MapPin,
@@ -55,7 +55,7 @@ export function AboutSection() {
             <SectionHeading
               label="03 / About"
               title="Engineering systems that withstand reality."
-              subtitle="Practical software that balances high-performance client interfaces with resilient backend infrastructure."
+              subtitle="Practical software that balances high-performance mobile interfaces with resilient backend infrastructure."
             />
 
             <motion.div

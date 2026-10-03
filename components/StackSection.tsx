@@ -15,7 +15,7 @@ const stackCategories = [
       "Deterministic State Machines",
       "Platform Channels",
       "Custom 2D Canvas & Animations",
-      "iOS & Android Toolchains",
+      "Android Toolchains & Gradle",
     ],
   },
   {

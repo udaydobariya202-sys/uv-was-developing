@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { RegistrationMark } from "./PrintMarks";
 
 interface SectionHeadingProps {
   label: string;
@@ -20,14 +21,14 @@ export function SectionHeading({
   return (
     <motion.div
       className={`mb-12 sm:mb-16 ${className}`}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="flex items-center gap-2 mb-3">
-        <span className="w-1.5 h-1.5 rounded-full bg-accent-lime" />
-        <p className="text-xs font-mono tracking-[0.2em] uppercase text-secondary">
+        <RegistrationMark size={14} className="text-accent-uv" />
+        <p className="text-xs font-mono font-bold tracking-[0.2em] uppercase text-secondary">
           {label}
         </p>
       </div>

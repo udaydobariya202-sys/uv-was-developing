@@ -16,11 +16,11 @@ Personal portfolio of **Uday Dobariya** — Flutter Developer & Full-Stack Produ
 
 ## Features
 
-- Dark cinematic design with ultraviolet brand identity
+- UV Print Lab aesthetic with Paper and UV Lamp modes
 - Fully responsive — mobile, tablet, and desktop
-- Animated hero with UV visual orb
-- App screenshot showcase with CSS phone frames
-- Project cards with case study modals
+- Editorial headline typography with registration drift and spot ink accents
+- MOVIQ Cabs featured Android proof sheet with live interface capture
+- Project cards with architectural blueprints
 - Accessible navigation with mobile menu
 - SEO-optimised metadata and Open Graph tags
 - Static export ready

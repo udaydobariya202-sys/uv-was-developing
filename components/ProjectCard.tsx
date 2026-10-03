@@ -42,7 +42,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               <span className="text-secondary/30">{"\u2022"}</span>
               <span
                 className={`text-[11px] font-mono tracking-wider px-2.5 py-0.5 rounded-full border ${
-                  project.status === "Production project / Client work"
+                  project.status === "Independent product"
                     ? "text-accent-lime bg-accent-lime/10 border-accent-lime/20"
                     : "text-secondary bg-surface-elevated border-border"
                 }`}
@@ -200,7 +200,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                 </div>
                 <div className="pt-3 border-t border-border/60 flex items-center justify-between text-[10px] text-secondary/60">
                   <span>Conversational UX</span>
-                  <span>Flutter Client</span>
+                  <span>Flutter App</span>
                 </div>
               </div>
             )}

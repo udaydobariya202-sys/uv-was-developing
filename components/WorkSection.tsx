@@ -12,7 +12,7 @@ export function WorkSection() {
         <SectionHeading
           label="02 / Selected Work"
           title="Featured systems & applications."
-          subtitle="Production platforms, client applications, and focused technical prototypes built for real users."
+          subtitle="Independent platforms, mobile applications, and focused technical prototypes built for real users."
         />
 
         {/* Full-Width Editorial Rows */}
@@ -30,7 +30,7 @@ export function WorkSection() {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          More production client systems in progress.
+          More independent production systems in progress.
         </motion.p>
       </div>
     </section>

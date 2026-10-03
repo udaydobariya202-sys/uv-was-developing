@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowUp, Mail } from "lucide-react";
+import { RegistrationMark, ColorSwatches } from "@/components/ui/PrintMarks";
 
 function GitHubIcon({ size = 16 }: { size?: number }) {
   return (
@@ -20,12 +21,12 @@ function LinkedInIcon({ size = 16 }: { size?: number }) {
 }
 
 const footerLinks = [
-  { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
-  { label: "Stack", href: "#stack" },
-  { label: "Process", href: "#process" },
-  { label: "Contact", href: "#contact" },
-  { label: "MOVIQ Case Study", href: "/projects/moviq" },
+  { number: "01", label: "Work", href: "#work" },
+  { number: "02", label: "About", href: "#about" },
+  { number: "03", label: "Stack", href: "#stack" },
+  { number: "04", label: "Process", href: "#process" },
+  { number: "05", label: "Contact", href: "#contact" },
+  { number: "\u2192", label: "MOVIQ Proof Sheet", href: "/projects/moviq" },
 ];
 
 export function Footer() {
@@ -40,85 +41,111 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-border bg-[#0B0A0C] pt-16 pb-12 overflow-hidden">
-      <div className="page-container">
-        {/* Top Area: Large Wordmark & Brand Info */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 pb-12 border-b border-border/80">
+    <footer className="relative border-t-2 border-border bg-bg pt-16 pb-12 overflow-hidden select-none isolate">
+      {/* Giant Overprinted Background Wordmark */}
+      <div
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none -z-10 overflow-hidden leading-none opacity-10"
+        aria-hidden="true"
+      >
+        <span className="font-display text-[14vw] font-black uppercase tracking-tighter text-primary whitespace-nowrap block ink-overprint">
+          UV WAS DEVELOPING
+        </span>
+      </div>
+
+      <div className="page-container relative z-10">
+        {/* Top Area: Brand Info & Socials */}
+        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 pb-10 border-b-2 border-border">
           <div>
-            <span className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-primary block mb-2">
-              UV WAS DEVELOPING
-            </span>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center justify-center w-7 h-7 rounded border-2 border-border bg-surface shadow-ink-sm">
+                <span className="font-mono text-xs font-bold text-primary">UV</span>
+              </div>
+              <span className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-primary">
+                UV WAS DEVELOPING
+              </span>
+            </div>
             <p className="text-sm font-mono text-secondary max-w-md leading-relaxed">
               Uday Dobariya · Flutter developer and full-stack product builder based in Gujarat, India.
             </p>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-3">
-            <a
-              href="https://github.com/udaydobariya202-sys"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-lg border border-border text-secondary hover:text-primary hover:border-accent-lime/40 bg-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
-              aria-label="GitHub Profile"
-            >
-              <GitHubIcon size={16} />
-            </a>
-            <a
-              href="https://linkedin.com/in/udaydobariya"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-lg border border-border text-secondary hover:text-primary hover:border-accent-lime/40 bg-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
-              aria-label="LinkedIn Profile"
-            >
-              <LinkedInIcon size={16} />
-            </a>
-            <a
-              href="mailto:udaydobariya202@gmail.com"
-              className="p-2.5 rounded-lg border border-border text-secondary hover:text-primary hover:border-accent-lime/40 bg-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
-              aria-label="Email Uday Dobariya"
-            >
-              <Mail size={16} />
-            </a>
+          {/* Social Links & Swatches */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <ColorSwatches />
+            <div className="flex items-center gap-2">
+              <a
+                href="https://github.com/udaydobariya202-sys"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded border-2 border-border text-primary bg-surface shadow-ink-sm hover:-translate-y-0.5 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
+                aria-label="GitHub Profile"
+              >
+                <GitHubIcon size={16} />
+              </a>
+              <a
+                href="https://linkedin.com/in/udaydobariya"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded border-2 border-border text-primary bg-surface shadow-ink-sm hover:-translate-y-0.5 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
+                aria-label="LinkedIn Profile"
+              >
+                <LinkedInIcon size={16} />
+              </a>
+              <a
+                href="mailto:udaydobariya202@gmail.com"
+                className="p-2 rounded border-2 border-border text-primary bg-surface shadow-ink-sm hover:-translate-y-0.5 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
+                aria-label="Email Uday Dobariya"
+              >
+                <Mail size={16} />
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Area: Navigation, Copyright & Back to Top */}
-        <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          {/* Repeated Nav */}
-          <nav className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono text-secondary">
-            {footerLinks.map((link) =>
-              link.href.startsWith("#") ? (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={handleScroll(link.href)}
-                  className="hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded"
-                >
-                  {link.label}
-                </a>
-              ) : (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded"
-                >
-                  {link.label}
-                </Link>
-              )
-            )}
-          </nav>
+        {/* Center: Repeated Nav with Numbers */}
+        <div className="py-6 border-b-2 border-border flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono">
+          {footerLinks.map((link) =>
+            link.href.startsWith("#") ? (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={handleScroll(link.href)}
+                className="text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded py-1"
+              >
+                <span className="text-accent-uv mr-1 font-bold">{link.number}</span>
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="text-secondary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded py-1"
+              >
+                <span className="text-accent-uv mr-1 font-bold">{link.number}</span>
+                {link.label}
+              </Link>
+            )
+          )}
+        </div>
 
-          {/* Copyright & Top Button */}
-          <div className="flex items-center gap-6 text-xs font-mono text-secondary/70 w-full sm:w-auto justify-between sm:justify-end">
-            <span>&copy; {year} UV WAS DEVELOPING</span>
+        {/* Bottom Colophon Bar */}
+        <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-mono text-secondary">
+          <div className="flex items-center gap-2">
+            <RegistrationMark size={14} className="text-accent-uv" />
+            <p className="text-[11px] leading-relaxed">
+              Set in Space Grotesk &amp; Geist · Printed in UV Violet &amp; Signal Lime · Proof #{year}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+            <span className="text-[11px]">&copy; {year} UV WAS DEVELOPING</span>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="inline-flex items-center gap-1.5 text-secondary hover:text-accent-lime transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime rounded px-2 py-1 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border-2 border-border bg-surface shadow-ink-sm text-primary hover:-translate-y-0.5 transition-transform text-xs font-bold cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime"
               aria-label="Back to top"
             >
-              <span>Top</span>
-              <ArrowUp size={13} />
+              <span>TOP</span>
+              <ArrowUp size={12} />
             </button>
           </div>
         </div>

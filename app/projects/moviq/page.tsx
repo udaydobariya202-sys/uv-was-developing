@@ -60,7 +60,7 @@ export default function MoviqCaseStudyPage() {
               </span>
               <span className="text-secondary/40">{"\u2022"}</span>
               <span className="text-[11px] font-mono tracking-wider px-2.5 py-0.5 rounded-full border border-border bg-surface text-accent-lime">
-                Production project / Client work
+                Independent product
               </span>
             </div>
 
@@ -171,7 +171,7 @@ export default function MoviqCaseStudyPage() {
               </div>
               <h3 className="font-display text-lg font-bold text-primary mb-2">Production Quality</h3>
               <p className="text-xs sm:text-sm text-secondary leading-relaxed">
-                Built as a client production product with bulletproof error handling, offline reconnections, and secure data caching.
+                Built as a standalone production product with bulletproof error handling, offline reconnections, and secure data caching.
               </p>
             </div>
           </div>

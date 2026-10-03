@@ -1,7 +1,7 @@
 export type TechTag = string;
 
 export type ProjectStatus =
-  | "Production project / Client work"
+  | "Independent product"
   | "Concept / In development"
   | "Prototype"
   | "Exploration";
@@ -56,7 +56,7 @@ export const projects: Project[] = [
     description:
       "A Flutter cab booking user app built with maps, ride lifecycle states, payments, notifications, and structured product architecture.",
     stack: ["Flutter", "Dart", "Node.js", "Maps", "Payments", "Notifications"],
-    status: "Production project / Client work",
+    status: "Independent product",
     role: "Flutter Developer and Full-Stack Product Builder",
     accentHue: "270",
     image: "/images/apps/moviq/moviq-home.webp",

@@ -156,7 +156,7 @@ export function AppShowcaseSection() {
               <span className="text-secondary/30">{"\u2022"}</span>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-border bg-surface text-[11px] font-mono tracking-wider text-accent-lime">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-lime" />
-                <span>Production project / Client work</span>
+                <span>Independent product</span>
               </div>
             </motion.div>
 
@@ -218,7 +218,7 @@ export function AppShowcaseSection() {
                     <span className="w-1.5 h-1.5 rounded-full bg-accent-lime" />
                     Production Build
                   </span>
-                  <span>iOS & Android</span>
+                  <span>Android</span>
                 </div>
 
                 <div className="relative w-[230px] min-[380px]:w-[250px] aspect-[1220/2712] rounded-[2.3rem] p-2 bg-[#0c0c11] border-2 border-white/[0.12] shadow-xl flex flex-col">
@@ -311,7 +311,7 @@ export function AppShowcaseSection() {
                 className="inline-flex items-center justify-center gap-2 rounded-lg font-medium border border-border text-secondary/60 bg-surface text-sm px-5 py-2.5 cursor-not-allowed opacity-60 select-none"
               >
                 <Smartphone size={14} className="text-secondary/40" />
-                <span>Google Play, coming soon</span>
+                <span>Coming soon on Google Play</span>
               </button>
             </motion.div>
           </div>
@@ -332,7 +332,7 @@ export function AppShowcaseSection() {
                   <span className="w-1.5 h-1.5 rounded-full bg-accent-lime" />
                   Live Build
                 </span>
-                <span>iOS & Android</span>
+                <span>Android</span>
               </div>
 
               {/* 3D Phone Frame */}
