@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, ExternalLink, X, MapPin, Sparkles } from "lucide-react";
 import { Project } from "@/lib/data";
 import { ProjectMedia } from "@/components/ui/ProjectMedia";
@@ -16,6 +17,7 @@ interface ProjectCardProps {
 export function ProjectCard({ project, index }: ProjectCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const isLead = project.id === "moviq";
+  const isBigNight = project.id === "bignight";
 
   return (
     <>
@@ -26,7 +28,11 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             <div className="lg:col-span-7 flex flex-col justify-between">
               {/* Category & Number (No status badges) */}
               <div className="flex items-center gap-2 mb-3 text-xs font-mono">
-                <span className="font-semibold text-accent tracking-wider uppercase">
+                <span
+                  className={`font-semibold tracking-wider uppercase ${
+                    isBigNight ? "text-[#D97706]" : "text-accent"
+                  }`}
+                >
                   {`${project.number} // ${project.category}`}
                 </span>
               </div>
@@ -102,9 +108,56 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               </div>
             </div>
 
-            {/* Right Column: Architectural Blueprint / Abstract Panel */}
+            {/* Right Column: Architectural Blueprint / Abstract Panel / BigNight Showcase */}
             <div className="lg:col-span-5 flex justify-center items-center w-full">
-              {isLead ? (
+              {isBigNight ? (
+                /* BigNight: Specialized Brand Showcase with Amber Theme, Official Logo and Single App Screenshot */
+                <div className="w-full rounded-xl border border-[#E58B24]/30 bg-gradient-to-b from-[#1C1612] via-[#16120E] to-[#100D0B] p-5 sm:p-6 text-white shadow-lg flex flex-col justify-between overflow-hidden relative">
+                  {/* Warm amber ambient light effect */}
+                  <div
+                    className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-[#E58B24]/15 blur-3xl pointer-events-none"
+                    aria-hidden="true"
+                  />
+
+                  {/* Header: Official Logo + Live Badge */}
+                  <div className="flex items-center justify-between pb-3 border-b border-white/10 relative z-10">
+                    <div className="relative h-9 w-28 sm:w-32">
+                      <Image
+                        src="/images/apps/bignight/bignight_logo.png"
+                        alt="BigNight Official Logo"
+                        fill
+                        className="object-contain object-left"
+                        sizes="(max-width: 640px) 112px, 128px"
+                      />
+                    </div>
+                    <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border border-[#E58B24]/40 bg-[#E58B24]/10 text-[#F3B063] font-medium">
+                      Multi-Restaurant
+                    </span>
+                  </div>
+
+                  {/* Center: The Single Real App Screenshot (clean framing, no phone skeleton) */}
+                  <div className="py-5 flex justify-center items-center relative z-10">
+                    <div className="relative w-40 sm:w-44 aspect-[841/1870] rounded-xl overflow-hidden border border-[#E58B24]/40 shadow-2xl bg-black">
+                      <Image
+                        src="/images/apps/bignight/image.png"
+                        alt="BigNight food ordering app interface screenshot"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 160px, 176px"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Footer specs */}
+                  <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-[#D4CDC7] relative z-10">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F3B063]" />
+                      Real-Time Kitchen Ops
+                    </span>
+                    <span className="text-[#F3B063]">Zero-Trust Locks</span>
+                  </div>
+                </div>
+              ) : isLead ? (
                 <ProjectMedia title={project.title} className="w-full" />
               ) : project.id === "terracast" ? (
                 /* TerraCast: Clean Geospatial Blueprint Panel */

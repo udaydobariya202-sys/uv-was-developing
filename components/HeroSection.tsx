@@ -173,16 +173,29 @@ export function HeroSection() {
                   <span>Selected work</span>
                   <ArrowUpRight size={13} className="text-muted group-hover:text-primary transition-colors" />
                 </div>
-                <div className="flex items-baseline justify-between gap-3 text-sm font-sans">
-                  <div className="flex items-baseline gap-2.5">
-                    <span className="font-mono text-xs text-muted">01</span>
-                    <span className="font-medium text-primary group-hover:text-accent transition-colors">
-                      MOVIQ Cabs
+                <div className="space-y-2.5">
+                  <div className="flex items-baseline justify-between gap-3 text-sm font-sans">
+                    <div className="flex items-baseline gap-2.5">
+                      <span className="font-mono text-xs text-muted">01</span>
+                      <span className="font-medium text-primary group-hover:text-accent transition-colors">
+                        BigNight
+                      </span>
+                    </div>
+                    <span className="text-xs text-secondary font-sans">
+                      Food platform
                     </span>
                   </div>
-                  <span className="text-xs text-secondary font-sans">
-                    Mobile app
-                  </span>
+                  <div className="flex items-baseline justify-between gap-3 text-sm font-sans pt-2 border-t border-border/60">
+                    <div className="flex items-baseline gap-2.5">
+                      <span className="font-mono text-xs text-muted">02</span>
+                      <span className="font-medium text-primary group-hover:text-accent transition-colors">
+                        MOVIQ Cabs
+                      </span>
+                    </div>
+                    <span className="text-xs text-secondary font-sans">
+                      Cab booking
+                    </span>
+                  </div>
                 </div>
               </a>
             </motion.div>

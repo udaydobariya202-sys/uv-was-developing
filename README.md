@@ -19,7 +19,7 @@ Personal portfolio of **Uday Dobariya** — Flutter Developer & Full-Stack Produ
 - Calm editorial design system with warm paper background and deep indigo accent
 - Fully responsive — mobile, tablet, and desktop
 - Refined typography pairing Fraunces serif headlines with clean Inter body
-- MOVIQ Cabs featured editorial case study showcase
+- BigNight and MOVIQ Cabs featured editorial case study showcases
 - Project cards with technical architectural specifications
 - Accessible navigation with mobile menu
 - SEO-optimised metadata and Open Graph tags

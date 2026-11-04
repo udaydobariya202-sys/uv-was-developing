@@ -13,6 +13,8 @@ export interface Project {
   accentHue: string;
   featured?: boolean;
   caseStudyUrl?: string;
+  logoUrl?: string;
+  screenshotUrl?: string;
 }
 
 export interface ProcessStep {
@@ -28,8 +30,32 @@ export interface StackGroup {
 
 export const projects: Project[] = [
   {
-    id: "moviq",
+    id: "bignight",
     number: "01",
+    category: "Food commerce, multi-restaurant",
+    subtitle: "On-Demand Multi-Restaurant Food Delivery Platform",
+    title: "BigNight",
+    description:
+      "A high-concurrency food delivery platform featuring real-time kitchen operations, a multi-tiered dish customization engine, bank-grade checkout protection, and a centralized administrative command center.",
+    stack: [
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "High-Concurrency",
+      "System Security",
+      "REST APIs",
+    ],
+    role: "Full-stack architecture & engineering",
+    platform: "Web & Mobile",
+    accentHue: "32",
+    featured: true,
+    caseStudyUrl: "/projects/bignight",
+    logoUrl: "/images/apps/bignight/bignight_logo.png",
+    screenshotUrl: "/images/apps/bignight/image.png",
+  },
+  {
+    id: "moviq",
+    number: "02",
     category: "Mobile app, ride booking",
     subtitle: "Cab Booking User App",
     title: "MOVIQ Cabs",
@@ -44,7 +70,7 @@ export const projects: Project[] = [
   },
   {
     id: "terracast",
-    number: "02",
+    number: "03",
     category: "Weather, earth visualization",
     title: "TerraCast",
     description:
@@ -56,7 +82,7 @@ export const projects: Project[] = [
   },
   {
     id: "udaya-ai",
-    number: "03",
+    number: "04",
     category: "Voice assistant interface",
     title: "Udaya AI",
     description:
