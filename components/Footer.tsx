@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { ArrowUp, Mail } from "lucide-react";
 
 function GitHubIcon({ size = 16 }: { size?: number }) {
@@ -25,15 +26,22 @@ const footerLinks = [
   { label: "Stack", href: "#stack" },
   { label: "Process", href: "#process" },
   { label: "Contact", href: "#contact" },
+  { label: "BigNight Case Study", href: "/projects/bignight" },
   { label: "MOVIQ Case Study", href: "/projects/moviq" },
 ];
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const handleScroll = (href: string) => (e: React.MouseEvent) => {
     if (href.startsWith("#")) {
       e.preventDefault();
+      if (pathname !== "/") {
+        router.push(`/${href}`);
+        return;
+      }
       const el = document.querySelector(href);
       el?.scrollIntoView({ behavior: "smooth" });
     }

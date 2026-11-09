@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
@@ -16,6 +18,9 @@ export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
+
+  const pathname = usePathname();
+  const router = useRouter();
 
   const menuToggleRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -76,6 +81,10 @@ export function Navigation() {
 
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
+    if (pathname !== "/") {
+      router.push(`/${href}`);
+      return;
+    }
     setTimeout(() => {
       const el = document.querySelector(href);
       el?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -87,29 +96,31 @@ export function Navigation() {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-150 ${
           scrolled
-            ? "bg-bg/90 backdrop-blur-sm border-b border-border"
+            ? "bg-bg/95 backdrop-blur-md border-b border-border shadow-xs"
             : "bg-transparent border-b border-transparent"
         }`}
       >
         <div className="page-container">
           <div className="flex items-center justify-between h-16">
             {/* Left: Brand */}
-            <a
-              href="#"
+            <Link
+              href="/"
               onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                if (pathname === "/") {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
               }}
               className="flex flex-col text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded p-1 -ml-1 group"
               aria-label="UV WAS DEVELOPING by Uday Dobariya — home"
             >
-              <span className="text-xs tracking-widest text-primary uppercase font-sans font-semibold leading-tight">
+              <span className="text-xs tracking-widest text-primary uppercase font-sans font-semibold leading-tight group-hover:text-accent transition-colors">
                 UV WAS DEVELOPING
               </span>
               <span className="text-[10px] tracking-wide text-secondary leading-tight font-sans">
                 by Uday Dobariya
               </span>
-            </a>
+            </Link>
 
             {/* Center: Desktop Nav */}
             <nav
@@ -117,11 +128,11 @@ export function Navigation() {
               aria-label="Primary navigation"
             >
               {navLinks.map((link) => {
-                const isActive = activeSection === link.id;
+                const isActive = pathname === "/" && activeSection === link.id;
                 return (
                   <a
                     key={link.label}
-                    href={link.href}
+                    href={pathname === "/" ? link.href : `/${link.href}`}
                     onClick={(e) => {
                       e.preventDefault();
                       handleNavClick(link.href);
@@ -142,7 +153,7 @@ export function Navigation() {
             <div className="flex items-center gap-3">
               <div className="hidden sm:block">
                 <LinkButton
-                  href="#contact"
+                  href={pathname === "/" ? "#contact" : "/#contact"}
                   variant="primary"
                   size="sm"
                   onClick={(e) => {
@@ -156,7 +167,7 @@ export function Navigation() {
 
               <button
                 ref={menuToggleRef}
-                className="md:hidden p-2 text-secondary hover:text-primary rounded-lg border border-border transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer"
+                className="md:hidden p-2 text-secondary hover:text-primary rounded-lg border border-border bg-surface/50 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer active:scale-95"
                 onClick={() => setMenuOpen((v) => !v)}
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={menuOpen}
@@ -178,7 +189,7 @@ export function Navigation() {
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation"
-            className="fixed inset-0 z-50 md:hidden flex flex-col bg-bg"
+            className="fixed inset-0 z-50 md:hidden flex flex-col bg-bg/98 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -202,11 +213,11 @@ export function Navigation() {
             </div>
 
             {/* Nav Links */}
-            <nav className="flex flex-col px-6 py-8 gap-1 flex-1">
+            <nav className="flex flex-col px-6 py-8 gap-1 flex-1 overflow-y-auto">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.label}
-                  href={link.href}
+                  href={pathname === "/" ? link.href : `/${link.href}`}
                   onClick={(e) => {
                     e.preventDefault();
                     handleNavClick(link.href);
@@ -222,7 +233,7 @@ export function Navigation() {
               ))}
               <div className="pt-6">
                 <LinkButton
-                  href="#contact"
+                  href={pathname === "/" ? "#contact" : "/#contact"}
                   variant="primary"
                   size="lg"
                   className="w-full justify-center"

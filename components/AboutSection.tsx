@@ -36,7 +36,7 @@ const timelineFacts = [
   {
     icon: Terminal,
     label: "Lead Work",
-    value: "MOVIQ Cabs ride-booking platform",
+    value: "BigNight (Food Delivery) & MOVIQ Cabs",
   },
   {
     icon: MapPin,

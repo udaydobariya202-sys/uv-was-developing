@@ -22,7 +22,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
   return (
     <>
       <Reveal delay={index * 0.08} duration={0.4} y={16}>
-        <article className="rounded-xl border border-border bg-surface-card p-6 sm:p-8 lg:p-10 transition-colors duration-150 hover:border-border-strong">
+        <article className="rounded-xl border border-border bg-surface-card p-5 sm:p-8 lg:p-10 transition-colors duration-150 hover:border-border-strong">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Metadata & Editorial Info */}
             <div className="lg:col-span-7 flex flex-col justify-between">
@@ -74,11 +74,11 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               )}
 
               {/* Tech Tags */}
-              <div className="flex flex-wrap gap-2 mb-6">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
                 {project.stack.map((tech) => (
                   <span
                     key={tech}
-                    className="text-xs font-mono px-2.5 py-1 rounded-md border border-border bg-surface text-secondary"
+                    className="text-[11px] sm:text-xs font-mono px-2.5 py-1 rounded-md border border-border bg-surface text-secondary"
                   >
                     {tech}
                   </span>
@@ -90,7 +90,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                 {project.caseStudyUrl ? (
                   <Link
                     href={project.caseStudyUrl}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-sans font-medium text-sm bg-primary text-bg hover:bg-[#2c2a32] hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 ease-out select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-sans font-medium text-sm bg-primary text-bg hover:bg-[#2c2a32] hover:-translate-y-[1px] active:scale-[0.98] transition-all duration-150 ease-out select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     <span>View case study</span>
                     <ArrowUpRight size={15} />
@@ -99,7 +99,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                   <button
                     type="button"
                     onClick={() => setModalOpen(true)}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-sans font-medium text-sm border border-border-strong text-primary bg-transparent hover:bg-surface hover:border-primary hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 ease-out cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-sans font-medium text-sm border border-border-strong text-primary bg-transparent hover:bg-surface hover:border-primary hover:-translate-y-[1px] active:scale-[0.98] transition-all duration-150 ease-out cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     <span>Project details</span>
                     <ExternalLink size={14} className="text-secondary" />
@@ -112,7 +112,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             <div className="lg:col-span-5 flex justify-center items-center w-full">
               {isBigNight ? (
                 /* BigNight: Specialized Brand Showcase with Amber Theme, Official Logo and Single App Screenshot */
-                <div className="w-full rounded-xl border border-[#E58B24]/30 bg-gradient-to-b from-[#1C1612] via-[#16120E] to-[#100D0B] p-5 sm:p-6 text-white shadow-lg flex flex-col justify-between overflow-hidden relative">
+                <div className="w-full rounded-xl border border-[#E58B24]/30 bg-gradient-to-b from-[#1C1612] via-[#16120E] to-[#100D0B] p-4 sm:p-6 text-white shadow-lg flex flex-col justify-between overflow-hidden relative">
                   {/* Warm amber ambient light effect */}
                   <div
                     className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-[#E58B24]/15 blur-3xl pointer-events-none"
@@ -121,13 +121,13 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
                   {/* Header: Official Logo + Live Badge */}
                   <div className="flex items-center justify-between pb-3 border-b border-white/10 relative z-10">
-                    <div className="relative h-9 w-28 sm:w-32">
+                    <div className="relative h-8 sm:h-9 w-24 sm:w-32">
                       <Image
                         src="/images/apps/bignight/bignight_logo.png"
                         alt="BigNight Official Logo"
                         fill
                         className="object-contain object-left"
-                        sizes="(max-width: 640px) 112px, 128px"
+                        sizes="(max-width: 640px) 96px, 128px"
                       />
                     </div>
                     <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border border-[#E58B24]/40 bg-[#E58B24]/10 text-[#F3B063] font-medium">
@@ -136,20 +136,20 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                   </div>
 
                   {/* Center: The Single Real App Screenshot (clean framing, no phone skeleton) */}
-                  <div className="py-5 flex justify-center items-center relative z-10">
-                    <div className="relative w-40 sm:w-44 aspect-[841/1870] rounded-xl overflow-hidden border border-[#E58B24]/40 shadow-2xl bg-black">
+                  <div className="py-4 sm:py-5 flex justify-center items-center relative z-10">
+                    <div className="relative w-36 sm:w-44 aspect-[841/1870] rounded-xl overflow-hidden border border-[#E58B24]/40 shadow-2xl bg-black">
                       <Image
                         src="/images/apps/bignight/image.png"
                         alt="BigNight food ordering app interface screenshot"
                         fill
                         className="object-cover"
-                        sizes="(max-width: 640px) 160px, 176px"
+                        sizes="(max-width: 640px) 144px, 176px"
                       />
                     </div>
                   </div>
 
                   {/* Footer specs */}
-                  <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-[#D4CDC7] relative z-10">
+                  <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono text-[#D4CDC7] relative z-10">
                     <span className="flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#F3B063]" />
                       Push Notifications

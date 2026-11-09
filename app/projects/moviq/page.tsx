@@ -88,7 +88,7 @@ export default function MoviqCaseStudyPage() {
           <div className="max-w-3xl mb-12">
             <div className="flex flex-wrap items-center gap-2 mb-3 text-xs font-mono">
               <span className="font-semibold text-accent uppercase tracking-wider">
-                01 // Mobile app, ride booking
+                02 // Mobile app, ride booking
               </span>
             </div>
 
@@ -146,7 +146,7 @@ export default function MoviqCaseStudyPage() {
               From user experience architecture to cloud API integration, the entire product ecosystem was developed cleanly:
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {builtHighlights.map((item) => (
                 <div
                   key={item.title}
@@ -181,7 +181,7 @@ export default function MoviqCaseStudyPage() {
               Engineering highlights
             </h2>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               <div className="p-6 rounded-xl border border-border bg-surface-card flex flex-col">
                 <div className="w-10 h-10 rounded-lg border border-border bg-surface flex items-center justify-center text-accent mb-4">
                   <MapPin size={18} />

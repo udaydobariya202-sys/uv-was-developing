@@ -34,8 +34,8 @@ function LinkedInIcon({ size = 16 }: { size?: number }) {
 
 const facts = [
   { label: "Specialty", value: "Flutter · Dart" },
-  { label: "Backend", value: "REST APIs · Firebase" },
-  { label: "Full-stack", value: "Next.js · TypeScript" },
+  { label: "Platforms", value: "iOS & Android" },
+  { label: "Architecture", value: "BLoC · Clean Code" },
   { label: "Based in", value: "Rajkot, India" },
 ];
 

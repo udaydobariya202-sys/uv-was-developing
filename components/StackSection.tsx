@@ -15,7 +15,7 @@ const stackCategories = [
       "Deterministic State Machines",
       "Platform Channels",
       "Custom 2D Canvas & Animations",
-      "Android Toolchains & Gradle",
+      "iOS & Android Toolchains (Xcode & Gradle)",
     ],
   },
   {
@@ -53,7 +53,7 @@ const stackCategories = [
       "Postman API Validation",
       "Figma UI System Translation",
       "Cloud Hosting & Deployment",
-      "Android Studio Tooling",
+      "Xcode & Android Studio Tooling",
       "Store Release Pipeline",
     ],
   },

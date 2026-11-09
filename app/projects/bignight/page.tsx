@@ -218,20 +218,20 @@ export default function BigNightCaseStudyPage() {
               </span>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-primary tracking-tight mb-3 [text-wrap:balance]">
+            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-semibold text-primary tracking-tight mb-3 [text-wrap:balance]">
               BigNight
             </h1>
-            <p className="text-lg sm:text-xl text-secondary font-sans tracking-normal mb-6">
+            <p className="text-base sm:text-xl text-secondary font-sans tracking-normal mb-6">
               On-Demand Multi-Restaurant Food Delivery App
             </p>
 
             {/* Meta Row */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 py-4 border-y border-border mb-6 max-w-xl">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 py-4 border-y border-border mb-6 max-w-xl">
               <div>
                 <span className="block text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">
                   Role
                 </span>
-                <span className="text-sm font-sans font-medium text-primary">
+                <span className="text-xs sm:text-sm font-sans font-medium text-primary">
                   Design and development
                 </span>
               </div>
@@ -239,21 +239,21 @@ export default function BigNightCaseStudyPage() {
                 <span className="block text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">
                   Platform
                 </span>
-                <span className="text-sm font-sans font-medium text-primary">
+                <span className="text-xs sm:text-sm font-sans font-medium text-primary">
                   iOS &amp; Android
                 </span>
               </div>
-              <div>
+              <div className="col-span-2 sm:col-span-1">
                 <span className="block text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">
                   Stack Core
                 </span>
-                <span className="text-sm font-sans font-medium text-primary">
+                <span className="text-xs sm:text-sm font-sans font-medium text-primary">
                   Flutter · BLoC · Database
                 </span>
               </div>
             </div>
 
-            <p className="text-secondary leading-relaxed text-base sm:text-lg mb-8 font-sans">
+            <p className="text-secondary leading-relaxed text-sm sm:text-base md:text-lg mb-8 font-sans">
               An enterprise-grade, high-performance food delivery mobile application built with Flutter
               and BLoC for iOS and Android, engineered to power seamless customer ordering, multi-vendor
               restaurant operations, push notification alerts, and reliable database persistence.
@@ -261,66 +261,66 @@ export default function BigNightCaseStudyPage() {
           </div>
 
           {/* Showcase Panel: Warm Theme, Logo & Single Mobile Screenshot */}
-          <div className="my-12 max-w-4xl">
-            <div className="w-full rounded-2xl border border-[#E58B24]/30 bg-gradient-to-b from-[#1C1612] via-[#16120E] to-[#100D0B] p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+          <div className="my-10 sm:my-12 max-w-4xl">
+            <div className="w-full rounded-2xl border border-[#E58B24]/30 bg-gradient-to-b from-[#1C1612] via-[#16120E] to-[#100D0B] p-5 sm:p-8 md:p-10 text-white shadow-xl relative overflow-hidden">
               {/* Warm amber backdrop ambient glow */}
               <div
                 className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#E58B24]/10 blur-3xl pointer-events-none"
                 aria-hidden="true"
               />
 
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-white/10 relative z-10">
-                <div className="relative h-12 w-40 sm:w-48">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-5 border-b border-white/10 relative z-10">
+                <div className="relative h-10 sm:h-12 w-32 sm:w-48">
                   <Image
                     src="/images/apps/bignight/bignight_logo.png"
                     alt="BigNight Official Logo"
                     fill
                     className="object-contain object-left"
                     priority
-                    sizes="(max-width: 640px) 160px, 192px"
+                    sizes="(max-width: 640px) 128px, 192px"
                   />
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono uppercase tracking-wider px-3 py-1 rounded-full border border-[#E58B24]/40 bg-[#E58B24]/10 text-[#F3B063] font-medium">
+                  <span className="text-[11px] sm:text-xs font-mono uppercase tracking-wider px-3 py-1 rounded-full border border-[#E58B24]/40 bg-[#E58B24]/10 text-[#F3B063] font-medium">
                     iOS &amp; Android App
                   </span>
                 </div>
               </div>
 
               {/* The Single Real Screenshot Showcase */}
-              <div className="py-10 flex flex-col items-center justify-center relative z-10">
-                <div className="relative w-64 sm:w-72 md:w-80 aspect-[841/1870] rounded-2xl overflow-hidden border border-[#E58B24]/40 shadow-2xl bg-black">
+              <div className="py-8 sm:py-10 flex flex-col items-center justify-center relative z-10">
+                <div className="relative w-52 sm:w-64 md:w-72 max-w-full aspect-[841/1870] rounded-2xl overflow-hidden border border-[#E58B24]/40 shadow-2xl bg-black">
                   <Image
                     src="/images/apps/bignight/image.png"
                     alt="BigNight customer ordering interface showcase screenshot"
                     fill
                     className="object-cover"
                     priority
-                    sizes="(max-width: 640px) 256px, 320px"
+                    sizes="(max-width: 640px) 208px, 288px"
                   />
                 </div>
-                <p className="mt-4 text-xs font-mono text-[#D4CDC7]/70 text-center tracking-wide">
+                <p className="mt-4 text-[11px] sm:text-xs font-mono text-[#D4CDC7]/70 text-center tracking-wide">
                   Live Customer Ordering Interface &amp; Dish Customization Engine
                 </p>
               </div>
 
               {/* Showcase Footer Specs */}
-              <div className="pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center font-mono text-xs relative z-10">
-                <div>
+              <div className="pt-5 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 text-center font-mono text-xs relative z-10">
+                <div className="p-2 sm:p-2.5 rounded-lg bg-white/5 border border-white/5">
                   <span className="block text-muted text-[10px] uppercase">Framework</span>
-                  <span className="text-[#F3B063] font-medium">Flutter · Dart</span>
+                  <span className="text-[#F3B063] font-medium text-[11px] sm:text-xs">Flutter · Dart</span>
                 </div>
-                <div>
+                <div className="p-2 sm:p-2.5 rounded-lg bg-white/5 border border-white/5">
                   <span className="block text-muted text-[10px] uppercase">State Engine</span>
-                  <span className="text-[#F3B063] font-medium">BLoC Pattern</span>
+                  <span className="text-[#F3B063] font-medium text-[11px] sm:text-xs">BLoC Pattern</span>
                 </div>
-                <div>
+                <div className="p-2 sm:p-2.5 rounded-lg bg-white/5 border border-white/5">
                   <span className="block text-muted text-[10px] uppercase">Platforms</span>
-                  <span className="text-[#F3B063] font-medium">iOS &amp; Android</span>
+                  <span className="text-[#F3B063] font-medium text-[11px] sm:text-xs">iOS &amp; Android</span>
                 </div>
-                <div>
+                <div className="p-2 sm:p-2.5 rounded-lg bg-white/5 border border-white/5">
                   <span className="block text-muted text-[10px] uppercase">Connected Services</span>
-                  <span className="text-[#F3B063] font-medium">DB &amp; Push Alerts</span>
+                  <span className="text-[#F3B063] font-medium text-[11px] sm:text-xs">DB &amp; Push Alerts</span>
                 </div>
               </div>
             </div>
@@ -359,11 +359,11 @@ export default function BigNightCaseStudyPage() {
                       </h3>
                     </div>
 
-                    <div className="grid sm:grid-cols-3 gap-4 pt-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 pt-2">
                       {feature.points.map((pt) => (
                         <div
                           key={pt.heading}
-                          className="p-4 rounded-lg bg-surface border border-border/80 flex flex-col justify-start"
+                          className="p-3.5 sm:p-4 rounded-lg bg-surface border border-border/80 flex flex-col justify-start"
                         >
                           <div className="flex items-center gap-1.5 text-xs font-sans font-semibold text-primary mb-1.5">
                             <Check size={13} className="text-[#D97706] shrink-0" />
@@ -434,9 +434,9 @@ export default function BigNightCaseStudyPage() {
             </p>
 
             <div className="rounded-xl border border-border bg-surface-card overflow-hidden">
-              <div className="grid grid-cols-1 md:grid-cols-12 bg-surface border-b border-border text-xs font-mono uppercase text-muted tracking-wider p-4">
+              <div className="hidden md:grid md:grid-cols-12 bg-surface border-b border-border text-xs font-mono uppercase text-muted tracking-wider p-4">
                 <div className="md:col-span-4 font-semibold text-primary">The Challenge</div>
-                <div className="md:col-span-8 font-semibold text-primary mt-2 md:mt-0">
+                <div className="md:col-span-8 font-semibold text-primary">
                   How BigNight Solves It
                 </div>
               </div>
@@ -444,13 +444,13 @@ export default function BigNightCaseStudyPage() {
                 {problemsSolved.map((row) => (
                   <div
                     key={row.challenge}
-                    className="grid grid-cols-1 md:grid-cols-12 p-4 sm:p-5 gap-3 items-start hover:bg-surface/50 transition-colors"
+                    className="grid grid-cols-1 md:grid-cols-12 p-4 sm:p-5 gap-2 md:gap-4 items-start hover:bg-surface/50 transition-colors"
                   >
                     <div className="md:col-span-4 font-sans font-semibold text-sm text-primary flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#D97706]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D97706] shrink-0" />
                       {row.challenge}
                     </div>
-                    <div className="md:col-span-8 font-sans text-xs sm:text-sm text-secondary leading-relaxed">
+                    <div className="md:col-span-8 font-sans text-xs sm:text-sm text-secondary leading-relaxed pl-3.5 md:pl-0">
                       {row.solution}
                     </div>
                   </div>
