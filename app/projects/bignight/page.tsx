@@ -4,38 +4,38 @@ import Image from "next/image";
 import {
   ArrowLeft,
   ShieldCheck,
-  Zap,
   Store,
   UtensilsCrossed,
-  Sliders,
   Lock,
   Layers,
   Sparkles,
   Check,
   Flame,
+  Bell,
+  Smartphone,
 } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "BigNight — On-Demand Multi-Restaurant Food Delivery Platform | Uday Dobariya",
+  title: "BigNight — On-Demand Food Delivery Mobile App (iOS & Android) | Uday Dobariya",
   description:
-    "An enterprise-grade, high-performance food delivery & restaurant management platform built to power seamless customer ordering, multi-vendor restaurant operations, and centralized administrative control.",
+    "A cross-platform food delivery mobile app built with Flutter and BLoC for iOS and Android, featuring real-time kitchen tracking, dynamic dish customization, push notifications, and a connected database.",
   alternates: {
     canonical: "https://dcmlabs.online/projects/bignight",
   },
   openGraph: {
-    title: "BigNight — On-Demand Multi-Restaurant Food Delivery Platform | Uday Dobariya",
+    title: "BigNight — On-Demand Food Delivery Mobile App (iOS & Android) | Uday Dobariya",
     description:
-      "An enterprise-grade, high-performance food delivery & restaurant management platform built to power seamless customer ordering, multi-vendor restaurant operations, and centralized administrative control.",
+      "A cross-platform food delivery mobile app built with Flutter and BLoC for iOS and Android, featuring real-time kitchen tracking, dynamic dish customization, push notifications, and a connected database.",
     url: "https://dcmlabs.online/projects/bignight",
     type: "article",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BigNight — On-Demand Multi-Restaurant Food Delivery Platform | Uday Dobariya",
+    title: "BigNight — On-Demand Food Delivery Mobile App (iOS & Android) | Uday Dobariya",
     description:
-      "An enterprise-grade, high-performance food delivery & restaurant management platform built to power seamless customer ordering, multi-vendor restaurant operations, and centralized administrative control.",
+      "A cross-platform food delivery mobile app built with Flutter and BLoC for iOS and Android, featuring real-time kitchen tracking, dynamic dish customization, push notifications, and a connected database.",
   },
 };
 
@@ -118,7 +118,7 @@ const standoutFeatures = [
     points: [
       {
         heading: "Engaging Promotional Banners",
-        text: "Visually rich promotional carousels designed to showcase seasonal offers, happy hours, and new restaurant launches on both mobile and desktop.",
+        text: "Visually rich promotional carousels designed to showcase seasonal offers, happy hours, and new restaurant launches smoothly on mobile.",
       },
       {
         heading: "Curated Food Collections",
@@ -130,65 +130,66 @@ const standoutFeatures = [
 
 const technicalHighlights = [
   {
-    icon: Zap,
-    title: "Modern Core Architecture",
+    icon: Smartphone,
+    title: "Flutter Cross-Platform Architecture",
     detail:
-      "Engineered using modern TypeScript and Node.js for high concurrency, lightweight memory footprints, and sub-second response times under peak load.",
+      "Built with a single Flutter & Dart codebase delivering native 60fps performance, responsive mobile interfaces, and complete feature parity across iOS and Android.",
   },
   {
     icon: Layers,
-    title: "High-Performance Relational Engine",
+    title: "Powerful BLoC State Management",
     detail:
-      "High-volume operations (cart updates, order placement, and inventory checks) run as atomic database operations to guarantee data consistency during high-traffic surges.",
+      "Structured reactive event-driven architecture with BLoC to cleanly decouple UI from business logic, ensuring predictable state transitions, instant cart updates, and robust error recovery.",
+  },
+  {
+    icon: Bell,
+    title: "Real-Time Push Notifications",
+    detail:
+      "Integrated push notification pipeline delivering real-time order status milestones, kitchen preparation alerts, and delivery updates directly to users' devices.",
   },
   {
     icon: ShieldCheck,
-    title: "Zero-Trust Security Standard",
+    title: "Resilient Database & Caching",
     detail:
-      "Built-in rate limiting, security headers, cryptographic verification, and strict input validation guarding every customer and administrative action.",
-  },
-  {
-    icon: Sliders,
-    title: "High-Availability Cloud Edge",
-    detail:
-      "Optimized connection handling and keep-alive tuning designed to eliminate connection drops and provide continuous uptime under heavy traffic bursts.",
+      "Reliable database integration with local persistence and transaction-level idempotency locks to ensure carts and order histories survive fluctuating mobile connectivity.",
   },
 ];
 
 const problemsSolved = [
   {
-    challenge: "Kitchen Overwhelm",
+    challenge: "Cross-Platform Consistency",
     solution:
-      "Real-time store availability and prep-time controls allow restaurants to pause orders or throttle intake during peak rushes.",
+      "Single codebase built in Flutter delivers identical visual fidelity, pixel-perfect layouts, and smooth 60fps animations on both iOS and Android.",
   },
   {
-    challenge: "Complex Food Orders",
+    challenge: "Complex Menu Variations & Cart State",
     solution:
-      "A flexible customization engine effortlessly handles nested meal variations, sauces, dietary options, and extra toppings with live pricing.",
+      "A flexible BLoC state tree handles nested meal choices, extra toppings, and instant price recalculations with zero UI lag.",
   },
   {
-    challenge: "Double Charges & Race Conditions",
+    challenge: "Order Updates & Real-Time Awareness",
     solution:
-      "Transaction-level idempotency locks completely eliminate duplicate orders and double billing from double-taps or weak cellular signals.",
+      "Integrated push notification services deliver instant status alerts when orders are accepted, being prepared in the kitchen, or out for delivery.",
   },
   {
-    challenge: "Unauthorized System Access",
+    challenge: "Network Dropouts & Duplicate Submissions",
     solution:
-      "Multi-layer database triggers and rigorous role checks protect sensitive financial, operational, and customer records.",
+      "Local database caching with idempotent transaction tokens ensures customer carts persist and duplicate charges are prevented during connection flickers.",
   },
 ];
 
 const techStack = [
-  "TypeScript",
-  "Node.js",
-  "PostgreSQL",
-  "Next.js",
+  "Flutter",
+  "Dart",
+  "BLoC Pattern",
+  "iOS",
+  "Android",
   "REST APIs",
-  "High-Concurrency Architecture",
-  "System Security",
-  "Atomic Transactions",
-  "Idempotency Locking",
-  "Zero-Trust Access Control",
+  "Database",
+  "Push Notifications",
+  "State Management",
+  "Cart Persistence",
+  "Idempotency Protection",
 ];
 
 export default function BigNightCaseStudyPage() {
@@ -213,7 +214,7 @@ export default function BigNightCaseStudyPage() {
             <div className="flex flex-wrap items-center gap-2 mb-3 text-xs font-mono">
               <span className="font-semibold text-[#D97706] uppercase tracking-wider flex items-center gap-1.5">
                 <Flame size={13} className="text-[#D97706]" />
-                01 // Food commerce, multi-restaurant
+                01 // Mobile app, food delivery
               </span>
             </div>
 
@@ -221,7 +222,7 @@ export default function BigNightCaseStudyPage() {
               BigNight
             </h1>
             <p className="text-lg sm:text-xl text-secondary font-sans tracking-normal mb-6">
-              On-Demand Multi-Restaurant Food Delivery Platform
+              On-Demand Multi-Restaurant Food Delivery App
             </p>
 
             {/* Meta Row */}
@@ -231,7 +232,7 @@ export default function BigNightCaseStudyPage() {
                   Role
                 </span>
                 <span className="text-sm font-sans font-medium text-primary">
-                  Architecture &amp; Engineering
+                  Design and development
                 </span>
               </div>
               <div>
@@ -239,7 +240,7 @@ export default function BigNightCaseStudyPage() {
                   Platform
                 </span>
                 <span className="text-sm font-sans font-medium text-primary">
-                  Web &amp; Mobile
+                  iOS &amp; Android
                 </span>
               </div>
               <div>
@@ -247,15 +248,15 @@ export default function BigNightCaseStudyPage() {
                   Stack Core
                 </span>
                 <span className="text-sm font-sans font-medium text-primary">
-                  TypeScript · Node · Postgres
+                  Flutter · BLoC · Database
                 </span>
               </div>
             </div>
 
             <p className="text-secondary leading-relaxed text-base sm:text-lg mb-8 font-sans">
-              An enterprise-grade, high-performance food delivery &amp; restaurant management platform
-              built to power seamless customer ordering, multi-vendor restaurant operations, and
-              centralized administrative control.
+              An enterprise-grade, high-performance food delivery mobile application built with Flutter
+              and BLoC for iOS and Android, engineered to power seamless customer ordering, multi-vendor
+              restaurant operations, push notification alerts, and reliable database persistence.
             </p>
           </div>
 
@@ -281,7 +282,7 @@ export default function BigNightCaseStudyPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-mono uppercase tracking-wider px-3 py-1 rounded-full border border-[#E58B24]/40 bg-[#E58B24]/10 text-[#F3B063] font-medium">
-                    Enterprise Platform
+                    iOS &amp; Android App
                   </span>
                 </div>
               </div>
@@ -306,20 +307,20 @@ export default function BigNightCaseStudyPage() {
               {/* Showcase Footer Specs */}
               <div className="pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center font-mono text-xs relative z-10">
                 <div>
-                  <span className="block text-muted text-[10px] uppercase">Engine</span>
-                  <span className="text-[#F3B063] font-medium">Node.js + TS</span>
+                  <span className="block text-muted text-[10px] uppercase">Framework</span>
+                  <span className="text-[#F3B063] font-medium">Flutter · Dart</span>
                 </div>
                 <div>
-                  <span className="block text-muted text-[10px] uppercase">Database</span>
-                  <span className="text-[#F3B063] font-medium">PostgreSQL</span>
+                  <span className="block text-muted text-[10px] uppercase">State Engine</span>
+                  <span className="text-[#F3B063] font-medium">BLoC Pattern</span>
                 </div>
                 <div>
-                  <span className="block text-muted text-[10px] uppercase">Transactions</span>
-                  <span className="text-[#F3B063] font-medium">Atomic + Idempotent</span>
+                  <span className="block text-muted text-[10px] uppercase">Platforms</span>
+                  <span className="text-[#F3B063] font-medium">iOS &amp; Android</span>
                 </div>
                 <div>
-                  <span className="block text-muted text-[10px] uppercase">Security</span>
-                  <span className="text-[#F3B063] font-medium">Zero-Trust RBAC</span>
+                  <span className="block text-muted text-[10px] uppercase">Connected Services</span>
+                  <span className="text-[#F3B063] font-medium">DB &amp; Push Alerts</span>
                 </div>
               </div>
             </div>
@@ -331,15 +332,14 @@ export default function BigNightCaseStudyPage() {
               <span className="font-mono text-xs text-[#D97706] font-semibold">01</span>
               <div className="flex-1 h-px bg-border" />
               <span className="text-xs font-sans tracking-widest uppercase text-secondary font-medium">
-                Scope &amp; Business Capabilities
+                Scope &amp; App Capabilities
               </span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-semibold text-primary mb-3">
-              Standout Features &amp; Platform Architecture
+              Standout Features &amp; Mobile Capabilities
             </h2>
             <p className="text-sm sm:text-base text-secondary font-sans leading-relaxed mb-8">
-              BigNight bridges hungry diners, kitchen staff, and business operators through clean
-              multi-vendor architecture:
+              BigNight delivers a frictionless food ordering experience across iOS and Android:
             </p>
 
             <div className="space-y-6">
@@ -391,7 +391,7 @@ export default function BigNightCaseStudyPage() {
               </span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-semibold text-primary mb-8">
-              Technical Highlights &amp; System Design
+              Technical Highlights &amp; Mobile Architecture
             </h2>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -423,15 +423,14 @@ export default function BigNightCaseStudyPage() {
               <span className="font-mono text-xs text-[#D97706] font-semibold">03</span>
               <div className="flex-1 h-px bg-border" />
               <span className="text-xs font-sans tracking-widest uppercase text-secondary font-medium">
-                Business &amp; Technical Solutions
+                Business &amp; Mobile Engineering Solutions
               </span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-semibold text-primary mb-4">
               Key Problems Solved
             </h2>
             <p className="text-sm sm:text-base text-secondary font-sans leading-relaxed mb-6">
-              How BigNight addresses critical race conditions, operational friction, and security
-              risks in food commerce:
+              How BigNight addresses critical mobile performance, state consistency, and UX challenges:
             </p>
 
             <div className="rounded-xl border border-border bg-surface-card overflow-hidden">
@@ -493,4 +492,3 @@ export default function BigNightCaseStudyPage() {
     </>
   );
 }
-

@@ -182,7 +182,7 @@ export function HeroSection() {
                       </span>
                     </div>
                     <span className="text-xs text-secondary font-sans">
-                      Food platform
+                      Mobile app
                     </span>
                   </div>
                   <div className="flex items-baseline justify-between gap-3 text-sm font-sans pt-2 border-t border-border/60">

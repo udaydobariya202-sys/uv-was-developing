@@ -131,7 +131,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                       />
                     </div>
                     <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border border-[#E58B24]/40 bg-[#E58B24]/10 text-[#F3B063] font-medium">
-                      Multi-Restaurant
+                      iOS &amp; Android
                     </span>
                   </div>
 
@@ -152,9 +152,9 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                   <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-[#D4CDC7] relative z-10">
                     <span className="flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#F3B063]" />
-                      Real-Time Kitchen Ops
+                      Push Notifications
                     </span>
-                    <span className="text-[#F3B063]">Zero-Trust Locks</span>
+                    <span className="text-[#F3B063]">Flutter &amp; BLoC</span>
                   </div>
                 </div>
               ) : isLead ? (
